@@ -8,6 +8,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+
 import java.net.Socket;
 
 public class ServerSocketConnectionTest {
@@ -24,12 +25,12 @@ public class ServerSocketConnectionTest {
   }
 
   @Test
-  public void testInputStreamIsReturned() throws Exception {
+  public void InputStreamIsReturned() throws Exception {
     assertEquals(inputStream, serverSocketConnection.in());
   }
 
   @Test
-  public void testOutputStreamisReturned() throws Exception {
+  public void OutputStreamIsReturned() throws Exception {
     assertEquals(outputStream, serverSocketConnection.out());
   }
 

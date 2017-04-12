@@ -5,21 +5,20 @@ import java.net.Socket;
 
 public class ServerListener {
   private ServerSocket serverSocket;
+  private CancellationToken serverCancellationToken;
 
-  public ServerListener(ServerSocket serverSocket) {
+  public ServerListener(ServerSocket serverSocket, CancellationToken serverCancellationToken) {
     this.serverSocket = serverSocket;
+    this.serverCancellationToken = serverCancellationToken;
   }
 
   public void runner() throws Exception {
-    System.out.println("Listening for connection on port 4444");
-    boolean listening = true;
-    while (listening) {
+    while (serverCancellationToken.isListening()) {
       Socket clientSocket = serverSocket.accept();
       ServerSocketConnection serverSocketConnection = new ServerSocketConnection(clientSocket);
       ServerProcessor serverProcessor = new ServerProcessor(serverSocketConnection);
       serverProcessor.execute();
     }
-    serverSocket.close();
   }
 }
 
