@@ -4,10 +4,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ServerListener {
-  private ServerSocket serverSocket;
+  private ConnectionManager serverSocket;
   private CancellationToken serverCancellationToken;
 
-  public ServerListener(ServerSocket serverSocket, CancellationToken serverCancellationToken) {
+  public ServerListener(ConnectionManager serverSocket, CancellationToken serverCancellationToken) {
     this.serverSocket = serverSocket;
     this.serverCancellationToken = serverCancellationToken;
   }

@@ -8,3 +8,4 @@ public interface Connection {
   public InputStream in() throws IOException;
   public OutputStream out() throws IOException;
 }
+
