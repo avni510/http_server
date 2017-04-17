@@ -8,7 +8,8 @@ public class HTTPServer {
     ServerSocket serverSocket = new ServerSocket(4444);
     ConnectionManager server = new Server (serverSocket);
     ServerCancellationToken serverCancellationToken = new ServerCancellationToken();
-    ServerListener serverListener = new ServerListener(server, serverCancellationToken);
+    Processor serverPrcoessor = new ServerProcessor();
+    ServerListener serverListener = new ServerListener(server, serverCancellationToken, serverPrcoessor);
     serverListener.runner();
   }
 }

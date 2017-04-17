@@ -4,14 +4,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 
-public class ServerProcessor {
+public class ServerProcessor implements Processor {
   private Connection clientConnection;
 
-  public ServerProcessor(Connection clientConnection) {
+  public void execute(Connection clientConnection) throws Exception {
     this.clientConnection = clientConnection;
-  }
-
-  public void execute() throws Exception {
     BufferedReader in = read();
     logRequest(in);
     String response = "HTTP/1.1 200 OK\r\n\r\n" + "hello world";

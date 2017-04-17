@@ -8,10 +8,22 @@ public class ServerListenerTest {
 
   @Test
   public void theServerStopsListening() throws Exception {
-    ConnectionManager mockServerSocket = new MockServer();
+    ConnectionManager mockServer = new MockServer();
     CancellationToken mockServerCancellationToken = new MockServerCancellationToken();
-    ServerListener serverListener = new ServerListener(mockServerSocket, mockServerCancellationToken);
+    Processor mockProcessor = new MockProcessor();
+    ServerListener serverListener = new ServerListener(mockServer, mockServerCancellationToken, mockProcessor);
     serverListener.runner();
     assertEquals(false, mockServerCancellationToken.isListening());
   }
+
+//  @Test
+//  public void executeWasCalledWithASocket throws Exception {
+//    ConnectionManager mockServer = new MockServer();
+//    CancellationToken mockServerCancellationToken = new MockServerCancellationToken();
+//    Processor mockProcessor = new MockProcessor();
+//    ServerListener serverListener = new ServerListener(mockServer, mockServerCancellationToken, mockProcessor);
+//    serverListener.runner();
+//    MockServerSocketConnection mockServerSocketConnection = new MockServerSocketConnection(mockServer.accept());
+//    assertEquals(true, mockProcessor.executeWasCalledWith(mockServerSocketConnection));
+//  }
 }
