@@ -1,6 +1,7 @@
 package http_server;
 
 import java.net.ServerSocket;
+import java.net.Socket;
 
 public class HTTPServer {
 
@@ -8,8 +9,10 @@ public class HTTPServer {
     ServerSocket serverSocket = new ServerSocket(4444);
     ConnectionManager server = new Server (serverSocket);
     ServerCancellationToken serverCancellationToken = new ServerCancellationToken();
-    Processor serverPrcoessor = new ServerProcessor();
-    ServerListener serverListener = new ServerListener(server, serverCancellationToken, serverPrcoessor);
+    Processor serverProcessor = new ServerProcessor();
+    Socket clientSocket = server.accept();
+    ServerSocketConnection serverSocketConnection = new ServerSocketConnection(clientSocket) ;
+    ServerListener serverListener = new ServerListener(serverSocketConnection, serverCancellationToken, serverProcessor);
     serverListener.runner();
   }
 }

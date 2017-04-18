@@ -2,6 +2,7 @@ package http_server;
 
 import java.io.*;
 
+import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 import java.util.ArrayList;
@@ -10,6 +11,10 @@ import java.util.List;
 public class MockServerSocketConnection implements Connection {
   private List<Byte> storedOutputData = new ArrayList<>();
   private byte[] storedInputData;
+
+  public MockServerSocketConnection(Socket clientConnection) {
+  }
+
 
   public InputStream in() throws IOException {
     return new ByteArrayInputStream(storedInputData);

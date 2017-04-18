@@ -17,7 +17,7 @@ public class ServerSocketConnectionTest {
   private ServerSocketConnection serverSocketConnection;
 
   @Before
-  public void setUp(){
+  public void setUp() {
     inputStream = new ByteArrayInputStream("".getBytes());
     outputStream = new ByteArrayOutputStream();
     Socket clientSocket = new MockSocket(inputStream, outputStream);
