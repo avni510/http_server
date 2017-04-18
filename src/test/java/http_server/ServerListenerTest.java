@@ -1,6 +1,5 @@
 package http_server;
 
-import com.sun.xml.internal.ws.org.objectweb.asm.ByteVector;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -17,10 +16,10 @@ public class ServerListenerTest {
   }
 
 //  @Test
-//  public void executeWasCalledWithASocket throws Exception {
+//  public void executeWasCalledWithASocket() throws Exception {
 //    ConnectionManager mockServer = new MockServer();
 //    CancellationToken mockServerCancellationToken = new MockServerCancellationToken();
-//    Processor mockProcessor = new MockProcessor();
+//    MockProcessor mockProcessor = new MockProcessor();
 //    ServerListener serverListener = new ServerListener(mockServer, mockServerCancellationToken, mockProcessor);
 //    serverListener.runner();
 //    MockServerSocketConnection mockServerSocketConnection = new MockServerSocketConnection(mockServer.accept());
