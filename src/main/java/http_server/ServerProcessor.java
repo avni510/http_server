@@ -14,7 +14,13 @@ public class ServerProcessor implements Processor {
     StringBuilder http_request = buildHttpRequest(in);
     Request request = new Request(http_request.toString());
     if (Objects.equals(request.getRequestMethod(), "GET") && Objects.equals(request.getUri(), "/")){
-      String response = "HTTP/1.1 200 OK\r\n\r\n" + "hello world";
+      HelloWorldResponse helloWorldResponse = new HelloWorldResponse();
+      byte [] response = helloWorldResponse.generate();
+      write(response);
+    }
+    else if (Objects.equals(request.getRequestMethod(), "GET") && Objects.equals(request.getUri(), "/code")) {
+      DirectoryResponse directoryResponse = new DirectoryResponse("/Users/avnikothari/Desktop/resident_apprenticeship/java/http_server/code/");
+      byte [] response = directoryResponse.generate();
       write(response);
     }
     clientConnection.out().close();
@@ -33,7 +39,7 @@ public class ServerProcessor implements Processor {
     return http_request;
   }
 
-  private void write(String response) throws Exception{
-    clientConnection.out().write(response.getBytes("UTF-8"));
+  private void write(byte[] response) throws Exception{
+    clientConnection.out().write(response);
   }
 }

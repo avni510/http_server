@@ -10,6 +10,7 @@ public class HelloWorldResponse implements Response{
     ResponseBuilder responseBuilder = new ResponseBuilder();
     Map<String, String> header = new HashMap<>();
     header.put("Content-Type", "text/plain");
-    return responseBuilder.run(200, header, "hello world");
+    String body = "hello world";
+    return responseBuilder.run(200, header, body);
   }
 }

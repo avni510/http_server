@@ -8,6 +8,15 @@ import java.io.ByteArrayOutputStream;
 
 public class ServerProcessorTest {
 
+  public String getHtmlBody() {
+   return  "<li> <a href=/Users/avnikothari/Desktop/resident_apprenticeship/java/http_server/code/result.txt>" +
+           "result.txt</a></li>" +
+           "<li> <a href=/Users/avnikothari/Desktop/resident_apprenticeship/java/http_server/code/validation.txt>" +
+           "validation.txt</a></li>" +
+           "<li> <a href=/Users/avnikothari/Desktop/resident_apprenticeship/java/http_server/code/log_time_entry.txt>" +
+           "log_time_entry.txt</a></li>";
+  }
+
   @Test
   public void sendsHelloWorld() throws Exception {
     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("GET / HTTP/1.1\r\nHost: localhost\r\n\r\n".getBytes());
@@ -17,6 +26,19 @@ public class ServerProcessorTest {
     mockServerSocketConnection.setStoredInputData("GET / HTTP/1.1\r\nHost: localhost\r\n\r\n");
     ServerProcessor serverProcessor = new ServerProcessor();
     serverProcessor.execute(mockServerSocketConnection);
-    assertEquals("HTTP/1.1 200 OK\r\n\r\n" + "hello world", mockServerSocketConnection.getStoredOutputData());
+    assertEquals("HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\n" + "hello world", mockServerSocketConnection.getStoredOutputData());
+  }
+
+
+  @Test
+  public void sendsHtmlOfFilesInDirectory() throws Exception {
+    ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("GET /code HTTP/1.1\r\nHost: localhost\r\n\r\n".getBytes());
+    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    MockSocket mockSocket = new MockSocket(byteArrayInputStream, byteArrayOutputStream);
+    MockServerSocketConnection mockServerSocketConnection = new MockServerSocketConnection(mockSocket);
+    mockServerSocketConnection.setStoredInputData("GET /code HTTP/1.1\r\nHost: localhost\r\n\r\n");
+    ServerProcessor serverProcessor = new ServerProcessor();
+    serverProcessor.execute(mockServerSocketConnection);
+    assertEquals("HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n" + getHtmlBody(), mockServerSocketConnection.getStoredOutputData());
   }
 }

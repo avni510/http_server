@@ -2,14 +2,14 @@ package http_server;
 
 import java.io.File;
 
-public class FilePath {
+public class FileHelper {
   private File rootDirectory;
 
-  public FilePath(String rootDirectoryPath) {
+  public FileHelper(String rootDirectoryPath) {
     this.rootDirectory = new File(rootDirectoryPath);
   }
 
-  public File[] getFilePaths() {
+  public File[] getFilesInDirectory() {
     return rootDirectory.listFiles();
   }
 }

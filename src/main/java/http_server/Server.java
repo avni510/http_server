@@ -11,7 +11,8 @@ public class Server implements ConnectionManager {
     this.serverSocket = serverSocket;
   }
 
-  public Socket accept() throws IOException {
-    return serverSocket.accept();
+  public Connection accept() throws IOException {
+    Socket clientSocket = serverSocket.accept();
+    return new ServerSocketConnection(clientSocket);
   }
 }

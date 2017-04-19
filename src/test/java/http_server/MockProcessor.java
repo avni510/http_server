@@ -1,13 +1,16 @@
 package http_server;
 
 public class MockProcessor implements Processor {
-  private Connection clientConnection;
+  public Connection clientConnection;
 
-  public void execute(Connection clientConnection) throws Exception {
+  public MockProcessor(Connection clientConnection) {
     this.clientConnection = clientConnection;
   }
 
-  public boolean executeWasCalledWith(MockServerSocketConnection mockServerSocketConnection) {
-    return clientConnection == mockServerSocketConnection;
+  public void execute(Connection clientConnection) throws Exception {
+  }
+
+  public boolean executeWasCalledWith(Connection mockServerSocketConnection) {
+    return clientConnection.getClass().equals(mockServerSocketConnection.getClass());
   }
 }

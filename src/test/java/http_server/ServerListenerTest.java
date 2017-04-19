@@ -10,16 +10,15 @@ import static org.junit.Assert.*;
 public class ServerListenerTest {
   private MockServerCancellationToken mockServerCancellationToken;
   private MockProcessor mockProcessor;
-  private MockServerSocketConnection mockServerSocketConnection;
+  private Connection mockServerSocketConnection;
 
   @Before
   public void setUp() throws Exception {
-    ConnectionManager mockServer = new MockServer();
-    Socket clientConnection = mockServer.accept();
-    mockServerSocketConnection = new MockServerSocketConnection(clientConnection);
+    MockServer mockServer = new MockServer();
+    mockServerSocketConnection = mockServer.accept();
     mockServerCancellationToken = new MockServerCancellationToken();
-    mockProcessor = new MockProcessor();
-    ServerListener serverListener = new ServerListener(mockServerSocketConnection, mockServerCancellationToken, mockProcessor);
+    mockProcessor = mockServer.getProcessor();
+    ServerListener serverListener = new ServerListener(mockServer, mockServerCancellationToken, mockProcessor);
     serverListener.runner();
   }
 
@@ -30,7 +29,6 @@ public class ServerListenerTest {
 
   @Test
   public void executeWasCalledWithASocket() throws Exception {
-    MockServer mockServer = new MockServer();
     assertEquals(true, mockProcessor.executeWasCalledWith(mockServerSocketConnection));
   }
 }
