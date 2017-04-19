@@ -3,6 +3,7 @@ package http_server;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
+import java.util.Objects;
 
 public class ServerProcessor implements Processor {
   private Connection clientConnection;
@@ -10,9 +11,12 @@ public class ServerProcessor implements Processor {
   public void execute(Connection clientConnection) throws Exception {
     this.clientConnection = clientConnection;
     BufferedReader in = read();
-    logRequest(in);
-    String response = "HTTP/1.1 200 OK\r\n\r\n" + "hello world";
-    write(response);
+    StringBuilder http_request = buildHttpRequest(in);
+    Request request = new Request(http_request.toString());
+    if (Objects.equals(request.getRequestMethod(), "GET") && Objects.equals(request.getUri(), "/")){
+      String response = "HTTP/1.1 200 OK\r\n\r\n" + "hello world";
+      write(response);
+    }
     clientConnection.out().close();
   }
 
@@ -20,11 +24,13 @@ public class ServerProcessor implements Processor {
    return new BufferedReader(new InputStreamReader(clientConnection.in()));
   }
 
-  private void logRequest(BufferedReader in) throws IOException {
+  private StringBuilder buildHttpRequest(BufferedReader in) throws IOException {
+    StringBuilder http_request = new StringBuilder();
     String line;
     while ((line = in.readLine()) != null && !line.isEmpty()) {
-      System.out.println(line);
+      http_request.append(line + "\r\n");
     }
+    return http_request;
   }
 
   private void write(String response) throws Exception{

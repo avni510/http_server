@@ -17,6 +17,6 @@ public class ServerProcessorTest {
     mockServerSocketConnection.setStoredInputData("GET / HTTP/1.1\r\nHost: localhost\r\n\r\n");
     ServerProcessor serverProcessor = new ServerProcessor();
     serverProcessor.execute(mockServerSocketConnection);
-    assertEquals(mockServerSocketConnection.getStoredOutputData(), "HTTP/1.1 200 OK\r\n\r\n" + "hello world");
+    assertEquals("HTTP/1.1 200 OK\r\n\r\n" + "hello world", mockServerSocketConnection.getStoredOutputData());
   }
 }

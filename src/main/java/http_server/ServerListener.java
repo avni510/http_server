@@ -4,7 +4,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ServerListener {
-  private ConnectionManager server;
   private CancellationToken serverCancellationToken;
   private Processor serverProcessor;
   private Connection serverSocketConnection;

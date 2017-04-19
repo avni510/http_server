@@ -34,6 +34,8 @@ Start the server
 $ java -jar build/libs/http_server.jar
 ```
 
+`CTRL+C` to quit the server
+
 The server will listen on port 4444
 
 Run the Tests

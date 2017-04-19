@@ -3,7 +3,6 @@ package http_server;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.net.Socket;
 
 import static org.junit.Assert.*;

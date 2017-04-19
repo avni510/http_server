@@ -4,7 +4,6 @@ public class MockProcessor implements Processor {
   private Connection clientConnection;
 
   public void execute(Connection clientConnection) throws Exception {
-    System.out.println(clientConnection);
     this.clientConnection = clientConnection;
   }
 

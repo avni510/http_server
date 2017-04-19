@@ -22,4 +22,3 @@ public class ServerSocketConnection implements Connection {
     return clientSocket.getOutputStream();
   }
 }
-
