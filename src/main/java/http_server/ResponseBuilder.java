@@ -19,6 +19,12 @@ public class ResponseBuilder {
     return response.getBytes(characterSet);
   }
 
+  public byte[] run(Integer statusCode) throws UnsupportedEncodingException {
+    String statusCodeMessage = retrieveStatusCode(statusCode);
+    String response = httpVersion + " " + statusCodeMessage + CLRF + CLRF;
+    return response.getBytes(characterSet);
+  }
+
 
   public String retrieveStatusCode(Integer statusCode) {
     Map<Integer, String> allStatusCodes = new HashMap<>();
@@ -45,4 +51,5 @@ public class ResponseBuilder {
     }
     return mergedHeader.toString();
   }
+
 }
