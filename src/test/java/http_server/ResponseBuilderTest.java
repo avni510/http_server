@@ -55,4 +55,13 @@ public class ResponseBuilderTest {
 
     assertEquals(true, Arrays.equals(expectedResponseBytes, actualResponseBytes));
   }
+
+  @Test
+  public void test404ErrorIsReturned() throws UnsupportedEncodingException {
+   byte[] expectedResponseBytes = "HTTP/1.1 404 Not Found\r\n\r\n".getBytes();
+
+   byte[] actualResponseBytes = responseBuilder.run(404);
+
+   assertEquals(true, Arrays.equals(expectedResponseBytes, actualResponseBytes));
+  }
 }

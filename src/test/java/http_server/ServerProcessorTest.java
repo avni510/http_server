@@ -9,11 +9,11 @@ import java.io.ByteArrayOutputStream;
 public class ServerProcessorTest {
 
   public String getHtmlBody() {
-   return  "<li> <a href=/Users/avnikothari/Desktop/resident_apprenticeship/java/http_server/code/result.txt>" +
+   return  "<li> <a href=/code/result.txt>" +
            "result.txt</a></li>" +
-           "<li> <a href=/Users/avnikothari/Desktop/resident_apprenticeship/java/http_server/code/validation.txt>" +
+           "<li> <a href=/code/validation.txt>" +
            "validation.txt</a></li>" +
-           "<li> <a href=/Users/avnikothari/Desktop/resident_apprenticeship/java/http_server/code/log_time_entry.txt>" +
+           "<li> <a href=/code/log_time_entry.txt>" +
            "log_time_entry.txt</a></li>";
   }
 

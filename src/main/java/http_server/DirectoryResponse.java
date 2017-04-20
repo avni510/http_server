@@ -3,7 +3,6 @@ package http_server;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class DirectoryResponse implements Response {
@@ -31,9 +30,7 @@ public class DirectoryResponse implements Response {
   }
 
   private Map<String, String> setFileInformation(){
-    FileHelper fileHelper = new FileHelper(rootDirectoryPath);
-    File[] filesUnderRootDirectory = fileHelper.getFilesInDirectory();
-    FilePresenter filePresenter = new FilePresenter();
-    return filePresenter.getFileInformation(filesUnderRootDirectory);
+    FileManager fileManager = new FileManager();
+    return fileManager.getNameAndRelativePath(rootDirectoryPath);
   }
 }
