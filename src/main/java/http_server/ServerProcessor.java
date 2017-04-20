@@ -1,5 +1,6 @@
 package http_server;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
@@ -17,12 +18,19 @@ public class ServerProcessor implements Processor {
       HelloWorldResponse helloWorldResponse = new HelloWorldResponse();
       byte [] response = helloWorldResponse.generate();
       write(response);
-    }
-    else if (Objects.equals(request.getRequestMethod(), "GET") && Objects.equals(request.getUri(), "/code")) {
-      DirectoryResponse directoryResponse = new DirectoryResponse("/Users/avnikothari/Desktop/resident_apprenticeship/java/http_server/code/");
+    } else if (Objects.equals(request.getRequestMethod(), "GET") && Objects.equals(request.getUri(), "/code")) {
+      DirectoryResponse directoryResponse = new DirectoryResponse("/Users/avnikothari/Desktop/resident_apprenticeship/java/http_server/code");
       byte [] response = directoryResponse.generate();
       write(response);
     }
+//    else if (Objects.equals(request.getRequestMethod(), "GET") && Objects.equals(request.getUri(), "/code/result.txt")) {
+//      FileManager fileManager = new FileManager();
+//      String filePath = fileManager.getAbsolutePath(request.getUri(),"/Users/avnikothari/Desktop/resident_apprenticeship/java/http_server/code");
+//      FileReaderResponse fileReaderResponse = new FileReaderResponse(filePath);
+//      byte[] response = fileReaderResponse.generate();
+//      write(response);
+//    }
+
     clientConnection.out().close();
   }
 

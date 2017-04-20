@@ -30,9 +30,7 @@ public class DirectoryResponse implements Response {
   }
 
   private Map<String, String> setFileInformation(){
-    FileHelper fileHelper = new FileHelper(rootDirectoryPath);
-    File[] filesUnderRootDirectory = fileHelper.getFilesInDirectory();
-    FilePresenter filePresenter = new FilePresenter();
-    return filePresenter.getFileInformation(filesUnderRootDirectory);
+    FileManager fileManager = new FileManager();
+    return fileManager.getNameAndRelativePath(rootDirectoryPath);
   }
 }
