@@ -1,35 +1,80 @@
 package http_server;
 
-import static org.junit.Assert.*;
-
-import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import static org.junit.Assert.*;
+
 public class RequestTest {
-  private Request request;
 
-  @Before
-  public void setup() {
-    request = new Request("GET / HTTP/1.1\r\nHost: localhost\r\n\r\n");
+  @Test
+  public void testRequestMethodIsReturned(){
+    Request requestNew = new RequestBuilder()
+                                .setRequestMethod(RequestMethod.GET)
+                                .setUri("/")
+                                .setHttpVersion("HTTP/1.1")
+                                .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+                                .setBody("hello world")
+                                .build();
+
+    assertEquals(requestNew.getRequestMethod(), RequestMethod.GET);
   }
 
   @Test
-  public void testRequestIsReturned() {
-    assertEquals("GET", request.getRequestMethod());
+  public void testUriIsReturned(){
+    Request requestNew = new RequestBuilder()
+        .setRequestMethod(RequestMethod.GET)
+        .setUri("/")
+        .setHttpVersion("HTTP/1.1")
+        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .setBody("hello world")
+        .build();
+
+    assertEquals(requestNew.getUri(), "/");
   }
 
   @Test
-  public void testUriIsReturned() {
-    assertEquals("/", request.getUri());
+  public void testHttpVersionIsReturned(){
+    Request requestNew = new RequestBuilder()
+        .setRequestMethod(RequestMethod.GET)
+        .setUri("/")
+        .setHttpVersion("HTTP/1.1")
+        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .setBody("hello world")
+        .build();
+
+    assertEquals(requestNew.getHttpVersion(), "HTTP/1.1");
   }
 
   @Test
-  public void testHttpVersionIsReturned() {
-    assertEquals("HTTP/1.1", request.getHttpVersion());
+  public void testHeaderIsReturned(){
+    Request requestNew = new RequestBuilder()
+        .setRequestMethod(RequestMethod.GET)
+        .setUri("/")
+        .setHttpVersion("HTTP/1.1")
+        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost", "Content-Type: text/plain")))
+        .setBody("hello world")
+        .build();
+
+    ArrayList<String> actualResult = requestNew.getHeader();
+    ArrayList<String> expectedResult = new ArrayList<>();
+    expectedResult.add("Host: localhost");
+    expectedResult.add("Content-Type: text/plain");
+    assertTrue(actualResult.equals(expectedResult));
   }
 
   @Test
-  public void testHostNameIsReturned() {
-    assertEquals("localhost", request.getHostName());
+  public void testBodyIsReturned(){
+    Request requestNew = new RequestBuilder()
+        .setRequestMethod(RequestMethod.GET)
+        .setUri("/")
+        .setHttpVersion("HTTP/1.1")
+        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .setBody("hello world")
+        .build();
+
+    assertEquals(requestNew.getBody(), "hello world");
   }
 }
