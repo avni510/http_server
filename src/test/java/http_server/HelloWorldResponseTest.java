@@ -14,6 +14,6 @@ public class HelloWorldResponseTest {
     HelloWorldResponse helloWorldResponse = new HelloWorldResponse();
     String expectedResponse = "HTTP/1.1 200 OK\r\n" + "Content-Type: text/plain\r\n\r\n"+ "hello world";
     byte[] expectedResponseBytes = expectedResponse.getBytes("UTF-8");
-    assertEquals(true, Arrays.equals(expectedResponseBytes, helloWorldResponse.generate()));
+    assertTrue(Arrays.equals(expectedResponseBytes, helloWorldResponse.generate()));
   }
 }

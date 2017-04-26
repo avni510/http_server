@@ -19,7 +19,7 @@ public class RequestTest {
                                 .setBody("hello world")
                                 .build();
 
-    assertEquals(requestNew.getRequestMethod(), RequestMethod.GET);
+    assertEquals(RequestMethod.GET, requestNew.getRequestMethod());
   }
 
   @Test
@@ -32,7 +32,7 @@ public class RequestTest {
         .setBody("hello world")
         .build();
 
-    assertEquals(requestNew.getUri(), "/");
+    assertEquals("/", requestNew.getUri());
   }
 
   @Test
@@ -45,7 +45,7 @@ public class RequestTest {
         .setBody("hello world")
         .build();
 
-    assertEquals(requestNew.getHttpVersion(), "HTTP/1.1");
+    assertEquals("HTTP/1.1", requestNew.getHttpVersion());
   }
 
   @Test
@@ -75,6 +75,6 @@ public class RequestTest {
         .setBody("hello world")
         .build();
 
-    assertEquals(requestNew.getBody(), "hello world");
+    assertEquals("hello world", requestNew.getBody());
   }
 }

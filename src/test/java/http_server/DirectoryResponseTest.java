@@ -27,6 +27,6 @@ public class DirectoryResponseTest {
 
    byte[] actualResponse = directoryResponse.generate();
 
-   assertEquals(true, Arrays.equals(expectedResponse, actualResponse));
+   assertTrue(Arrays.equals(expectedResponse, actualResponse));
   }
 }

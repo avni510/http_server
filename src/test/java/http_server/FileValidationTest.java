@@ -12,7 +12,7 @@ public class FileValidationTest {
     String rootDirectoryPath = "/Users/avnikothari/Desktop/resident_apprenticeship/java/http_server/code";
     String requestUri = "/code/result.txt";
     boolean actualResult = fileValidation.hasRelativePath(rootDirectoryPath, requestUri);
-    assertEquals(true, actualResult);
+    assertTrue(actualResult);
   }
 
   @Test
@@ -21,6 +21,6 @@ public class FileValidationTest {
     String rootDirectoryPath = "/Users/avnikothari/Desktop/resident_apprenticeship/java/http_server/code";
     String requestUri = "/code/time_logger.txt";
     boolean actualResult = fileValidation.hasRelativePath(rootDirectoryPath, requestUri);
-    assertEquals(false, actualResult);
+    assertFalse(actualResult);
   }
 }

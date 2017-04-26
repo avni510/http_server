@@ -19,10 +19,10 @@ public class RequestBuilderTest {
         .setBody("hello world")
         .build();
 
-    assertEquals(actualResult.getRequestMethod(), RequestMethod.GET);
-    assertEquals(actualResult.getUri(), "/");
-    assertEquals(actualResult.getHttpVersion(),"HTTP/1.1");
-    assertEquals(actualResult.getHeader(),new ArrayList<>(Arrays.asList("Host: localhost")));
-    assertEquals(actualResult.getBody(),"hello world");
+    assertEquals(RequestMethod.GET, actualResult.getRequestMethod());
+    assertEquals("/", actualResult.getUri());
+    assertEquals("HTTP/1.1", actualResult.getHttpVersion());
+    assertEquals(new ArrayList<>(Arrays.asList("Host: localhost")), actualResult.getHeader());
+    assertEquals("hello world", actualResult.getBody());
   }
 }
