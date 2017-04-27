@@ -17,7 +17,7 @@ public class ResponseTest {
         .setHttpVersion("HTTP/1.1")
         .setStatusCode(200)
         .setHeaders(headers)
-        .setbody("hello world")
+        .setBody("hello world")
         .build();
 
     String expectedHttpResponse = "HTTP/1.1 200 OK\r\n" + "Content-Type: text/plain\r\n\r\n"+ "hello world";
@@ -30,7 +30,7 @@ public class ResponseTest {
         .setHttpVersion("HTTP/1.1")
         .setStatusCode(404)
         .setHeaders(null)
-        .setbody(null)
+        .setBody(null)
         .build();
 
     String expectedHttpResponse = "HTTP/1.1 404 Not Found\r\n\r\n";

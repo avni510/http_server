@@ -1,14 +1,13 @@
 package http_server;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DirectoryResponse implements Handler {
+public class DirectoryHandler implements Handler {
   private String rootDirectoryPath;
 
-  public DirectoryResponse(String rootDirectoryPath) {
+  public DirectoryHandler(String rootDirectoryPath) {
     this.rootDirectoryPath = rootDirectoryPath;
   }
 
@@ -19,7 +18,7 @@ public class DirectoryResponse implements Handler {
         .setHttpVersion("HTTP/1.1")
         .setStatusCode(200)
         .setHeaders(header)
-        .setbody(getBody())
+        .setBody(getBody())
         .build();
     return response.getHttpResponse();
   }

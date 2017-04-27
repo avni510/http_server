@@ -9,10 +9,10 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FileReaderResponse implements Handler{
+public class FileReaderHandler implements Handler{
   String filePath;
 
-  public FileReaderResponse(String filePath) {
+  public FileReaderHandler(String filePath) {
     this.filePath = filePath;
   }
 
@@ -23,7 +23,7 @@ public class FileReaderResponse implements Handler{
         .setHttpVersion("HTTP/1.1")
         .setStatusCode(200)
         .setHeaders(header)
-        .setbody(getBody())
+        .setBody(getBody())
         .build();
     return response.getHttpResponse();
   }

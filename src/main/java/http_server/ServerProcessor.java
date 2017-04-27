@@ -16,12 +16,12 @@ public class ServerProcessor implements Processor {
     RequestParser requestParser = new RequestParser(optimizedInputStream);
     Request request = requestParser.parse();
     if (Objects.equals(request.getRequestMethod(), RequestMethod.GET) && Objects.equals(request.getUri(), "/")){
-      HelloWorldResponse helloWorldResponse = new HelloWorldResponse();
-      String response = helloWorldResponse.generate();
+      HelloWorldHandler helloWorldHandler = new HelloWorldHandler();
+      String response = helloWorldHandler.generate();
       write(response);
     } else if (Objects.equals(request.getRequestMethod(), RequestMethod.GET) && Objects.equals(request.getUri(), "/code")) {
-      DirectoryResponse directoryResponse = new DirectoryResponse(rootPathDirectory);
-      String response = directoryResponse.generate();
+      DirectoryHandler directoryHandler = new DirectoryHandler(rootPathDirectory);
+      String response = directoryHandler.generate();
       write(response);
     } else { loadFileContents(request, rootPathDirectory); }
 
@@ -38,8 +38,8 @@ public class ServerProcessor implements Processor {
 
     if (Objects.equals(request.getRequestMethod(), RequestMethod.GET) && fileValidation.hasRelativePath(rootPathDirectory, request.getUri())) {
       String filePath = fileManager.getAbsolutePath(request.getUri(), rootPathDirectory);
-      FileReaderResponse fileReaderResponse = new FileReaderResponse(filePath);
-      String response = fileReaderResponse.generate();
+      FileReaderHandler fileReaderHandler = new FileReaderHandler(filePath);
+      String response = fileReaderHandler.generate();
       write(response);
     } else if(Objects.equals(request.getRequestMethod(), RequestMethod.GET) && !fileValidation.hasRelativePath(rootPathDirectory, request.getUri())) {
       Response response = new ResponseBuilder()

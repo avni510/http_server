@@ -3,17 +3,16 @@ package http_server;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
-public class HelloWorldResponseTest {
+public class HelloWorldHandlerTest {
 
   @Test
   public void testResponseIsReturned() throws UnsupportedEncodingException {
-    HelloWorldResponse helloWorldResponse = new HelloWorldResponse();
+    HelloWorldHandler helloWorldHandler = new HelloWorldHandler();
 
-    String actualResponse = helloWorldResponse.generate();
+    String actualResponse = helloWorldHandler.generate();
 
     String expectedResponse = "HTTP/1.1 200 OK\r\n" + "Content-Type: text/plain\r\n\r\n"+ "hello world";
     assertEquals(expectedResponse, actualResponse);

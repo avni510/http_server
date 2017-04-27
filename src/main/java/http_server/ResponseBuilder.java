@@ -34,7 +34,7 @@ public class ResponseBuilder {
     return this;
   }
 
-  public ResponseBuilder setbody(String body) {
+  public ResponseBuilder setBody(String body) {
     this.body = body;
     return this;
   }
