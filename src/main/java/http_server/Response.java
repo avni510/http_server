@@ -23,7 +23,7 @@ public class Response {
       return httpVersion + " " + statusCodeMessage + CLRF + CLRF;
     }
     String headerMessage = retrieveHeader(headers);
-    return httpVersion + " " + statusCodeMessage + CLRF + headerMessage + body + CLRF + CLRF;
+    return httpVersion + " " + statusCodeMessage + CLRF + headerMessage + CLRF + body;
   }
 
   public String retrieveHeader(Map<String, String> header) {

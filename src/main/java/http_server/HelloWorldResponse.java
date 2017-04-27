@@ -6,11 +6,15 @@ import java.util.Map;
 
 public class HelloWorldResponse implements Handler{
 
-  public byte[] generate() throws UnsupportedEncodingException {
-    ResponseBuilder responseBuilder = new ResponseBuilder();
-    Map<String, String> header = new HashMap<>();
+  public String generate() throws UnsupportedEncodingException {
+    Map<String, String> header = new HashMap();
     header.put("Content-Type", "text/plain");
-    String body = "hello world";
-    return responseBuilder.run(200, header, body);
+    Response response = new ResponseBuilder()
+        .setHttpVersion("HTTP/1.1")
+        .setStatusCode(200)
+        .setHeaders(header)
+        .setbody("hello world")
+        .build();
+    return response.getHttpResponse();
   }
 }

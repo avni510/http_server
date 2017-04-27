@@ -4,5 +4,5 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 public interface Handler {
-  public byte[] generate() throws IOException;
+  public String generate() throws IOException;
 }

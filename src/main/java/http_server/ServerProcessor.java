@@ -17,11 +17,11 @@ public class ServerProcessor implements Processor {
     Request request = requestParser.parse();
     if (Objects.equals(request.getRequestMethod(), RequestMethod.GET) && Objects.equals(request.getUri(), "/")){
       HelloWorldResponse helloWorldResponse = new HelloWorldResponse();
-      byte [] response = helloWorldResponse.generate();
+      String response = helloWorldResponse.generate();
       write(response);
     } else if (Objects.equals(request.getRequestMethod(), RequestMethod.GET) && Objects.equals(request.getUri(), "/code")) {
       DirectoryResponse directoryResponse = new DirectoryResponse(rootPathDirectory);
-      byte [] response = directoryResponse.generate();
+      String response = directoryResponse.generate();
       write(response);
     } else { loadFileContents(request, rootPathDirectory); }
 
@@ -39,16 +39,19 @@ public class ServerProcessor implements Processor {
     if (Objects.equals(request.getRequestMethod(), RequestMethod.GET) && fileValidation.hasRelativePath(rootPathDirectory, request.getUri())) {
       String filePath = fileManager.getAbsolutePath(request.getUri(), rootPathDirectory);
       FileReaderResponse fileReaderResponse = new FileReaderResponse(filePath);
-      byte[] response = fileReaderResponse.generate();
+      String response = fileReaderResponse.generate();
       write(response);
     } else if(Objects.equals(request.getRequestMethod(), RequestMethod.GET) && !fileValidation.hasRelativePath(rootPathDirectory, request.getUri())) {
-      ResponseBuilder responseBuilder = new ResponseBuilder();
-      byte[] response = responseBuilder.run(404);
-      write(response);
+      Response response = new ResponseBuilder()
+          .setHttpVersion("HTTP/1.1")
+          .setStatusCode(404)
+          .build();
+      String httpResponse = response.getHttpResponse();
+      write(httpResponse);
     }
   }
 
-  private void write(byte[] response) throws Exception{
-    clientConnection.out().write(response);
+  private void write(String response) throws Exception{
+    clientConnection.out().write(response.getBytes());
   }
 }

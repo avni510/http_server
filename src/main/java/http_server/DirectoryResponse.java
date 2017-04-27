@@ -12,12 +12,16 @@ public class DirectoryResponse implements Handler {
     this.rootDirectoryPath = rootDirectoryPath;
   }
 
-  public byte[] generate() throws UnsupportedEncodingException {
-    ResponseBuilder responseBuilder = new ResponseBuilder();
-    Map<String, String> header = new HashMap<>();
+  public String generate() throws UnsupportedEncodingException {
+    Map<String, String> header = new HashMap();
     header.put("Content-Type", "text/html");
-    String body = getBody();
-    return responseBuilder.run(200, header, body);
+    Response response = new ResponseBuilder()
+        .setHttpVersion("HTTP/1.1")
+        .setStatusCode(200)
+        .setHeaders(header)
+        .setbody(getBody())
+        .build();
+    return response.getHttpResponse();
   }
 
   private String getBody() {

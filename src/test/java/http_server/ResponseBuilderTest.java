@@ -1,66 +1,39 @@
 package http_server;
 
-import org.junit.Before;
 import org.junit.Test;
-import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.*;
 
 public class ResponseBuilderTest {
-  private ResponseBuilder responseBuilder;
 
-  @Before
-  public void setup() {
-    responseBuilder = new ResponseBuilder();
-  }
+  @Test
+  public void responseIsReturnedWithHeaderAndBody() {
+    Map<String, String> headers = new HashMap();
+    headers.put("Content-Type", "text/plain");
+    Response response = new ResponseBuilder()
+        .setHttpVersion("HTTP/1.1")
+        .setStatusCode(200)
+        .setHeaders(headers)
+        .setbody("hello world")
+        .build();
 
-  private byte[] createPlainTextResponse(String body) throws UnsupportedEncodingException {
-    String expectedResponse = "HTTP/1.1 200 OK\r\n" + "Content-Type: text/plain\r\n\r\n"+ body;
-    return expectedResponse.getBytes("UTF-8");
-  }
-
-  private byte[] createHtmlTextResponse(String body) throws UnsupportedEncodingException {
-    String expectedResponse = "HTTP/1.1 200 OK\r\n" + "Content-Type: text/html\r\n\r\n" + body;
-    return expectedResponse.getBytes("UTF-8");
-  }
-
-  private Map<String, String> populateOneHeader(String key, String value) {
-    Map<String, String> headers = new HashMap<>();
-    headers.put(key, value);
-    return headers;
+    String expectedHttpResponse = "HTTP/1.1 200 OK\r\n" + "Content-Type: text/plain\r\n\r\n"+ "hello world";
+    assertEquals(response.getHttpResponse(), expectedHttpResponse);
   }
 
   @Test
-  public void testPlainTextResponseIsReturned() throws UnsupportedEncodingException {
-    String body = "hello world";
-    byte[] expectedResponseBytes = createPlainTextResponse(body);
+  public void responseIsReturnedWithNoHeaderAndBody() {
+    Response response = new ResponseBuilder()
+        .setHttpVersion("HTTP/1.1")
+        .setStatusCode(200)
+        .setHeaders(null)
+        .setbody(null)
+        .build();
 
-    Map <String, String> header = populateOneHeader("Content-Type", "text/plain");
-    byte[] actualResponseBytes = responseBuilder.run(200, header, body);
-
-    assertTrue(Arrays.equals(expectedResponseBytes, actualResponseBytes));
-  }
-
-  @Test
-  public void testHtmlTextResponseIsReturned() throws UnsupportedEncodingException {
-    String body = "<!doctype html><html><head><title> <p> Hello World </p>";
-    byte[] expectedResponseBytes = createHtmlTextResponse(body);
-
-    Map <String, String> header = populateOneHeader("Content-Type", "text/html");
-    byte[] actualResponseBytes = responseBuilder.run(200, header, body);
-
-    assertEquals(true, Arrays.equals(expectedResponseBytes, actualResponseBytes));
-  }
-
-  @Test
-  public void test404ErrorIsReturned() throws UnsupportedEncodingException {
-   byte[] expectedResponseBytes = "HTTP/1.1 404 Not Found\r\n\r\n".getBytes();
-
-   byte[] actualResponseBytes = responseBuilder.run(404);
-
-   assertEquals(true, Arrays.equals(expectedResponseBytes, actualResponseBytes));
+    String expectedHttpResponse = "HTTP/1.1 200 OK\r\n\r\n";
+    assertEquals(response.getHttpResponse(), expectedHttpResponse);
   }
 }

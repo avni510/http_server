@@ -25,10 +25,9 @@ public class DirectoryResponseTest {
     String rootDirectory = System.getProperty("user.dir") + "/code";
     DirectoryResponse directoryResponse = new DirectoryResponse(rootDirectory);
 
-    byte[] actualResponse = directoryResponse.generate();
+    String actualResponse = directoryResponse.generate();
 
-    String request = "HTTP/1.1 200 OK\r\n" + "Content-Type: text/html\r\n\r\n";
-    byte[] expectedResponse = (request + getBody()).getBytes();
-    assertTrue(Arrays.equals(expectedResponse, actualResponse));
+    String expectedResponse = "HTTP/1.1 200 OK\r\n" + "Content-Type: text/html\r\n\r\n" + getBody();
+    assertEquals(expectedResponse, actualResponse);
   }
 }
