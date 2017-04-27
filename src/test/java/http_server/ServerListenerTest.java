@@ -24,11 +24,11 @@ public class ServerListenerTest {
 
   @Test
   public void theServerStopsListening() throws Exception {
-    assertEquals(false, mockServerCancellationToken.isListening());
+    assertFalse(mockServerCancellationToken.isListening());
   }
 
   @Test
   public void executeWasCalledWithASocket() throws Exception {
-    assertEquals(true, mockProcessor.executeWasCalledWith(mockServerSocketConnection));
+    assertTrue(mockProcessor.executeWasCalledWith(mockServerSocketConnection));
   }
 }

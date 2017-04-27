@@ -42,7 +42,7 @@ public class ResponseBuilderTest {
     Map <String, String> header = populateOneHeader("Content-Type", "text/plain");
     byte[] actualResponseBytes = responseBuilder.run(200, header, body);
 
-    assertEquals(true, Arrays.equals(expectedResponseBytes, actualResponseBytes));
+    assertTrue(Arrays.equals(expectedResponseBytes, actualResponseBytes));
   }
 
   @Test

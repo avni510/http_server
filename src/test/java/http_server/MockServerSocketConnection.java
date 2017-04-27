@@ -11,10 +11,11 @@ import java.util.List;
 public class MockServerSocketConnection implements Connection {
   private List<Byte> storedOutputData = new ArrayList<>();
   private byte[] storedInputData;
+  private Socket clientconnection;
 
   public MockServerSocketConnection(Socket clientConnection) {
+    this.clientconnection = clientConnection;
   }
-
 
   public InputStream in() throws IOException {
     return new ByteArrayInputStream(storedInputData);
