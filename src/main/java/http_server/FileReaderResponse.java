@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FileReaderResponse implements Response{
+public class FileReaderResponse implements Handler{
   String filePath;
 
   public FileReaderResponse(String filePath) {

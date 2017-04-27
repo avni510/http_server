@@ -4,7 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HelloWorldResponse implements Response{
+public class HelloWorldResponse implements Handler{
 
   public byte[] generate() throws UnsupportedEncodingException {
     ResponseBuilder responseBuilder = new ResponseBuilder();

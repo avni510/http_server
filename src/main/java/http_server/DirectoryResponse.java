@@ -5,7 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DirectoryResponse implements Response {
+public class DirectoryResponse implements Handler {
   private String rootDirectoryPath;
 
   public DirectoryResponse(String rootDirectoryPath) {
