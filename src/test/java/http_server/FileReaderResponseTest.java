@@ -12,9 +12,13 @@ public class FileReaderResponseTest {
 
   @Test
   public void testResponseIsReturned() throws IOException {
-    FileReaderResponse fileReaderResponse = new FileReaderResponse("/Users/avnikothari/Desktop/resident_apprenticeship/java/http_server/code/result.txt");
+    String pathToFile = System.getProperty("user.dir") + "/code/result.txt";
+    FileReaderResponse fileReaderResponse = new FileReaderResponse(pathToFile);
+
+    byte[] actualResponseBytes = fileReaderResponse.generate();
+
     String expectedResponse = "HTTP/1.1 200 OK\r\n" + "Content-Type: text/plain\r\n\r\n" + "module TimeLogger\nend\n";
     byte[] expectedResponseBytes = expectedResponse.getBytes("UTF-8");
-    assertTrue(Arrays.equals(expectedResponseBytes, fileReaderResponse.generate()));
+    assertTrue(Arrays.equals(actualResponseBytes, expectedResponseBytes));
   }
 }

@@ -22,11 +22,13 @@ public class DirectoryResponseTest {
 
   @Test
   public void testResponseIsReturned() throws UnsupportedEncodingException {
-   DirectoryResponse directoryResponse = new DirectoryResponse("/Users/avnikothari/Desktop/resident_apprenticeship/java/http_server/code");
-   byte[] expectedResponse = ("HTTP/1.1 200 OK\r\n" + "Content-Type: text/html\r\n\r\n"+ getBody()).getBytes();
+    String rootDirectory = System.getProperty("user.dir") + "/code";
+    DirectoryResponse directoryResponse = new DirectoryResponse(rootDirectory);
 
-   byte[] actualResponse = directoryResponse.generate();
+    byte[] actualResponse = directoryResponse.generate();
 
-   assertTrue(Arrays.equals(expectedResponse, actualResponse));
+    String request = "HTTP/1.1 200 OK\r\n" + "Content-Type: text/html\r\n\r\n";
+    byte[] expectedResponse = (request + getBody()).getBytes();
+    assertTrue(Arrays.equals(expectedResponse, actualResponse));
   }
 }

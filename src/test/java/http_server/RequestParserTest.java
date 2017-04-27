@@ -22,7 +22,8 @@ public class RequestParserTest {
     assertEquals(RequestMethod.GET, actualResult.getRequestMethod());
     assertEquals("/", actualResult.getUri());
     assertEquals( "HTTP/1.1", actualResult.getHttpVersion());
-    ArrayList<String> expectedHeader = new ArrayList<>(Arrays.asList("Host: localhost", "Content-Type: text/plain"));
+    ArrayList<String> expectedHeader = new ArrayList<>(Arrays.asList("Host: localhost",
+                                                                         "Content-Type: text/plain"));
     assertTrue(expectedHeader.equals(actualResult.getHeader()));
     assertEquals("hello world", actualResult.getBody());
   }

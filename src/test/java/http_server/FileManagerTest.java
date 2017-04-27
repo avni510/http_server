@@ -14,30 +14,30 @@ public class FileManagerTest {
 
   @Before
   public void setup() {
-    rootFilePath = "/Users/avnikothari/Desktop/resident_apprenticeship/java/http_server/code";
-    fileManager = new FileManager();
+    rootFilePath = System.getProperty("user.dir") + "/code";
   }
 
   @Test
   public void testFileNamesAndRelativePathsAreReturned() {
+    fileManager = new FileManager();
+
+    Map<String, String> actualNameAndRelativePath = fileManager.getNameAndRelativePath(rootFilePath);
+
     Map<String, String> expectedNameAndRelativePath = new HashMap();
     expectedNameAndRelativePath.put("log_time_entry.txt", "/code/log_time_entry.txt");
     expectedNameAndRelativePath.put("result.txt", "/code/result.txt");
     expectedNameAndRelativePath.put("validation.txt", "/code/validation.txt");
-
-    Map<String, String> actualNameAndRelativePath = fileManager.getNameAndRelativePath(rootFilePath);
-
     assertEquals(expectedNameAndRelativePath, actualNameAndRelativePath);
-
   }
 
   @Test
   public void testFileAbsolutePathsAreReturned() {
-    String expectedAbsolutePath = "/Users/avnikothari/Desktop/resident_apprenticeship/java/http_server/code/log_time_entry.txt";
+    fileManager = new FileManager();
 
     String relativePath = "/code/log_time_entry.txt";
     String actualAbsolutePath = fileManager.getAbsolutePath(relativePath, rootFilePath);
 
+    String expectedAbsolutePath = System.getProperty("user.dir") + "/code/log_time_entry.txt";
     assertEquals(expectedAbsolutePath, actualAbsolutePath);
   }
 }
