@@ -11,6 +11,6 @@ public class HTTPServer {
     ServerCancellationToken serverCancellationToken = new ServerCancellationToken();
     Processor serverProcessor = new ServerProcessor();
     ServerListener serverListener = new ServerListener(server, serverCancellationToken, serverProcessor);
-    serverListener.runner();
+    serverListener.run();
   }
 }

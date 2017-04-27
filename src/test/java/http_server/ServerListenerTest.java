@@ -35,7 +35,7 @@ public class ServerListenerTest {
   public void theServerStopsListening() throws Exception {
     ServerListener serverListener = new ServerListener(server, serverCancellationToken, processor);
 
-    serverListener.runner();
+    serverListener.run();
 
     assertFalse(serverCancellationToken.isListening());
   }
@@ -44,7 +44,7 @@ public class ServerListenerTest {
   public void executeWasCalledWithASocket() throws Exception {
     ServerListener serverListener = new ServerListener(server, serverCancellationToken, processor);
 
-    serverListener.runner();
+    serverListener.run();
 
     assertTrue(processor.executeWasCalledWith(serverSocketConnection));
   }

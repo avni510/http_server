@@ -14,7 +14,7 @@ public class ServerListener {
     this.serverProcessor = serverProcessor;
   }
 
-  public void runner() throws Exception {
+  public void run() throws Exception {
     while (serverCancellationToken.isListening()) {
       Connection serverSocketConnection = server.accept();
       serverProcessor.execute(serverSocketConnection);

@@ -3,11 +3,10 @@ package http_server;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
-public class DirectoryResponseTest {
+public class DirectoryHandlerTest {
 
   public String getBody() {
    String body =
@@ -23,12 +22,11 @@ public class DirectoryResponseTest {
   @Test
   public void testResponseIsReturned() throws UnsupportedEncodingException {
     String rootDirectory = System.getProperty("user.dir") + "/code";
-    DirectoryResponse directoryResponse = new DirectoryResponse(rootDirectory);
+    DirectoryHandler directoryResponse = new DirectoryHandler(rootDirectory);
 
-    byte[] actualResponse = directoryResponse.generate();
+    String actualResponse = directoryResponse.generate();
 
-    String request = "HTTP/1.1 200 OK\r\n" + "Content-Type: text/html\r\n\r\n";
-    byte[] expectedResponse = (request + getBody()).getBytes();
-    assertTrue(Arrays.equals(expectedResponse, actualResponse));
+    String expectedResponse = "HTTP/1.1 200 OK\r\n" + "Content-Type: text/html\r\n\r\n" + getBody();
+    assertEquals(expectedResponse, actualResponse);
   }
 }

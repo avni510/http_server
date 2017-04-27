@@ -7,10 +7,10 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class ResponseBuilderTest {
+public class ResponseTest {
 
   @Test
-  public void responseIsReturnedWithHeaderAndBody() {
+  public void httpResponseIstReturnedWithHeaderAndBody() {
     Map<String, String> headers = new HashMap();
     headers.put("Content-Type", "text/plain");
     Response response = new ResponseBuilder()
@@ -21,19 +21,19 @@ public class ResponseBuilderTest {
         .build();
 
     String expectedHttpResponse = "HTTP/1.1 200 OK\r\n" + "Content-Type: text/plain\r\n\r\n"+ "hello world";
-    assertEquals(response.getHttpResponse(), expectedHttpResponse);
+    assertEquals(expectedHttpResponse, response.getHttpResponse());
   }
 
   @Test
-  public void responseIsReturnedWithNoHeaderAndBody() {
+  public void httpResponseIstReturnedWithNoHeaderAndBody() {
     Response response = new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
-        .setStatusCode(200)
+        .setStatusCode(404)
         .setHeaders(null)
         .setBody(null)
         .build();
 
-    String expectedHttpResponse = "HTTP/1.1 200 OK\r\n\r\n";
-    assertEquals(response.getHttpResponse(), expectedHttpResponse);
+    String expectedHttpResponse = "HTTP/1.1 404 Not Found\r\n\r\n";
+    assertEquals(expectedHttpResponse, response.getHttpResponse());
   }
 }
