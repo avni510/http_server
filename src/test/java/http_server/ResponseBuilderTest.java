@@ -2,7 +2,6 @@ package http_server;
 
 import org.junit.Before;
 import org.junit.Test;
-
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.HashMap;

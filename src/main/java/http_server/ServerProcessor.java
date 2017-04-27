@@ -11,7 +11,7 @@ public class ServerProcessor implements Processor {
 
   public void execute(Connection clientConnection) throws Exception {
     this.clientConnection = clientConnection;
-    this.rootPathDirectory = "/Users/avnikothari/Desktop/resident_apprenticeship/java/http_server/code";
+    this.rootPathDirectory = System.getProperty("user.dir") + "/code";
     BufferedReader optimizedInputStream = read();
     RequestParser requestParser = new RequestParser(optimizedInputStream);
     Request request = requestParser.parse();
@@ -36,12 +36,12 @@ public class ServerProcessor implements Processor {
     FileManager fileManager = new FileManager();
     FileValidation fileValidation = new FileValidation(fileManager);
 
-    if (Objects.equals(request.getRequestMethod(), "GET") && fileValidation.hasRelativePath(rootPathDirectory, request.getUri())) {
+    if (Objects.equals(request.getRequestMethod(), RequestMethod.GET) && fileValidation.hasRelativePath(rootPathDirectory, request.getUri())) {
       String filePath = fileManager.getAbsolutePath(request.getUri(), rootPathDirectory);
       FileReaderResponse fileReaderResponse = new FileReaderResponse(filePath);
       byte[] response = fileReaderResponse.generate();
       write(response);
-    } else if(Objects.equals(request.getRequestMethod(), "GET") && !fileValidation.hasRelativePath(rootPathDirectory, request.getUri())) {
+    } else if(Objects.equals(request.getRequestMethod(), RequestMethod.GET) && !fileValidation.hasRelativePath(rootPathDirectory, request.getUri())) {
       ResponseBuilder responseBuilder = new ResponseBuilder();
       byte[] response = responseBuilder.run(404);
       write(response);
