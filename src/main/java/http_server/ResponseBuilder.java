@@ -17,6 +17,7 @@ public class ResponseBuilder {
     allStatusCodes.put(301, "301 Moved Permanently");
     allStatusCodes.put(302, "302 Moved Temporarily");
     allStatusCodes.put(500, "500 Server Error");
+    allStatusCodes.put(400, "400 Bad Request");
   }
 
   public ResponseBuilder setHttpVersion(String httpVersion) {

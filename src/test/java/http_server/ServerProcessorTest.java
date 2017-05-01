@@ -11,19 +11,6 @@ import java.net.Socket;
 
 public class ServerProcessorTest {
 
-  private String getHtmlBody() {
-   return  "<li> <a href=/code/result.txt>" +
-           "result.txt</a></li>" +
-           "<li> <a href=/code/validation.txt>" +
-           "validation.txt</a></li>" +
-           "<li> <a href=/code/log_time_entry.txt>" +
-           "log_time_entry.txt</a></li>";
-  }
-
-  private String setRequest(String path) {
-    return "GET " + path + " HTTP/1.1\r\nHost: localhost\r\n\r\n";
-  }
-
   private Socket createMockSocket(String request){
     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(request.getBytes());
     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -31,8 +18,8 @@ public class ServerProcessorTest {
   }
 
   @Test
-  public void sendsHelloWorld() throws Exception {
-    String request = setRequest("/");
+  public void responseIsWrittenOutForValidRequest() throws Exception {
+    String request = "GET / HTTP/1.1\r\nHost: localhost\r\n\r\n";
     Socket socket = createMockSocket(request);
     MockServerSocketConnection serverSocketConnection = new MockServerSocketConnection(socket);
     serverSocketConnection.setStoredInputData(request);
@@ -44,10 +31,9 @@ public class ServerProcessorTest {
     assertEquals(response, serverSocketConnection.getStoredOutputData());
   }
 
-
   @Test
-  public void sendsHtmlOfFilesInDirectory() throws Exception {
-    String request = setRequest("/code");
+  public void responseIsWrittenOutForInvalidRequest() throws Exception {
+    String request = "INVALID / HTTP/1.1\r\nHost: localhost\r\n\r\n";
     Socket socket = createMockSocket(request);
     MockServerSocketConnection serverSocketConnection = new MockServerSocketConnection(socket);
     serverSocketConnection.setStoredInputData(request);
@@ -55,7 +41,7 @@ public class ServerProcessorTest {
 
     serverProcessor.execute(serverSocketConnection);
 
-    String response = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n" + getHtmlBody();
+    String response = "HTTP/1.1 400 Bad Request\r\n\r\n";
     assertEquals(response, serverSocketConnection.getStoredOutputData());
   }
 }
