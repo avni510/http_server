@@ -31,11 +31,15 @@ public class ServerListenerTest {
     this.processor = new MockProcessor();
   }
 
+  private String getDirectoryPath(){
+   return  System.getProperty("user.dir", "/code");
+  }
+
   @Test
   public void theServerStopsListening() throws Exception {
     ServerListener serverListener = new ServerListener(server, serverCancellationToken, processor);
 
-    serverListener.run();
+    serverListener.run(getDirectoryPath());
 
     assertFalse(serverCancellationToken.isListening());
   }
@@ -44,7 +48,7 @@ public class ServerListenerTest {
   public void executeWasCalledWithASocket() throws Exception {
     ServerListener serverListener = new ServerListener(server, serverCancellationToken, processor);
 
-    serverListener.run();
+    serverListener.run(getDirectoryPath());
 
     assertTrue(processor.executeWasCalledWith(serverSocketConnection));
   }

@@ -11,10 +11,10 @@ public class ServerListener {
     this.serverProcessor = serverProcessor;
   }
 
-  public void run() throws Exception {
+  public void run(String directoryPath) throws Exception {
     while (serverCancellationToken.isListening()) {
       Connection serverSocketConnection = server.accept();
-      serverProcessor.execute(serverSocketConnection);
+      serverProcessor.execute(serverSocketConnection, directoryPath);
     }
   }
 }

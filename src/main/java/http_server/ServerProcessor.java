@@ -6,11 +6,10 @@ import java.io.BufferedReader;
 
 public class ServerProcessor implements Processor {
 
-  public void execute(Connection clientConnection) throws Exception {
-    String rootPathDirectory = System.getProperty("user.dir") + "/code";
+  public void execute(Connection clientConnection, String directoryPath) throws Exception {
     BufferedReader optimizedInputStream = read(clientConnection);
     Router router = new Router();
-    router.populateRoutes(rootPathDirectory);
+    router.populateRoutes(directoryPath);
     String httpResponse = router.generateHttpResponse(optimizedInputStream);
     write(clientConnection, httpResponse);
     clientConnection.out().close();
