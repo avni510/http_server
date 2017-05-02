@@ -5,13 +5,8 @@ import java.util.Map;
 
 public class ResponseBuilder {
   private String httpVersion;
-  private Map<Integer, String> allStatusCodes;
-  private String statusCodeMessage;
-  private Map<String, String> headers = null;
-  private String body = null;
-
-  public ResponseBuilder() {
-    this.allStatusCodes = new HashMap();
+  static Map<Integer, String> allStatusCodes = new HashMap<>();
+  static {
     allStatusCodes.put(200, "200 OK");
     allStatusCodes.put(404, "404 Not Found");
     allStatusCodes.put(301, "301 Moved Permanently");
@@ -19,6 +14,9 @@ public class ResponseBuilder {
     allStatusCodes.put(500, "500 Server Error");
     allStatusCodes.put(400, "400 Bad Request");
   }
+  private String statusCodeMessage;
+  private Map<String, String> headers = null;
+  private String body = null;
 
   public ResponseBuilder setHttpVersion(String httpVersion) {
     this.httpVersion = httpVersion;
@@ -26,7 +24,7 @@ public class ResponseBuilder {
   }
 
   public ResponseBuilder setStatusCode(Integer statusCode) {
-    this.statusCodeMessage = allStatusCodes.get(statusCode);
+    this.statusCodeMessage = ResponseBuilder.allStatusCodes.get(statusCode);
     return this;
   }
 

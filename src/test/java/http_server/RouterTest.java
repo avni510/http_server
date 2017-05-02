@@ -17,15 +17,18 @@ public class RouterTest {
         "log_time_entry.txt</a></li>";
   }
 
+  private BufferedReader getInputStream(String uri){
+    String httpRequest = "GET " + uri + " HTTP/1.1\r\nHost: localhost\r\n\r\n";
+    InputStream inputStream = new ByteArrayInputStream(httpRequest.getBytes());
+    return new BufferedReader(new InputStreamReader(inputStream));
+  }
+
   @Test
   public void helloWorldIsSentAsAResponse() throws Exception {
-    String httpRequest = "GET " + "/" + " HTTP/1.1\r\nHost: localhost\r\n\r\n";
-    InputStream inputStream = new ByteArrayInputStream(httpRequest.getBytes());
-    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-    Router router = new Router();
-    router.populateRoutes(System.getProperty("user.dir") + "/code");
+    BufferedReader bufferedReader = getInputStream("/");
+    Router.addRoute(RequestMethod.GET, "/", new HelloWorldHandler());
 
-    String actualResponse = router.generateHttpResponse(bufferedReader);
+    String actualResponse = Router.generateHttpResponse(bufferedReader);
 
     String expectedResponse = "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\n" + "hello world";
     assertEquals(expectedResponse, actualResponse);
@@ -33,13 +36,11 @@ public class RouterTest {
 
   @Test
   public void htmlOfFilesIsSentAsAResponse() throws Exception {
-    String httpRequest = "GET " + "/code" + " HTTP/1.1\r\nHost: localhost\r\n\r\n";
-    InputStream inputStream = new ByteArrayInputStream(httpRequest.getBytes());
-    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-    Router router = new Router();
-    router.populateRoutes(System.getProperty("user.dir") + "/code");
+    String rootDirectoryPath = System.getProperty("user.dir") + "/code";
+    BufferedReader bufferedReader = getInputStream("/code");
+    Router.addRoute(RequestMethod.GET, "/code", new DirectoryHandler(rootDirectoryPath));
 
-    String actualResponse = router.generateHttpResponse(bufferedReader);
+    String actualResponse = Router.generateHttpResponse(bufferedReader);
 
     String expectedResponse = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n" + getHtmlBody();
     assertEquals(expectedResponse, actualResponse);
@@ -47,13 +48,11 @@ public class RouterTest {
 
   @Test
   public void fileContentsAreSentAsAResponseForResultFile() throws Exception {
-    String httpRequest = "GET " + "/code/result.txt" + " HTTP/1.1\r\nHost: localhost\r\n\r\n";
-    InputStream inputStream = new ByteArrayInputStream(httpRequest.getBytes());
-    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-    Router router = new Router();
-    router.populateRoutes(System.getProperty("user.dir") + "/code");
+    String filePath = System.getProperty("user.dir") + "/code/result.txt";
+    BufferedReader bufferedReader = getInputStream("/code/result.txt");
+    Router.addRoute(RequestMethod.GET, "/code/result.txt", new FileReaderHandler(filePath));
 
-    String actualResponse = router.generateHttpResponse(bufferedReader);
+    String actualResponse = Router.generateHttpResponse(bufferedReader);
 
     String fileContents = "module TimeLogger\nend\n";
     String expectedResponse = "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\n" + fileContents;
@@ -62,13 +61,11 @@ public class RouterTest {
 
   @Test
   public void fileContentsAreSentAsAResponseForValidationFile() throws Exception {
-    String httpRequest = "GET " + "/code/validation.txt" + " HTTP/1.1\r\nHost: localhost\r\n\r\n";
-    InputStream inputStream = new ByteArrayInputStream(httpRequest.getBytes());
-    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-    Router router = new Router();
-    router.populateRoutes(System.getProperty("user.dir") + "/code");
+    String filePath = System.getProperty("user.dir") + "/code/validation.txt";
+    BufferedReader bufferedReader = getInputStream("/code/validation.txt");
+    Router.addRoute(RequestMethod.GET, "/code/validation.txt", new FileReaderHandler(filePath));
 
-    String actualResponse = router.generateHttpResponse(bufferedReader);
+    String actualResponse = Router.generateHttpResponse(bufferedReader);
 
     String fileContents = "x = 1\ny = 2\n";
     String expectedResponse = "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\n" + fileContents;
@@ -77,13 +74,11 @@ public class RouterTest {
 
   @Test
   public void notFoundResponseIsSentForNonExistentFile() throws Exception {
-    String httpRequest = "GET " + "/code/main.txt" + " HTTP/1.1\r\nHost: localhost\r\n\r\n";
-    InputStream inputStream = new ByteArrayInputStream(httpRequest.getBytes());
-    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-    Router router = new Router();
-    router.populateRoutes(System.getProperty("user.dir") + "/code");
+    String filePath = System.getProperty("user.dir") + "/code/validation.txt";
+    BufferedReader bufferedReader = getInputStream("/code/main.txt");
+    Router.addRoute(RequestMethod.GET, "/code/validation.txt", new FileReaderHandler(filePath));
 
-    String actualResponse = router.generateHttpResponse(bufferedReader);
+    String actualResponse = Router.generateHttpResponse(bufferedReader);
 
     String expectedResponse = "HTTP/1.1 404 Not Found\r\n\r\n";
     assertEquals(expectedResponse, actualResponse);
@@ -91,13 +86,11 @@ public class RouterTest {
 
   @Test
   public void badRequestResponseIsSentForMalformedRequest() throws Exception {
-    String httpRequest = "Invalid " + "/code/main.txt" + " HTTP/1.1\r\nHost: localhost\r\n\r\n";
+    String httpRequest = "INVALID " + "/" + " HTTP/1.1\r\nHost: localhost\r\n\r\n";
     InputStream inputStream = new ByteArrayInputStream(httpRequest.getBytes());
     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-    Router router = new Router();
-    router.populateRoutes(System.getProperty("user.dir") + "/code");
 
-    String actualResponse = router.generateHttpResponse(bufferedReader);
+    String actualResponse = Router.generateHttpResponse(bufferedReader);
 
     String expectedResponse = "HTTP/1.1 400 Bad Request\r\n\r\n";
     assertEquals(expectedResponse, actualResponse);

@@ -6,7 +6,7 @@ public class MockProcessor implements Processor {
   public MockProcessor() {
   }
 
-  public void execute(Connection clientConnection, String directoryPath) throws Exception {
+  public void execute(Connection clientConnection) throws Exception {
     this.clientConnection = clientConnection;
   }
 

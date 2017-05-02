@@ -5,51 +5,35 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Router {
-  private Map<Tuple<Enum<RequestMethod>, String>, Handler> routes = new HashMap();
+  private static Map<Tuple<Enum<RequestMethod>, String>, Handler> routes = new HashMap();
 
-  public void populateRoutes(String rootDirectoryPath) {
-    addRoute(RequestMethod.GET, "/", new HelloWorldHandler());
-    addRoute(RequestMethod.GET, "/code", new DirectoryHandler(rootDirectoryPath));
-    populateFileRoutes(rootDirectoryPath);
+  public static void addRoute(Enum<RequestMethod> requestMethod, String uri, Handler handler) {
+    routes.put(new Tuple<>(requestMethod, uri), handler);
   }
 
-  public void populateFileRoutes(String rootDirectoryPath){
-    FileManager fileManager = new FileManager();
-    Map<String, String> relativeAndAbsolutePaths = fileManager.getRelativeAndAbsolutePath(rootDirectoryPath);
-    for (Map.Entry<String, String> path : relativeAndAbsolutePaths.entrySet()) {
-      addRoute(RequestMethod.GET, path.getKey(), new FileReaderHandler(path.getValue()));
-    }
-  }
-
-  public String generateHttpResponse(BufferedReader inputStream) throws Exception {
+  public static String generateHttpResponse(BufferedReader inputStream) throws Exception {
     Request request;
     RequestParser requestParser = new RequestParser(inputStream);
     try {
       request = requestParser.parse();
     } catch (Exception e) {
-      Response response = new ResponseBuilder()
-                          .setHttpVersion("HTTP/1.1")
-                          .setStatusCode(400)
-                          .build();
-      return response.getHttpResponse();
+      ErrorHandler errorHandler = new ErrorHandler(400);
+      return errorHandler.generate();
     }
     try {
       Handler handler = retrieveHandler(request.getRequestMethod(), request.getUri());
       return handler.generate();
     } catch (Exception e) {
-      Response response = new ResponseBuilder()
-                          .setHttpVersion("HTTP/1.1")
-                          .setStatusCode(404)
-                          .build();
-      return response.getHttpResponse();
+      ErrorHandler errorHandler = new ErrorHandler(404);
+      return errorHandler.generate();
     }
   }
 
-  private Handler retrieveHandler(Enum<RequestMethod> requestMethod, String uri){
-    return routes.get(new Tuple<>(requestMethod, uri));
+  public static Map<Tuple<Enum<RequestMethod>, String>, Handler> getRoutes(){
+    return routes;
   }
 
-  private void addRoute(Enum<RequestMethod> requestMethod, String uri, Handler handler) {
-   routes.put(new Tuple<>(requestMethod, uri), handler);
+  private static Handler retrieveHandler(Enum<RequestMethod> requestMethod, String uri){
+    return routes.get(new Tuple<>(requestMethod, uri));
   }
 }

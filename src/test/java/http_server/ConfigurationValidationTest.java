@@ -77,6 +77,16 @@ public class ConfigurationValidationTest {
   }
 
   @Test
+  public void noPortNumberSupplied(){
+    ConfigurationValidation configurationValidation = new ConfigurationValidation();
+    String[] commandLineArgs = {"-d", "/new_directory"};
+
+    Boolean actualResult = configurationValidation.isValidArgs(commandLineArgs);
+
+    assertTrue(actualResult);
+  }
+
+  @Test
   public void sameFlagIsSupplied(){
     ConfigurationValidation configurationValidation = new ConfigurationValidation();
     String[] commandLineArgs = {"-p", "5000", "-p", "/new_directory"};
@@ -94,5 +104,15 @@ public class ConfigurationValidationTest {
     Boolean actualResult = configurationValidation.isValidArgs(commandLineArgs);
 
     assertFalse(actualResult);
+  }
+
+  @Test
+  public void noArguments(){
+    ConfigurationValidation configurationValidation = new ConfigurationValidation();
+    String[] commandLineArgs = {};
+
+    Boolean actualResult = configurationValidation.isValidArgs(commandLineArgs);
+
+    assertTrue(actualResult);
   }
 }

@@ -2,7 +2,6 @@ package http_server;
 
 import static org.junit.Assert.*;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -23,10 +22,9 @@ public class ServerProcessorTest {
     Socket socket = createMockSocket(request);
     MockServerSocketConnection serverSocketConnection = new MockServerSocketConnection(socket);
     serverSocketConnection.setStoredInputData(request);
-    String directoryPath = System.getProperty("user.dir") + "/code";
     ServerProcessor serverProcessor = new ServerProcessor();
 
-    serverProcessor.execute(serverSocketConnection, directoryPath);
+    serverProcessor.execute(serverSocketConnection);
 
     String response = "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\n" + "hello world";
     assertEquals(response, serverSocketConnection.getStoredOutputData());
@@ -38,10 +36,9 @@ public class ServerProcessorTest {
     Socket socket = createMockSocket(request);
     MockServerSocketConnection serverSocketConnection = new MockServerSocketConnection(socket);
     serverSocketConnection.setStoredInputData(request);
-    String directoryPath = System.getProperty("user.dir") + "/code";
     ServerProcessor serverProcessor = new ServerProcessor();
 
-    serverProcessor.execute(serverSocketConnection, directoryPath);
+    serverProcessor.execute(serverSocketConnection);
 
     String response = "HTTP/1.1 400 Bad Request\r\n\r\n";
     assertEquals(response, serverSocketConnection.getStoredOutputData());

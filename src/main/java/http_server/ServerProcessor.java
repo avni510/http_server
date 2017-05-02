@@ -6,11 +6,9 @@ import java.io.BufferedReader;
 
 public class ServerProcessor implements Processor {
 
-  public void execute(Connection clientConnection, String directoryPath) throws Exception {
+  public void execute(Connection clientConnection) throws Exception {
     BufferedReader optimizedInputStream = read(clientConnection);
-    Router router = new Router();
-    router.populateRoutes(directoryPath);
-    String httpResponse = router.generateHttpResponse(optimizedInputStream);
+    String httpResponse = Router.generateHttpResponse(optimizedInputStream);
     write(clientConnection, httpResponse);
     clientConnection.out().close();
   }
