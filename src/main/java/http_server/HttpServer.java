@@ -1,11 +1,11 @@
 package http_server;
 
-public class ServerListener {
+public class HttpServer {
   private ConnectionManager server;
   private CancellationToken serverCancellationToken;
   private Processor serverProcessor;
 
-  public ServerListener(ConnectionManager server, CancellationToken serverCancellationToken, Processor serverProcessor) {
+  public HttpServer(ConnectionManager server, CancellationToken serverCancellationToken, Processor serverProcessor) {
     this.server = server;
     this.serverCancellationToken = serverCancellationToken;
     this.serverProcessor = serverProcessor;

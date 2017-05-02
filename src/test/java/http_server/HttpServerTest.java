@@ -9,7 +9,7 @@ import java.net.Socket;
 
 import static org.junit.Assert.*;
 
-public class ServerListenerTest {
+public class HttpServerTest {
   private CancellationToken serverCancellationToken;
   private MockProcessor processor;
   private Connection serverSocketConnection;
@@ -31,18 +31,19 @@ public class ServerListenerTest {
     this.processor = new MockProcessor();
   }
 
+
   @Test
   public void theServerStopsListening() throws Exception {
-    ServerListener serverListener = new ServerListener(server, serverCancellationToken, processor);
+    HttpServer httpServer = new HttpServer(server, serverCancellationToken, processor);
 
-    serverListener.run();
+    httpServer.run();
 
     assertFalse(serverCancellationToken.isListening());
   }
 
   @Test
   public void executeWasCalledWithASocket() throws Exception {
-    ServerListener serverListener = new ServerListener(server, serverCancellationToken, processor);
+    HttpServer serverListener = new HttpServer(server, serverCancellationToken, processor);
 
     serverListener.run();
 

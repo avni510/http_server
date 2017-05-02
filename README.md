@@ -6,7 +6,9 @@ HTTP Server written in Java
 Requirements
 -----------
 Java 1.8.0
+
 JUnit 4.12
+
 Gradle 3.5
 
 Installation
@@ -29,10 +31,16 @@ $ ./gradlew build
 
 Run the Server
 --------------
-Start the server
+Start the server with default port number 4444 and directory "/code"
 ```
 $ java -jar build/libs/http_server.jar
 ```
+
+To specify port number and directory
+```
+$ java -jar build/libs/http_server.jar -p <port Number> -d <directory name>
+```
+Valid port numbers are between 0 and 65535
 
 `CTRL+C` to quit the server
 

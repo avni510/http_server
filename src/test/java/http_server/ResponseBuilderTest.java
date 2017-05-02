@@ -29,8 +29,6 @@ public class ResponseBuilderTest {
     Response response = new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
         .setStatusCode(200)
-        .setHeaders(null)
-        .setBody(null)
         .build();
 
     String expectedHttpResponse = "HTTP/1.1 200 OK\r\n\r\n";

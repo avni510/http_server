@@ -7,11 +7,8 @@ import java.io.BufferedReader;
 public class ServerProcessor implements Processor {
 
   public void execute(Connection clientConnection) throws Exception {
-    String rootPathDirectory = System.getProperty("user.dir") + "/code";
     BufferedReader optimizedInputStream = read(clientConnection);
-    Router router = new Router();
-    router.populateRoutes(rootPathDirectory);
-    String httpResponse = router.generateHttpResponse(optimizedInputStream);
+    String httpResponse = Router.generateHttpResponse(optimizedInputStream);
     write(clientConnection, httpResponse);
     clientConnection.out().close();
   }
