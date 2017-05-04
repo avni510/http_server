@@ -12,25 +12,21 @@ public class Router {
   }
 
   public static String generateHttpResponse(BufferedReader inputStream) throws Exception {
-    Request request;
+    Request request = null;
     RequestParser requestParser = new RequestParser(inputStream);
     try {
       request = requestParser.parse();
     } catch (Exception e) {
       ErrorHandler errorHandler = new ErrorHandler(400);
-      return errorHandler.generate();
+      return errorHandler.generate(request);
     }
     try {
       Handler handler = retrieveHandler(request.getRequestMethod(), request.getUri());
-      return handler.generate();
+      return handler.generate(request);
     } catch (Exception e) {
       ErrorHandler errorHandler = new ErrorHandler(404);
-      return errorHandler.generate();
+      return errorHandler.generate(request);
     }
-  }
-
-  public static Map<Tuple<Enum<RequestMethod>, String>, Handler> getRoutes(){
-    return routes;
   }
 
   private static Handler retrieveHandler(Enum<RequestMethod> requestMethod, String uri){

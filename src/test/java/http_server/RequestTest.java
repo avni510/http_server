@@ -4,53 +4,55 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
 public class RequestTest {
 
   @Test
-  public void testRequestMethodIsReturned(){
-    Request requestNew = new RequestBuilder()
+  public void requestMethodIsReturned(){
+    Request request = new RequestBuilder()
                                 .setRequestMethod(RequestMethod.GET)
                                 .setUri("/")
                                 .setHttpVersion("HTTP/1.1")
                                 .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
-                                .setBody("hello world")
+                                .setBody("data=fatcat")
                                 .build();
 
-    assertEquals(RequestMethod.GET, requestNew.getRequestMethod());
+    assertEquals(RequestMethod.GET, request.getRequestMethod());
   }
 
   @Test
-  public void testUriIsReturned(){
-    Request requestNew = new RequestBuilder()
+  public void uriIsReturned(){
+    Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/")
         .setHttpVersion("HTTP/1.1")
         .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
-        .setBody("hello world")
+        .setBody("data=fatcat")
         .build();
 
-    assertEquals("/", requestNew.getUri());
+    assertEquals("/", request.getUri());
   }
 
   @Test
-  public void testHttpVersionIsReturned(){
-    Request requestNew = new RequestBuilder()
+  public void httpVersionIsReturned(){
+    Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/")
         .setHttpVersion("HTTP/1.1")
         .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
-        .setBody("hello world")
+        .setBody("data=fatcat")
         .build();
 
-    assertEquals("HTTP/1.1", requestNew.getHttpVersion());
+    assertEquals("HTTP/1.1", request.getHttpVersion());
   }
 
   @Test
-  public void testHeaderIsReturned(){
-    Request requestNew = new RequestBuilder()
+  public void headerIsReturned(){
+    Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/")
         .setHttpVersion("HTTP/1.1")
@@ -58,7 +60,8 @@ public class RequestTest {
         .setBody("hello world")
         .build();
 
-    ArrayList<String> actualResult = requestNew.getHeader();
+    ArrayList<String> actualResult = request.getHeader();
+
     ArrayList<String> expectedResult = new ArrayList<>();
     expectedResult.add("Host: localhost");
     expectedResult.add("Content-Type: text/plain");
@@ -66,15 +69,62 @@ public class RequestTest {
   }
 
   @Test
-  public void testBodyIsReturned(){
-    Request requestNew = new RequestBuilder()
+  public void bodyIsReturned(){
+    Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/")
         .setHttpVersion("HTTP/1.1")
         .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
-        .setBody("hello world")
+        .setBody("data=fatcat")
         .build();
 
-    assertEquals("hello world", requestNew.getBody());
+    Map<String, String> actualResult = request.getBody();
+
+    Map<String, String> expectedResult = new HashMap<>();
+    expectedResult.put("data", "fatcat");
+    assertTrue(expectedResult.equals(actualResult));
+  }
+
+  @Test
+  public void bodyParameterIsReturn(){
+    Request request = new RequestBuilder()
+        .setRequestMethod(RequestMethod.GET)
+        .setUri("/")
+        .setHttpVersion("HTTP/1.1")
+        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .setBody("data=fatcat")
+        .build();
+
+    String actualResult = request.getBodyParam("data");
+
+    assertEquals("fatcat", actualResult);
+  }
+
+  @Test
+  public void requestIsReturnedWithNoBody(){
+    Request request = new RequestBuilder()
+        .setRequestMethod(RequestMethod.GET)
+        .setUri("/")
+        .setHttpVersion("HTTP/1.1")
+        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .build();
+
+    Map<String, String> actualResult = request.getBody();
+
+    assertEquals(null, actualResult);
+  }
+
+  @Test
+  public void noParametersAreReturnedIfNoBodyExists(){
+    Request request = new RequestBuilder()
+        .setRequestMethod(RequestMethod.GET)
+        .setUri("/")
+        .setHttpVersion("HTTP/1.1")
+        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .build();
+
+    String actualResult = request.getBodyParam("data");
+
+    assertEquals(null, actualResult);
   }
 }

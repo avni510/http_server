@@ -1,12 +1,13 @@
 package http_server;
 
+import javax.xml.crypto.Data;
 import java.util.Map;
 
 public class Configuration {
-  private String defaultDirectory = "/code";
+  private String defaultDirectory = System.getProperty("user.dir") + "/code";
   private String defaultPort = "4444";
   private Integer portNumber;
-  private String  directoryName;
+  private String  directoryPath;
   private ConfigurationValidation configurationValidation;
 
   public Configuration(){
@@ -16,14 +17,16 @@ public class Configuration {
   public void parse(String[] commandLineArgs){
     configurationValidation.exitForInvalidArgs(commandLineArgs);
     portNumber = retrievePort(commandLineArgs);
-    directoryName = retrieveDirectory(commandLineArgs);
+    directoryPath = retrieveDirectory(commandLineArgs);
   }
 
   public void populateRoutes() {
-    String rootDirectoryPath = System.getProperty("user.dir") + directoryName;
-    Router.addRoute(RequestMethod.GET, "/", new HelloWorldHandler());
-    Router.addRoute(RequestMethod.GET, directoryName, new DirectoryHandler(rootDirectoryPath));
-    populateFileRoutes(rootDirectoryPath);
+    DataStore dataStore = new DataStore();
+    Router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler());
+    Router.addRoute(RequestMethod.GET, "/", new DirectoryHandler(directoryPath));
+    Router.addRoute(RequestMethod.GET, "/form", new FormHandler(dataStore));
+    Router.addRoute(RequestMethod.POST, "/form", new FormHandler(dataStore));
+    populateFileRoutes(directoryPath);
   }
 
   public Integer getPortNumber(){
@@ -31,26 +34,16 @@ public class Configuration {
   }
 
   public String getDirectoryName(){
-    return directoryName;
+    return directoryPath;
   }
 
   private String retrieveDirectory(String[] commandLineArgs){
-    String directoryName = configurationValidation.findArg(commandLineArgs, "-d", defaultDirectory);
-    return addSlash(directoryName);
+    return configurationValidation.findArg(commandLineArgs, "-d", defaultDirectory);
   }
 
   private Integer retrievePort(String[] commandLineArgs) {
     String port = configurationValidation.findArg(commandLineArgs, "-p", defaultPort);
     return Integer.parseInt(port);
-  }
-
-  private String addSlash(String directoryName){
-    String firstLetter = directoryName.substring(0, 1);
-    if (!firstLetter.equals ("/")) {
-      return "/" + directoryName;
-    } else {
-      return directoryName;
-    }
   }
 
   public void populateFileRoutes(String rootDirectoryPath){

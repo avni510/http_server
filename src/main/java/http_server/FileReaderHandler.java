@@ -16,7 +16,7 @@ public class FileReaderHandler implements Handler{
     this.filePath = filePath;
   }
 
-  public String generate() throws IOException {
+  public String generate(Request request) throws IOException {
     Map<String, String> header = new HashMap<>();
     header.put("Content-Type", "text/plain");
     Response response = new ResponseBuilder()

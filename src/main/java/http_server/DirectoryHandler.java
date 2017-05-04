@@ -11,7 +11,7 @@ public class DirectoryHandler implements Handler {
     this.rootDirectoryPath = rootDirectoryPath;
   }
 
-  public String generate() throws UnsupportedEncodingException {
+  public String generate(Request request) throws UnsupportedEncodingException {
     Map<String, String> header = new HashMap();
     header.put("Content-Type", "text/html");
     Response response = new ResponseBuilder()

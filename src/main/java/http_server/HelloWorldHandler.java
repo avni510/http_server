@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class HelloWorldHandler implements Handler{
 
-  public String generate() throws UnsupportedEncodingException {
+  public String generate(Request request) throws UnsupportedEncodingException {
     Map<String, String> header = new HashMap();
     header.put("Content-Type", "text/plain");
     Response response = new ResponseBuilder()

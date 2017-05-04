@@ -9,11 +9,11 @@ import static org.junit.Assert.*;
 public class RouterTest {
 
   private String getHtmlBody() {
-    return  "<li> <a href=/code/result.txt>" +
+    return  "<li> <a href=/result.txt>" +
         "result.txt</a></li>" +
-        "<li> <a href=/code/validation.txt>" +
+        "<li> <a href=/validation.txt>" +
         "validation.txt</a></li>" +
-        "<li> <a href=/code/log_time_entry.txt>" +
+        "<li> <a href=/log_time_entry.txt>" +
         "log_time_entry.txt</a></li>";
   }
 
@@ -25,8 +25,8 @@ public class RouterTest {
 
   @Test
   public void helloWorldIsSentAsAResponse() throws Exception {
-    BufferedReader bufferedReader = getInputStream("/");
-    Router.addRoute(RequestMethod.GET, "/", new HelloWorldHandler());
+    BufferedReader bufferedReader = getInputStream("/hello_world");
+    Router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler());
 
     String actualResponse = Router.generateHttpResponse(bufferedReader);
 
@@ -37,8 +37,8 @@ public class RouterTest {
   @Test
   public void htmlOfFilesIsSentAsAResponse() throws Exception {
     String rootDirectoryPath = System.getProperty("user.dir") + "/code";
-    BufferedReader bufferedReader = getInputStream("/code");
-    Router.addRoute(RequestMethod.GET, "/code", new DirectoryHandler(rootDirectoryPath));
+    BufferedReader bufferedReader = getInputStream("/");
+    Router.addRoute(RequestMethod.GET, "/", new DirectoryHandler(rootDirectoryPath));
 
     String actualResponse = Router.generateHttpResponse(bufferedReader);
 
@@ -49,8 +49,8 @@ public class RouterTest {
   @Test
   public void fileContentsAreSentAsAResponseForResultFile() throws Exception {
     String filePath = System.getProperty("user.dir") + "/code/result.txt";
-    BufferedReader bufferedReader = getInputStream("/code/result.txt");
-    Router.addRoute(RequestMethod.GET, "/code/result.txt", new FileReaderHandler(filePath));
+    BufferedReader bufferedReader = getInputStream("/result.txt");
+    Router.addRoute(RequestMethod.GET, "/result.txt", new FileReaderHandler(filePath));
 
     String actualResponse = Router.generateHttpResponse(bufferedReader);
 
@@ -62,8 +62,8 @@ public class RouterTest {
   @Test
   public void fileContentsAreSentAsAResponseForValidationFile() throws Exception {
     String filePath = System.getProperty("user.dir") + "/code/validation.txt";
-    BufferedReader bufferedReader = getInputStream("/code/validation.txt");
-    Router.addRoute(RequestMethod.GET, "/code/validation.txt", new FileReaderHandler(filePath));
+    BufferedReader bufferedReader = getInputStream("/validation.txt");
+    Router.addRoute(RequestMethod.GET, "/validation.txt", new FileReaderHandler(filePath));
 
     String actualResponse = Router.generateHttpResponse(bufferedReader);
 
@@ -75,8 +75,8 @@ public class RouterTest {
   @Test
   public void notFoundResponseIsSentForNonExistentFile() throws Exception {
     String filePath = System.getProperty("user.dir") + "/code/validation.txt";
-    BufferedReader bufferedReader = getInputStream("/code/main.txt");
-    Router.addRoute(RequestMethod.GET, "/code/validation.txt", new FileReaderHandler(filePath));
+    BufferedReader bufferedReader = getInputStream("/main.txt");
+    Router.addRoute(RequestMethod.GET, "/validation.txt", new FileReaderHandler(filePath));
 
     String actualResponse = Router.generateHttpResponse(bufferedReader);
 

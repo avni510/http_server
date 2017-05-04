@@ -4,6 +4,8 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -13,16 +15,18 @@ public class RequestBuilderTest {
   public void requestIsReturnedWithInstanceVariablesSet(){
     Request actualResult = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
-        .setUri("/")
+        .setUri("/hello_world")
         .setHttpVersion("HTTP/1.1")
         .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
-        .setBody("hello world")
+        .setBody("data=fatcat")
         .build();
 
     assertEquals(RequestMethod.GET, actualResult.getRequestMethod());
-    assertEquals("/", actualResult.getUri());
+    assertEquals("/hello_world", actualResult.getUri());
     assertEquals("HTTP/1.1", actualResult.getHttpVersion());
     assertEquals(new ArrayList<>(Arrays.asList("Host: localhost")), actualResult.getHeader());
-    assertEquals("hello world", actualResult.getBody());
+    Map<String, String> expectedBody = new HashMap<>();
+    expectedBody.put("data", "fatcat");
+    assertTrue(expectedBody.equals(actualResult.getBody()));
   }
 }
