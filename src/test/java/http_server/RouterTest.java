@@ -95,4 +95,23 @@ public class RouterTest {
     String expectedResponse = "HTTP/1.1 400 Bad Request\r\n\r\n";
     assertEquals(expectedResponse, actualResponse);
   }
+
+  @Test
+  public void methodNotAllowedError() throws Exception {
+    String filePath = System.getProperty("user.dir") + "/code/result.txt";
+    Router.addRoute(RequestMethod.GET, "/result.txt", new FileReaderHandler(filePath));
+    String httpRequest = "POST " + "/result.txt" + " HTTP/1.1\r\nHost: localhost\r\n\r\n";
+    InputStream inputStream = new ByteArrayInputStream(httpRequest.getBytes());
+    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+    String actualResponse = Router.generateHttpResponse(bufferedReader);
+
+    String expectedResponse = "HTTP/1.1 405 Method Not Allowed\r\n\r\n";
+    assertEquals(expectedResponse, actualResponse);
+  }
 }
+
+
+
+
+

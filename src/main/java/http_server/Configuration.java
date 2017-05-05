@@ -1,6 +1,5 @@
 package http_server;
 
-import javax.xml.crypto.Data;
 import java.util.Map;
 
 public class Configuration {
@@ -26,6 +25,18 @@ public class Configuration {
     Router.addRoute(RequestMethod.GET, "/", new DirectoryHandler(directoryPath));
     Router.addRoute(RequestMethod.GET, "/form", new FormHandler(dataStore));
     Router.addRoute(RequestMethod.POST, "/form", new FormHandler(dataStore));
+    Router.addRoute(RequestMethod.PUT, "/form", new FormHandler(dataStore));
+    Router.addRoute(RequestMethod.DELETE, "/form", new FormHandler(dataStore));
+    Router.addRoute(RequestMethod.GET, "/coffee", new TeapotHandler());
+    Router.addRoute(RequestMethod.GET, "/tea", new TeapotHandler());
+    Router.addRoute(RequestMethod.GET, "/redirect", new RedirectHandler());
+    Router.addRoute(RequestMethod.GET, "/method_options", new OptionsHandler(methodOptions()));
+    Router.addRoute(RequestMethod.PUT, "/method_options", new OptionsHandler(methodOptions()));
+    Router.addRoute(RequestMethod.POST, "/method_options", new OptionsHandler(methodOptions()));
+    Router.addRoute(RequestMethod.HEAD, "/method_options", new OptionsHandler(methodOptions()));
+    Router.addRoute(RequestMethod.OPTIONS, "/method_options", new OptionsHandler(methodOptions()));
+    Router.addRoute(RequestMethod.GET, "/method_options2", new OptionsHandler(methodOptions2()));
+    Router.addRoute(RequestMethod.OPTIONS, "/method_options2", new OptionsHandler(methodOptions2()));
     populateFileRoutes(directoryPath);
   }
 
@@ -46,7 +57,17 @@ public class Configuration {
     return Integer.parseInt(port);
   }
 
-  public void populateFileRoutes(String rootDirectoryPath){
+  private RequestMethod[] methodOptions(){
+    return new RequestMethod[]{RequestMethod.GET, RequestMethod.POST,
+                               RequestMethod.PUT, RequestMethod.OPTIONS,
+                               RequestMethod.HEAD};
+  }
+
+  private RequestMethod[] methodOptions2(){
+    return new RequestMethod[]{RequestMethod.GET, RequestMethod.OPTIONS};
+  }
+
+  private void populateFileRoutes(String rootDirectoryPath){
     FileManager fileManager = new FileManager();
     Map<String, String> relativeAndAbsolutePaths = fileManager.getRelativeAndAbsolutePath(rootDirectoryPath);
     for (Map.Entry<String, String> path : relativeAndAbsolutePaths.entrySet()) {

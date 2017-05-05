@@ -17,7 +17,6 @@ public class FileReaderHandlerTest {
         .setUri("/code/result.txt")
         .setHttpVersion("HTTP/1.1")
         .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
-        .setBody("hello world")
         .build();
     String pathToFile = System.getProperty("user.dir") + "/code/result.txt";
     FileReaderHandler fileReaderHandler = new FileReaderHandler(pathToFile);

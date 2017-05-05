@@ -20,16 +20,33 @@ public class Router {
       ErrorHandler errorHandler = new ErrorHandler(400);
       return errorHandler.generate(request);
     }
-    try {
-      Handler handler = retrieveHandler(request.getRequestMethod(), request.getUri());
-      return handler.generate(request);
-    } catch (Exception e) {
-      ErrorHandler errorHandler = new ErrorHandler(404);
-      return errorHandler.generate(request);
+    Handler handler = retrieveHandler(request.getRequestMethod(), request.getUri());
+    if (handler == null) {
+      handler = clientError(request);
     }
+    return handler.generate(request);
   }
 
   private static Handler retrieveHandler(Enum<RequestMethod> requestMethod, String uri){
     return routes.get(new Tuple<>(requestMethod, uri));
+  }
+
+  private static Handler clientError(Request request){
+    if (uriExists(request.getUri())){
+      return new ErrorHandler(405);
+    } else {
+      return new ErrorHandler(404);
+    }
+  }
+
+  private static boolean uriExists(String uri){
+    boolean found = false;
+    for(Map.Entry<Tuple<Enum<RequestMethod>, String>, Handler> entry : routes.entrySet()){
+      String uriInRoute = entry.getKey().getSecondElement();
+      if (uriInRoute.equals(uri)){
+        return true;
+      }
+    }
+    return found;
   }
 }

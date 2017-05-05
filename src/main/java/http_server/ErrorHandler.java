@@ -1,6 +1,6 @@
 package http_server;
 
-public class ErrorHandler {
+public class ErrorHandler implements Handler{
   private Integer errorCode;
 
   public ErrorHandler(Integer errorCode){

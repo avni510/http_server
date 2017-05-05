@@ -22,6 +22,10 @@ public class Response {
     if (headers == null && body == null) {
       return httpVersion + " " + statusCodeMessage + CLRF + CLRF;
     }
+    if (body == null) {
+      String headerMessage = retrieveHeader(headers);
+      return httpVersion + " " + statusCodeMessage + CLRF + headerMessage + CLRF;
+    }
     String headerMessage = retrieveHeader(headers);
     return httpVersion + " " + statusCodeMessage + CLRF + headerMessage + CLRF + body;
   }

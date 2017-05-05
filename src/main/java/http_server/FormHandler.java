@@ -13,28 +13,39 @@ public class FormHandler implements Handler{
   }
 
   public String generate(Request request) throws IOException {
-    String httpResponse = null;
+    Response response = null;
     if (request.getRequestMethod() == RequestMethod.GET) {
       Map<String, String> header = new HashMap();
       header.put("Content-Type", "text/html");
       String bodyValue = getBodyValue();
-      Response response = new ResponseBuilder()
+      response = new ResponseBuilder()
           .setHttpVersion("HTTP/1.1")
           .setStatusCode(200)
           .setHeaders(header)
           .setBody(getBody(bodyValue))
           .build();
-      httpResponse = response.getHttpResponse();
     } else if(request.getRequestMethod() == RequestMethod.POST){
       String parameterValue = request.getBodyParam(parameter);
       dataStore.storeEntry(parameter, parameterValue);
-      Response response = new ResponseBuilder()
+      response = new ResponseBuilder()
           .setHttpVersion("HTTP/1.1")
           .setStatusCode(200)
           .build();
-      httpResponse = response.getHttpResponse();
-    }
-    return httpResponse;
+    } else if(request.getRequestMethod() == RequestMethod.PUT){
+    String parameterValue = request.getBodyParam(parameter);
+    dataStore.storeEntry(parameter, parameterValue);
+    response = new ResponseBuilder()
+        .setHttpVersion("HTTP/1.1")
+        .setStatusCode(200)
+        .build();
+  } else if(request.getRequestMethod() == RequestMethod.DELETE){
+    dataStore.clear();
+    response = new ResponseBuilder()
+        .setHttpVersion("HTTP/1.1")
+        .setStatusCode(200)
+        .build();
+  }
+    return response.getHttpResponse();
   }
 
   private String getBodyValue() {

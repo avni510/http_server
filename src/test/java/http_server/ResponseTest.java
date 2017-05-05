@@ -36,4 +36,18 @@ public class ResponseTest {
     String expectedHttpResponse = "HTTP/1.1 404 Not Found\r\n\r\n";
     assertEquals(expectedHttpResponse, response.getHttpResponse());
   }
+
+  @Test
+  public void httpResponseIstReturnedWithHeaderButNoBody() {
+    Map<String, String> headers = new HashMap();
+    headers.put("Location", "http://localhost:4444/");
+    Response response = new ResponseBuilder()
+        .setHttpVersion("HTTP/1.1")
+        .setStatusCode(302)
+        .setHeaders(headers)
+        .build();
+
+    String expectedHttpResponse = "HTTP/1.1 302 Found\r\nLocation: http://localhost:4444/\r\n\r\n";
+    assertEquals(expectedHttpResponse, response.getHttpResponse());
+  }
 }

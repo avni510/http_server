@@ -75,4 +75,44 @@ public class FormHandlerTest {
                               getBody("data=fatcat");
     assertEquals(expectedResponse, actualResponse);
   }
+
+  @Test
+  public void aPutRequestIsHandled() throws IOException {
+    Request request = new RequestBuilder()
+        .setRequestMethod(RequestMethod.PUT)
+        .setUri("/form")
+        .setHttpVersion("HTTP/1.1")
+        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .setBody("data=heathcliff")
+        .build();
+    DataStore dataStore = new DataStore();
+    dataStore.storeEntry("data", "fatcat");
+    dataStore.storeEntry("data", "heathcliff");
+
+    FormHandler formHandler = new FormHandler(dataStore);
+
+    String actualResponse = formHandler.generate(request);
+
+    String expectedResponse = "HTTP/1.1 200 OK\r\n\r\n";
+    assertEquals(expectedResponse, actualResponse);
+  }
+
+  @Test
+  public void aDeleteRequestIsHandled() throws IOException {
+    Request request = new RequestBuilder()
+        .setRequestMethod(RequestMethod.DELETE)
+        .setUri("/form")
+        .setHttpVersion("HTTP/1.1")
+        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .build();
+    DataStore dataStore = new DataStore();
+    dataStore.storeEntry("data", "fatcat");
+
+    FormHandler formHandler = new FormHandler(dataStore);
+
+    String actualResponse = formHandler.generate(request);
+
+    String expectedResponse = "HTTP/1.1 200 OK\r\n\r\n";
+    assertEquals(expectedResponse, actualResponse);
+  }
 }

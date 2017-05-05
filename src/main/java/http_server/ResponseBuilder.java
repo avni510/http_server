@@ -10,9 +10,11 @@ public class ResponseBuilder {
     allStatusCodes.put(200, "200 OK");
     allStatusCodes.put(404, "404 Not Found");
     allStatusCodes.put(301, "301 Moved Permanently");
-    allStatusCodes.put(302, "302 Moved Temporarily");
+    allStatusCodes.put(302, "302 Found");
     allStatusCodes.put(500, "500 Server Error");
     allStatusCodes.put(400, "400 Bad Request");
+    allStatusCodes.put(405, "405 Method Not Allowed");
+    allStatusCodes.put(418, "418 I'm a teapot");
   }
   private String statusCodeMessage;
   private Map<String, String> headers = null;
