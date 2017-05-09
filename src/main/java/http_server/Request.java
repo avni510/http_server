@@ -53,9 +53,9 @@ public class Request {
   }
 
   private Map<String, String> transformBody(String body){
+    Map<String, String> bodyRepresentation = new HashMap();
     if (body != null) {
       String[] bodyParts = body.split("=");
-      Map<String, String> bodyRepresentation = new HashMap();
       for (int i = 0; i < (bodyParts.length - 1); i++) {
         bodyRepresentation.put(bodyParts[i], bodyParts[i + 1]);
       }

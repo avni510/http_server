@@ -62,13 +62,16 @@ public class RequestParserTest {
    requestParser.parse();
   }
 
-  @Test(expected = Exception.class)
-  public void testExceptionThrownForInvalidRequestMethod() throws Exception {
-    InputStream inputStream = new ByteArrayInputStream(("INVALID / HTTP/1.1\r\n\r\n")
-        .getBytes());
+  @Test
+  public void testInvalidRequestMethodIsSet() throws Exception {
+    InputStream inputStream = new ByteArrayInputStream(("INVALID / HTTP/1.1\r\nHost: localhost\r\n").getBytes());
     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
     RequestParser requestParser = new RequestParser(bufferedReader);
 
-    requestParser.parse();
+    Request actualResult = requestParser.parse();
+
+    assertEquals(RequestMethod.INVALID_REQUEST_METHOD, actualResult.getRequestMethod());
+    assertEquals("/", actualResult.getUri());
+    assertEquals( "HTTP/1.1", actualResult.getHttpVersion());
   }
 }

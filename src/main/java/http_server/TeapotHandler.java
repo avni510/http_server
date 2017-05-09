@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class TeapotHandler implements Handler{
 
-  public String generate(Request request) throws IOException {
+  public Response generate(Request request) throws IOException {
     Response response = null;
     if (request.getUri().equals("/coffee")) {
       Map<String, String> header = new HashMap();
@@ -23,6 +23,6 @@ public class TeapotHandler implements Handler{
           .setStatusCode(200)
           .build();
     }
-   return response.getHttpResponse();
+   return response;
   }
 }

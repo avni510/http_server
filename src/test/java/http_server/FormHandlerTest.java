@@ -30,12 +30,11 @@ public class FormHandlerTest {
 
     FormHandler formHandler = new FormHandler(new DataStore());
 
-    String actualResponse = formHandler.generate(request);
+    Response actualResponse = formHandler.generate(request);
 
-    String expectedResponse = "HTTP/1.1 200 OK\r\n" +
-                              "Content-Type: text/html\r\n\r\n" +
-                              getBody("");
-    assertEquals(expectedResponse, actualResponse);
+    assertEquals("200 OK", actualResponse.getStatusCodeMessage());
+    assertEquals("Content-Type: text/html\r\n", actualResponse.getHeaders());
+    assertEquals(getBody(""), new String(actualResponse.getBody()));
   }
 
   @Test
@@ -49,10 +48,9 @@ public class FormHandlerTest {
         .build();
     FormHandler formHandler = new FormHandler(new DataStore());
 
-    String actualResponse = formHandler.generate(request);
+    Response actualResponse = formHandler.generate(request);
 
-    String expectedResponse = "HTTP/1.1 200 OK\r\n\r\n";
-    assertEquals(expectedResponse, actualResponse);
+    assertEquals("200 OK", actualResponse.getStatusCodeMessage());
   }
 
   @Test
@@ -68,12 +66,9 @@ public class FormHandlerTest {
 
     FormHandler formHandler = new FormHandler(dataStore);
 
-    String actualResponse = formHandler.generate(request);
+    Response actualResponse = formHandler.generate(request);
 
-    String expectedResponse = "HTTP/1.1 200 OK\r\n" +
-                              "Content-Type: text/html\r\n\r\n" +
-                              getBody("data=fatcat");
-    assertEquals(expectedResponse, actualResponse);
+    assertEquals(getBody("data=fatcat"), new String(actualResponse.getBody()));
   }
 
   @Test
@@ -91,10 +86,9 @@ public class FormHandlerTest {
 
     FormHandler formHandler = new FormHandler(dataStore);
 
-    String actualResponse = formHandler.generate(request);
+    Response actualResponse = formHandler.generate(request);
 
-    String expectedResponse = "HTTP/1.1 200 OK\r\n\r\n";
-    assertEquals(expectedResponse, actualResponse);
+    assertEquals("200 OK", actualResponse.getStatusCodeMessage());
   }
 
   @Test
@@ -110,9 +104,8 @@ public class FormHandlerTest {
 
     FormHandler formHandler = new FormHandler(dataStore);
 
-    String actualResponse = formHandler.generate(request);
+    Response actualResponse = formHandler.generate(request);
 
-    String expectedResponse = "HTTP/1.1 200 OK\r\n\r\n";
-    assertEquals(expectedResponse, actualResponse);
+    assertEquals("200 OK", actualResponse.getStatusCodeMessage());
   }
 }

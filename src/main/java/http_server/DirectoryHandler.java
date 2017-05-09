@@ -11,16 +11,24 @@ public class DirectoryHandler implements Handler {
     this.rootDirectoryPath = rootDirectoryPath;
   }
 
-  public String generate(Request request) throws UnsupportedEncodingException {
-    Map<String, String> header = new HashMap();
-    header.put("Content-Type", "text/html");
-    Response response = new ResponseBuilder()
-        .setHttpVersion("HTTP/1.1")
-        .setStatusCode(200)
-        .setHeaders(header)
-        .setBody(getBody())
-        .build();
-    return response.getHttpResponse();
+  public Response generate(Request request) throws UnsupportedEncodingException {
+    Response response = null;
+    if (request.getRequestMethod() == RequestMethod.GET) {
+      Map<String, String> header = new HashMap();
+      header.put("Content-Type", "text/html");
+      response = new ResponseBuilder()
+          .setHttpVersion("HTTP/1.1")
+          .setStatusCode(200)
+          .setHeaders(header)
+          .setBody(getBody())
+          .build();
+    } else if (request.getRequestMethod() == RequestMethod.HEAD) {
+       response = new ResponseBuilder()
+          .setHttpVersion("HTTP/1.1")
+          .setStatusCode(200)
+          .build();
+    }
+    return response;
   }
 
   private String getBody() {

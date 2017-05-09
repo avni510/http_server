@@ -20,8 +20,9 @@ public class RedirectHandlerTest {
         .build();
     RedirectHandler redirectHandler = new RedirectHandler();
 
-    String actualResponse = redirectHandler.generate(request);
-    String expectedResponse = "HTTP/1.1 302 Found\r\nLocation: /\r\n\r\n";
-    assertEquals(expectedResponse, actualResponse);
+    Response actualResponse = redirectHandler.generate(request);
+
+    assertEquals("302 Found", actualResponse.getStatusCodeMessage());
+    assertEquals("Location: /\r\n", actualResponse.getHeaders());
   }
 }

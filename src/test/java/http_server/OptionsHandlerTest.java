@@ -23,10 +23,9 @@ public class OptionsHandlerTest {
                                                                    RequestMethod.HEAD};
     OptionsHandler optionsHandler = new OptionsHandler(requestMethodsOnResource);
 
-    String actualResult = optionsHandler.generate(request);
+    Response actualResult = optionsHandler.generate(request);
 
-    String expectedResult = "HTTP/1.1 200 OK\r\nAllow: GET,POST,PUT,OPTIONS,HEAD\r\n\r\n";
-    assertEquals(expectedResult, actualResult);
+    assertEquals("Allow: GET,POST,PUT,OPTIONS,HEAD\r\n", actualResult.getHeaders());
   }
 
   @Test
@@ -42,9 +41,9 @@ public class OptionsHandlerTest {
                                                                    RequestMethod.HEAD};
     OptionsHandler optionsHandler = new OptionsHandler(requestMethodsOnResource);
 
-    String actualResult = optionsHandler.generate(request);
+    Response actualResult = optionsHandler.generate(request);
 
     String expectedResult = "HTTP/1.1 200 OK\r\n\r\n";
-    assertEquals(expectedResult, actualResult);
+    assertEquals("200 OK", actualResult.getStatusCodeMessage());
   }
 }

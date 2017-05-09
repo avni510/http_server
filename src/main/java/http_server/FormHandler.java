@@ -12,7 +12,7 @@ public class FormHandler implements Handler{
     this.dataStore = dataStore;
   }
 
-  public String generate(Request request) throws IOException {
+  public Response generate(Request request) throws IOException {
     Response response = null;
     if (request.getRequestMethod() == RequestMethod.GET) {
       Map<String, String> header = new HashMap();
@@ -45,7 +45,7 @@ public class FormHandler implements Handler{
         .setStatusCode(200)
         .build();
   }
-    return response.getHttpResponse();
+    return response;
   }
 
   private String getBodyValue() {

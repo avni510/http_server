@@ -32,7 +32,7 @@ public class ServerProcessorTest {
 
   @Test
   public void responseIsWrittenOutForInvalidRequest() throws Exception {
-    String request = "INVALID / HTTP/1.1\r\nHost: localhost\r\n\r\n";
+    String request = "/ HTTP/1.1\r\nHost: localhost\r\n\r\n";
     Socket socket = createMockSocket(request);
     MockServerSocketConnection serverSocketConnection = new MockServerSocketConnection(socket);
     serverSocketConnection.setStoredInputData(request);

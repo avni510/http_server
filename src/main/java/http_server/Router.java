@@ -11,7 +11,7 @@ public class Router {
     routes.put(new Tuple<>(requestMethod, uri), handler);
   }
 
-  public static String generateHttpResponse(BufferedReader inputStream) throws Exception {
+  public static Response generateHttpResponse(BufferedReader inputStream) throws Exception {
     Request request = null;
     RequestParser requestParser = new RequestParser(inputStream);
     try {
@@ -28,7 +28,12 @@ public class Router {
   }
 
   private static Handler retrieveHandler(Enum<RequestMethod> requestMethod, String uri){
-    return routes.get(new Tuple<>(requestMethod, uri));
+    if (uri.contains("?")) {
+      String[] uriParts = uri.split("\\?");
+      return routes.get(new Tuple<>(requestMethod, uriParts[0]));
+    } else {
+      return routes.get(new Tuple<>(requestMethod, uri));
+    }
   }
 
   private static Handler clientError(Request request){

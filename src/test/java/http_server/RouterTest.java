@@ -23,15 +23,18 @@ public class RouterTest {
     return new BufferedReader(new InputStreamReader(inputStream));
   }
 
+  private String getParametersBody(){
+    return "variable_1 = Operators <, >, =, !=; +, -, *, &, @, #, $, [, ]: \"is that all\"? variable_2 = stuff ";
+  }
+
   @Test
   public void helloWorldIsSentAsAResponse() throws Exception {
     BufferedReader bufferedReader = getInputStream("/hello_world");
     Router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler());
 
-    String actualResponse = Router.generateHttpResponse(bufferedReader);
+    Response actualResponse = Router.generateHttpResponse(bufferedReader);
 
-    String expectedResponse = "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\n" + "hello world";
-    assertEquals(expectedResponse, actualResponse);
+    assertEquals("hello world", new String (actualResponse.getBody()));
   }
 
   @Test
@@ -40,10 +43,9 @@ public class RouterTest {
     BufferedReader bufferedReader = getInputStream("/");
     Router.addRoute(RequestMethod.GET, "/", new DirectoryHandler(rootDirectoryPath));
 
-    String actualResponse = Router.generateHttpResponse(bufferedReader);
+    Response actualResponse = Router.generateHttpResponse(bufferedReader);
 
-    String expectedResponse = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n" + getHtmlBody();
-    assertEquals(expectedResponse, actualResponse);
+    assertEquals(getHtmlBody(), new String(actualResponse.getBody()));
   }
 
   @Test
@@ -52,11 +54,10 @@ public class RouterTest {
     BufferedReader bufferedReader = getInputStream("/result.txt");
     Router.addRoute(RequestMethod.GET, "/result.txt", new FileReaderHandler(filePath));
 
-    String actualResponse = Router.generateHttpResponse(bufferedReader);
+    Response actualResponse = Router.generateHttpResponse(bufferedReader);
 
     String fileContents = "module TimeLogger\nend\n";
-    String expectedResponse = "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\n" + fileContents;
-    assertEquals(expectedResponse, actualResponse);
+    assertEquals(fileContents, new String(actualResponse.getBody()));
   }
 
   @Test
@@ -65,11 +66,10 @@ public class RouterTest {
     BufferedReader bufferedReader = getInputStream("/validation.txt");
     Router.addRoute(RequestMethod.GET, "/validation.txt", new FileReaderHandler(filePath));
 
-    String actualResponse = Router.generateHttpResponse(bufferedReader);
+    Response actualResponse = Router.generateHttpResponse(bufferedReader);
 
     String fileContents = "x = 1\ny = 2\n";
-    String expectedResponse = "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\n" + fileContents;
-    assertEquals(expectedResponse, actualResponse);
+    assertEquals(fileContents, new String(actualResponse.getBody()));
   }
 
   @Test
@@ -78,22 +78,20 @@ public class RouterTest {
     BufferedReader bufferedReader = getInputStream("/main.txt");
     Router.addRoute(RequestMethod.GET, "/validation.txt", new FileReaderHandler(filePath));
 
-    String actualResponse = Router.generateHttpResponse(bufferedReader);
+    Response actualResponse = Router.generateHttpResponse(bufferedReader);
 
-    String expectedResponse = "HTTP/1.1 404 Not Found\r\n\r\n";
-    assertEquals(expectedResponse, actualResponse);
+    assertEquals("404 Not Found", actualResponse.getStatusCodeMessage());
   }
 
   @Test
   public void badRequestResponseIsSentForMalformedRequest() throws Exception {
-    String httpRequest = "INVALID " + "/" + " HTTP/1.1\r\nHost: localhost\r\n\r\n";
+    String httpRequest = "/" + " HTTP/1.1\r\n\r\n";
     InputStream inputStream = new ByteArrayInputStream(httpRequest.getBytes());
     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
-    String actualResponse = Router.generateHttpResponse(bufferedReader);
+    Response actualResponse = Router.generateHttpResponse(bufferedReader);
 
-    String expectedResponse = "HTTP/1.1 400 Bad Request\r\n\r\n";
-    assertEquals(expectedResponse, actualResponse);
+    assertEquals("400 Bad Request", actualResponse.getStatusCodeMessage());
   }
 
   @Test
@@ -104,10 +102,23 @@ public class RouterTest {
     InputStream inputStream = new ByteArrayInputStream(httpRequest.getBytes());
     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
-    String actualResponse = Router.generateHttpResponse(bufferedReader);
+    Response actualResponse = Router.generateHttpResponse(bufferedReader);
 
-    String expectedResponse = "HTTP/1.1 405 Method Not Allowed\r\n\r\n";
-    assertEquals(expectedResponse, actualResponse);
+    assertEquals("405 Method Not Allowed", actualResponse.getStatusCodeMessage());
+  }
+
+  @Test
+  public void uriWithQuestionMark() throws Exception {
+    Router.addRoute(RequestMethod.GET, "/parameters", new ParameterHandler());
+    String httpRequest = "GET " + "/parameters?variable_1=Operators%20%3C%2C%20%3E%2C%20%3D%2C%20" +
+                         "!%3D%3B%20%2B%2C%20-%2C%20*%2C%20%26%2C%20%40%2C%20%23%2C%20%24%2C%20%5B%2C%20%" +
+                         "5D%3A%20%22is%20that%20all%22%3F&variable_2=stuff" + " HTTP/1.1\r\nHost: localhost\r\n\r\n";
+    InputStream inputStream = new ByteArrayInputStream(httpRequest.getBytes());
+    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+    Response actualResponse = Router.generateHttpResponse(bufferedReader);
+
+    assertEquals(getParametersBody(), new String (actualResponse.getBody()));
   }
 }
 

@@ -20,10 +20,10 @@ public class TeapotHandlerTest {
         .build();
     TeapotHandler teapotHandler = new TeapotHandler();
 
-    String actualResponse = teapotHandler.generate(request);
+    Response actualResponse = teapotHandler.generate(request);
 
-    String expectedResponse = "HTTP/1.1 418 I'm a teapot\r\nContent-Type: text/plain\r\n\r\nI'm a teapot";
-    assertEquals(expectedResponse, actualResponse);
+    assertEquals("418 I'm a teapot", actualResponse.getStatusCodeMessage());
+    assertEquals("I'm a teapot", new String (actualResponse.getBody()));
   }
 
   @Test
@@ -36,9 +36,8 @@ public class TeapotHandlerTest {
         .build();
     TeapotHandler teapotHandler = new TeapotHandler();
 
-    String actualResponse = teapotHandler.generate(request);
+    Response actualResponse = teapotHandler.generate(request);
 
-    String expectedResponse = "HTTP/1.1 200 OK\r\n\r\n";
-    assertEquals(expectedResponse, actualResponse);
+    assertEquals("200 OK", actualResponse.getStatusCodeMessage());
   }
 }

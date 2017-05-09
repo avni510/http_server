@@ -10,4 +10,5 @@ build/
 .gradle
 
 # reference
-log_file.txt
+scratch.txt
+

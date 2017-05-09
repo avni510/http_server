@@ -19,10 +19,9 @@ public class ErrorHandlerTest {
         .build();
     ErrorHandler errorHandler = new ErrorHandler(404);
 
-    String actualResponse = errorHandler.generate(request);
+    Response actualResponse = errorHandler.generate(request);
 
-    String expectedResponse = "HTTP/1.1 404 Not Found\r\n\r\n";
-    assertEquals(expectedResponse, actualResponse);
+    assertEquals("404 Not Found", actualResponse.getStatusCodeMessage());
   }
 
   @Test
@@ -30,9 +29,8 @@ public class ErrorHandlerTest {
     Request request = null;
     ErrorHandler errorHandler = new ErrorHandler(400);
 
-    String actualResponse = errorHandler.generate(request);
+    Response actualResponse = errorHandler.generate(request);
 
-    String expectedResponse = "HTTP/1.1 400 Bad Request\r\n\r\n";
-    assertEquals(expectedResponse, actualResponse);
+    assertEquals("400 Bad Request", actualResponse.getStatusCodeMessage());
   }
 }

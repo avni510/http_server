@@ -8,7 +8,7 @@ public class ServerProcessor implements Processor {
 
   public void execute(Connection clientConnection) throws Exception {
     BufferedReader optimizedInputStream = read(clientConnection);
-    String httpResponse = Router.generateHttpResponse(optimizedInputStream);
+    Response httpResponse = Router.generateHttpResponse(optimizedInputStream);
     write(clientConnection, httpResponse);
     clientConnection.out().close();
   }
@@ -17,7 +17,8 @@ public class ServerProcessor implements Processor {
    return new BufferedReader(new InputStreamReader(clientConnection.in()));
   }
 
-  private void write(Connection clientConnection, String response) throws Exception{
-    clientConnection.out().write(response.getBytes());
+  private void write(Connection clientConnection, Response response) throws Exception{
+    clientConnection.out().write(response.getHttpResponseBytes());
   }
+
 }

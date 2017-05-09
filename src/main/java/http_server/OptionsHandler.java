@@ -11,7 +11,7 @@ public class OptionsHandler implements Handler{
     this.requestMethodsOnResource = requestMethodsOnResource;
   }
 
-  public String generate(Request request) throws IOException {
+  public Response generate(Request request) throws IOException {
     if (request.getRequestMethod() == RequestMethod.OPTIONS) {
       Map<String, String> header = new HashMap<>();
       String allAllowedRequestMethods = requestMethodsToString();
@@ -21,13 +21,13 @@ public class OptionsHandler implements Handler{
           .setStatusCode(200)
           .setHeaders(header)
           .build();
-      return response.getHttpResponse();
+      return response;
     }
     Response response = new ResponseBuilder()
                         .setHttpVersion("HTTP/1.1")
                         .setStatusCode(200)
                         .build();
-    return response.getHttpResponse();
+    return response;
   }
 
   private String requestMethodsToString(){

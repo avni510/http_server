@@ -7,11 +7,11 @@ public class ErrorHandler implements Handler{
     this.errorCode = errorCode;
   }
 
-  public String generate(Request request){
+  public Response generate(Request request){
     Response response = new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
         .setStatusCode(errorCode)
         .build();
-    return response.getHttpResponse();
+    return response;
   }
 }

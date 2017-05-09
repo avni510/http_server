@@ -8,6 +8,8 @@ public class Configuration {
   private Integer portNumber;
   private String  directoryPath;
   private ConfigurationValidation configurationValidation;
+  private String usernameAuthentication = "admin";
+  private String passwordAuthentication = "hunter2";
 
   public Configuration(){
     this.configurationValidation = new ConfigurationValidation();
@@ -23,6 +25,7 @@ public class Configuration {
     DataStore dataStore = new DataStore();
     Router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler());
     Router.addRoute(RequestMethod.GET, "/", new DirectoryHandler(directoryPath));
+    Router.addRoute(RequestMethod.HEAD, "/", new DirectoryHandler(directoryPath));
     Router.addRoute(RequestMethod.GET, "/form", new FormHandler(dataStore));
     Router.addRoute(RequestMethod.POST, "/form", new FormHandler(dataStore));
     Router.addRoute(RequestMethod.PUT, "/form", new FormHandler(dataStore));
@@ -37,6 +40,10 @@ public class Configuration {
     Router.addRoute(RequestMethod.OPTIONS, "/method_options", new OptionsHandler(methodOptions()));
     Router.addRoute(RequestMethod.GET, "/method_options2", new OptionsHandler(methodOptions2()));
     Router.addRoute(RequestMethod.OPTIONS, "/method_options2", new OptionsHandler(methodOptions2()));
+    Router.addRoute(RequestMethod.GET, "/logs", new LogHandler(setLogs(), usernameAuthentication, passwordAuthentication));
+    Router.addRoute(RequestMethod.GET, "/parameters", new ParameterHandler());
+    Router.addRoute(RequestMethod.GET, "/cookie", new CookieHandler());
+    Router.addRoute(RequestMethod.GET, "/eat_cookie", new CookieHandler());
     populateFileRoutes(directoryPath);
   }
 
@@ -47,6 +54,7 @@ public class Configuration {
   public String getDirectoryName(){
     return directoryPath;
   }
+
 
   private String retrieveDirectory(String[] commandLineArgs){
     return configurationValidation.findArg(commandLineArgs, "-d", defaultDirectory);
@@ -72,6 +80,15 @@ public class Configuration {
     Map<String, String> relativeAndAbsolutePaths = fileManager.getRelativeAndAbsolutePath(rootDirectoryPath);
     for (Map.Entry<String, String> path : relativeAndAbsolutePaths.entrySet()) {
       Router.addRoute(RequestMethod.GET, path.getKey(), new FileReaderHandler(path.getValue()));
+      Router.addRoute(RequestMethod.PATCH, path.getKey(), new FileReaderHandler(path.getValue()));
     }
+  }
+
+  private DataStore setLogs(){
+    DataStore dataStore = new DataStore();
+    dataStore.storeEntry("GET", "/log HTTP/1.1");
+    dataStore.storeEntry("PUT", "/these HTTP/1.1");
+    dataStore.storeEntry("HEAD", "/requests HTTP/1.1");
+    return dataStore;
   }
 }

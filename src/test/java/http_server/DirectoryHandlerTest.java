@@ -19,7 +19,7 @@ public class DirectoryHandlerTest {
   }
 
   @Test
-  public void testResponseIsReturned() throws UnsupportedEncodingException {
+  public void responseIsReturnedForGetRequest() throws UnsupportedEncodingException {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/")
@@ -29,9 +29,26 @@ public class DirectoryHandlerTest {
     String rootDirectory = System.getProperty("user.dir") + "/code";
     DirectoryHandler directoryResponse = new DirectoryHandler(rootDirectory);
 
-    String actualResponse = directoryResponse.generate(request);
+    Response actualResponse = directoryResponse.generate(request);
 
-    String expectedResponse = "HTTP/1.1 200 OK\r\n" + "Content-Type: text/html\r\n\r\n" + getBody();
-    assertEquals(expectedResponse, actualResponse);
+    assertEquals("Content-Type: text/html\r\n", actualResponse.getHeaders());
+    assertEquals(getBody(), new String (actualResponse.getBody()));
+  }
+
+  @Test
+  public void responseIsReturnedForHeadRequest() throws UnsupportedEncodingException {
+    Request request = new RequestBuilder()
+        .setRequestMethod(RequestMethod.HEAD)
+        .setUri("/")
+        .setHttpVersion("HTTP/1.1")
+        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .build();
+    String rootDirectory = System.getProperty("user.dir") + "/code";
+    DirectoryHandler directoryResponse = new DirectoryHandler(rootDirectory);
+
+    Response actualResponse = directoryResponse.generate(request);
+
+    String expectedResponse = "HTTP/1.1 200 OK\r\n\r\n";
+    assertEquals("200 OK", actualResponse.getStatusCodeMessage());
   }
 }

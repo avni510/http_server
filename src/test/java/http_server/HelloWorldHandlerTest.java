@@ -20,9 +20,9 @@ public class HelloWorldHandlerTest {
         .build();
     HelloWorldHandler helloWorldHandler = new HelloWorldHandler();
 
-    String actualResponse = helloWorldHandler.generate(request);
+    Response actualResponse = helloWorldHandler.generate(request);
 
-    String expectedResponse = "HTTP/1.1 200 OK\r\n" + "Content-Type: text/plain\r\n\r\n"+ "hello world";
-    assertEquals(expectedResponse, actualResponse);
+    assertEquals("200 OK", actualResponse.getStatusCodeMessage());
+    assertEquals("hello world", new String (actualResponse.getBody()));
   }
 }

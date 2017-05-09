@@ -15,10 +15,13 @@ public class ResponseBuilder {
     allStatusCodes.put(400, "400 Bad Request");
     allStatusCodes.put(405, "405 Method Not Allowed");
     allStatusCodes.put(418, "418 I'm a teapot");
+    allStatusCodes.put(401, "401 Unauthorized");
+    allStatusCodes.put(206, "206 Partial Content");
+    allStatusCodes.put(204, "204 No Content");
   }
   private String statusCodeMessage;
   private Map<String, String> headers = null;
-  private String body = null;
+  private byte[] body = null;
 
   public ResponseBuilder setHttpVersion(String httpVersion) {
     this.httpVersion = httpVersion;
@@ -36,12 +39,21 @@ public class ResponseBuilder {
   }
 
   public ResponseBuilder setBody(String body) {
+    this.body = transformIntoBytes(body);
+    return this;
+  }
+
+  public ResponseBuilder setBody(byte[] body) {
     this.body = body;
     return this;
   }
 
   public Response build() {
     return new Response(httpVersion, statusCodeMessage, headers, body);
+  }
+
+  private byte[] transformIntoBytes(String body){
+    return body.getBytes();
   }
 }
 

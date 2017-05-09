@@ -84,11 +84,16 @@ public class RequestParser {
   }
 
   private void setRequestMethod(String[] requestLineComponents) {
-    this.requestMethod = RequestMethod.valueOf(requestLineComponents[0]);
+    String requestMethod = requestLineComponents[0];
+    try {
+      this.requestMethod = RequestMethod.valueOf(requestMethod);
+    } catch (IllegalArgumentException e) {
+      this.requestMethod = RequestMethod.INVALID_REQUEST_METHOD;
+    }
   }
 
   private void setUri(String[] requestLineComponents) {
-    this.uri = requestLineComponents[1];
+   this.uri = requestLineComponents[1];
   }
 
   private void setHttpVersion(String[] requestLineComponents) {
