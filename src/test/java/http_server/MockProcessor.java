@@ -1,13 +1,13 @@
 package http_server;
 
 public class MockProcessor implements Processor {
-  public Connection clientConnection;
+  public MockServerSocketConnection clientConnection;
 
-  public void setClientConnection(Connection clientConnection) {
+  public MockProcessor(MockServerSocketConnection clientConnection) {
     this.clientConnection = clientConnection;
   }
 
-  public boolean clientConnectionWasSet(Connection clientConnection) {
+  public boolean clientConnectionWasSet(MockServerSocketConnection clientConnection) {
     return clientConnection == this.clientConnection;
   }
 
