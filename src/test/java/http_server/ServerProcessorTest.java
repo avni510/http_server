@@ -24,7 +24,8 @@ public class ServerProcessorTest {
     serverSocketConnection.setStoredInputData(request);
     ServerProcessor serverProcessor = new ServerProcessor();
 
-    serverProcessor.execute(serverSocketConnection);
+    serverProcessor.setClientConnection(serverSocketConnection);
+    serverProcessor.run();
 
     String response = "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\n" + "hello world";
     assertEquals(response, serverSocketConnection.getStoredOutputData());
@@ -38,7 +39,8 @@ public class ServerProcessorTest {
     serverSocketConnection.setStoredInputData(request);
     ServerProcessor serverProcessor = new ServerProcessor();
 
-    serverProcessor.execute(serverSocketConnection);
+    serverProcessor.setClientConnection(serverSocketConnection);
+    serverProcessor.run();
 
     String response = "HTTP/1.1 400 Bad Request\r\n\r\n";
     assertEquals(response, serverSocketConnection.getStoredOutputData());

@@ -1,5 +1,7 @@
 package http_server;
 
+import java.io.IOException;
+
 public class HttpServer {
   private ConnectionManager server;
   private CancellationToken serverCancellationToken;
@@ -11,10 +13,22 @@ public class HttpServer {
     this.serverProcessor = serverProcessor;
   }
 
-  public void run() throws Exception {
+  public void run() {
     while (serverCancellationToken.isListening()) {
-      Connection serverSocketConnection = server.accept();
-      serverProcessor.execute(serverSocketConnection);
+      Connection serverSocketConnection = null;
+      try {
+        serverSocketConnection = server.accept();
+        serverProcessor.setClientConnection(serverSocketConnection);
+        serverProcessor.run();
+      } catch (Exception e) {
+        e.printStackTrace();
+      } finally {
+        try {
+          serverSocketConnection.out().close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 }

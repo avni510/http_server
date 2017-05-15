@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 
 public class HttpServerTest {
   private CancellationToken serverCancellationToken;
-  private MockProcessor processor;
+  private MockProcessor serverProcessor;
   private Connection serverSocketConnection;
   private MockServer server;
 
@@ -28,13 +28,13 @@ public class HttpServerTest {
     this.serverSocketConnection = new MockServerSocketConnection(socket);
     this.server = new MockServer().withAcceptStubbedToReturn(serverSocketConnection);
     serverCancellationToken = new MockServerCancellationToken();
-    this.processor = new MockProcessor();
+    this.serverProcessor = new MockProcessor();
   }
 
 
   @Test
   public void theServerStopsListening() throws Exception {
-    HttpServer httpServer = new HttpServer(server, serverCancellationToken, processor);
+    HttpServer httpServer = new HttpServer(server, serverCancellationToken, serverProcessor);
 
     httpServer.run();
 
@@ -42,11 +42,11 @@ public class HttpServerTest {
   }
 
   @Test
-  public void executeWasCalledWithASocket() throws Exception {
-    HttpServer serverListener = new HttpServer(server, serverCancellationToken, processor);
+  public void clientConnectionIsSetup() throws Exception {
+    HttpServer serverListener = new HttpServer(server, serverCancellationToken, serverProcessor);
 
     serverListener.run();
 
-    assertTrue(processor.executeWasCalledWith(serverSocketConnection));
+    assertTrue(serverProcessor.clientConnectionWasSet(serverSocketConnection));
   }
 }

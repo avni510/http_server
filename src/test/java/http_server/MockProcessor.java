@@ -3,14 +3,14 @@ package http_server;
 public class MockProcessor implements Processor {
   public Connection clientConnection;
 
-  public MockProcessor() {
-  }
-
-  public void execute(Connection clientConnection) throws Exception {
+  public void setClientConnection(Connection clientConnection) {
     this.clientConnection = clientConnection;
   }
 
-  public boolean executeWasCalledWith(Connection clientConnection) {
+  public boolean clientConnectionWasSet(Connection clientConnection) {
     return clientConnection == this.clientConnection;
+  }
+
+  public void run() {
   }
 }
