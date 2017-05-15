@@ -7,8 +7,6 @@ import org.junit.Test;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 public class RequestParserTest {
   @Test
@@ -25,7 +23,7 @@ public class RequestParserTest {
     assertEquals( "HTTP/1.1", actualResult.getHttpVersion());
     ArrayList<String> expectedHeader = new ArrayList<>(Arrays.asList("Host: localhost"));
     assertTrue(expectedHeader.equals(actualResult.getHeader()));
-    assertEquals(null, actualResult.getBody());
+    assertEquals(null, actualResult.getEntireBody());
   }
 
   @Test
@@ -47,9 +45,7 @@ public class RequestParserTest {
     ArrayList<String> expectedHeader = new ArrayList<>(Arrays.asList("Host: localhost",
         "Content-Type: application/x-www-form-urlencoded", "Content-Length: 11"));
     assertTrue(expectedHeader.equals(actualResult.getHeader()));
-    Map<String, String> expectedBody = new HashMap<>();
-    expectedBody.put("data", "fatcat");
-    assertTrue(expectedBody.equals(actualResult.getBody()));
+    assertTrue("fatcat".equals(actualResult.getBodyParam("data")));
   }
 
   @Test(expected = Exception.class)

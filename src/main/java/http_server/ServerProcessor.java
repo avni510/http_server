@@ -20,5 +20,4 @@ public class ServerProcessor implements Processor {
   private void write(Connection clientConnection, Response response) throws Exception{
     clientConnection.out().write(response.getHttpResponseBytes());
   }
-
 }

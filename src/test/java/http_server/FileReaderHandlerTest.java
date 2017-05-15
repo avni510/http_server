@@ -88,7 +88,7 @@ public class FileReaderHandlerTest {
         .setUri("/result.txt")
         .setHttpVersion("HTTP/1.1")
         .setHeader(new ArrayList<>(Arrays.asList("Host: localhost",
-                                                      "If-Match: 8926ca8690743db041718355613d9669ab13d0b7")))
+                                                      "If-Match: cc640aa14e96c7e21003963620c42259125749d9")))
         .setBody("data=foobar")
         .build();
     String pathToFile = System.getProperty("user.dir") + "/code/result.txt";
@@ -119,7 +119,7 @@ public class FileReaderHandlerTest {
         .setUri("/result.txt")
         .setHttpVersion("HTTP/1.1")
         .setHeader(new ArrayList<>(Arrays.asList("Host: localhost",
-                                                      "If-Match: 8926ca8690743db041718355613d9669ab13d0b7")))
+                                                      "If-Match: cc640aa14e96c7e21003963620c42259125749d9")))
         .setBody("data=foobar")
         .build();
     String pathToFile = System.getProperty("user.dir") + "/code/result.txt";
@@ -135,7 +135,7 @@ public class FileReaderHandlerTest {
     Response actualResponse = fileReaderHandler.generate(getRequest);
 
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
-    assertEquals("foobar\r", new String(actualResponse.getBody()));
+    assertEquals("data=foobar", new String(actualResponse.getBody()));
     writeToFile("module TimeLogger\nend\n");
   }
 }

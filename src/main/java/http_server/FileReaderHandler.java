@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -27,8 +26,7 @@ public FileReaderHandler(String filePath) {
   public Response generate(Request request) throws IOException {
     Response response = null;
     if (request.getRequestMethod() == RequestMethod.PATCH) {
-      String patchedContents = request.getBodyParam("data");
-      patchedContents = patchedContents.replace("+", " ");
+      String patchedContents = request.getEntireBody();
       if (fileHashValuesMatch(getifMatchValue(request.getHeader()))){
         writeToFile(patchedContents);
         response = new ResponseBuilder()
@@ -129,7 +127,7 @@ public FileReaderHandler(String filePath) {
     try {
       byte[] fileBytes = readFileBytes();
       MessageDigest sha1Encoder = MessageDigest.getInstance("SHA-1");
-      byte[] encodedBytes = sha1Encoder.digest(Arrays.copyOf(fileBytes, fileBytes.length - 1));
+      byte[] encodedBytes = sha1Encoder.digest(fileBytes);
       String hashValue = DatatypeConverter.printHexBinary(encodedBytes);
       return hashValue.toLowerCase();
     } catch (Exception e) {
@@ -146,7 +144,7 @@ public FileReaderHandler(String filePath) {
     try {
       FileWriter fileWriter = new FileWriter(filePath);
       BufferedWriter buffered = new BufferedWriter(fileWriter);
-      buffered.write(content + "\r");
+      buffered.write(content);
       buffered.close();
     } catch (IOException e) {
       e.printStackTrace();

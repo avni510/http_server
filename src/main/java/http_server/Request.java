@@ -9,7 +9,7 @@ public class Request {
   private String uri;
   private String httpVersion;
   private ArrayList<String> header = null;
-  private Map<String, String> body = null;
+  private String body = null;
 
   public Request(
      Enum<RequestMethod> requestMethod,
@@ -21,7 +21,7 @@ public class Request {
     this.uri = uri;
     this.httpVersion = httpVersion;
     this.header = header;
-    this.body = transformBody(body);
+    this.body = body;
   }
 
   public Enum<RequestMethod> getRequestMethod() {
@@ -40,13 +40,14 @@ public class Request {
     return header;
   }
 
-  public Map<String, String> getBody() {
-    return body;
+  public String getEntireBody() {
+    return this.body;
   }
 
   public String getBodyParam(String key){
-    if (body != null) {
-      return body.get(key);
+    Map<String, String> bodyComponents = transformBody(body);
+    if (bodyComponents != null) {
+      return bodyComponents.get(key);
     } else {
       return null;
     }

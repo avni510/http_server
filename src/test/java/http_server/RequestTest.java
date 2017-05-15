@@ -78,11 +78,9 @@ public class RequestTest {
         .setBody("data=fatcat")
         .build();
 
-    Map<String, String> actualResult = request.getBody();
+    String actualResult = request.getEntireBody();
 
-    Map<String, String> expectedResult = new HashMap<>();
-    expectedResult.put("data", "fatcat");
-    assertTrue(expectedResult.equals(actualResult));
+    assertTrue("data=fatcat".equals(actualResult));
   }
 
   @Test
@@ -109,7 +107,7 @@ public class RequestTest {
         .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
         .build();
 
-    Map<String, String> actualResult = request.getBody();
+    String actualResult = request.getEntireBody();
 
     assertEquals(null, actualResult);
   }

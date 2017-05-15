@@ -25,8 +25,6 @@ public class RequestBuilderTest {
     assertEquals("/hello_world", actualResult.getUri());
     assertEquals("HTTP/1.1", actualResult.getHttpVersion());
     assertEquals(new ArrayList<>(Arrays.asList("Host: localhost")), actualResult.getHeader());
-    Map<String, String> expectedBody = new HashMap<>();
-    expectedBody.put("data", "fatcat");
-    assertTrue(expectedBody.equals(actualResult.getBody()));
+    assertTrue("fatcat".equals(actualResult.getBodyParam("data")));
   }
 }
