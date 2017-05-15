@@ -1,6 +1,9 @@
 package http_server;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -9,21 +12,47 @@ public class Response {
   private String httpVersion;
   private String statusCodeMessage;
   private Map<String, String> headers;
-  private String body;
+  private byte[] body;
 
-  public Response(String httpVersion, String statusCodeMessage, Map<String, String> headers, String body) {
+  public Response(String httpVersion, String statusCodeMessage, Map<String, String> headers, byte[] body) {
     this.httpVersion = httpVersion;
     this.statusCodeMessage = statusCodeMessage;
     this.headers = headers;
     this.body = body;
   }
 
-  public String getHttpResponse() {
-    if (headers == null && body == null) {
+  public byte[] getHttpResponseBytes(){
+    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    byte[] responseLineAndHeader = getResponseLineAndHeader().getBytes();
+    try {
+      byteArrayOutputStream.write(responseLineAndHeader);
+      if (this.body != null) {
+        byteArrayOutputStream.write(this.body);
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return byteArrayOutputStream.toByteArray();
+  }
+
+  public String getResponseLineAndHeader() {
+    if (headers == null) {
       return httpVersion + " " + statusCodeMessage + CLRF + CLRF;
     }
     String headerMessage = retrieveHeader(headers);
-    return httpVersion + " " + statusCodeMessage + CLRF + headerMessage + CLRF + body;
+    return httpVersion + " " + statusCodeMessage + CLRF + headerMessage + CLRF;
+  }
+
+  public String getStatusCodeMessage(){
+    return this.statusCodeMessage;
+  }
+
+  public String getHeaders(){
+    return retrieveHeader(headers);
+  }
+
+  public byte[] getBody(){
+    return this.body;
   }
 
   public String retrieveHeader(Map<String, String> header) {

@@ -16,7 +16,7 @@ public class HttpServerTest {
   private MockServer server;
 
   private Socket createMockSocket() {
-    String request = "GET / HTTP/1.1\r\nHost: localhost\r\n\r\n";
+    String request = "GET /hello_world HTTP/1.1\r\nHost: localhost\r\n\r\n";
     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(request.getBytes());
     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
     return new MockSocket(byteArrayInputStream, byteArrayOutputStream);

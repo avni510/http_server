@@ -13,25 +13,25 @@ public class ResponseBuilderTest {
   public void responseIsReturnedWithHeaderAndBody() {
     Map<String, String> headers = new HashMap();
     headers.put("Content-Type", "text/plain");
-    Response response = new ResponseBuilder()
+    Response actualResponse = new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
         .setStatusCode(200)
         .setHeaders(headers)
         .setBody("hello world")
         .build();
 
-    String expectedHttpResponse = "HTTP/1.1 200 OK\r\n" + "Content-Type: text/plain\r\n\r\n"+ "hello world";
-    assertEquals(response.getHttpResponse(), expectedHttpResponse);
+    assertEquals("200 OK", actualResponse.getStatusCodeMessage());
+    assertEquals("Content-Type: text/plain\r\n", actualResponse.getHeaders());
+    assertEquals("hello world", new String(actualResponse.getBody()));
   }
 
   @Test
   public void responseIsReturnedWithNoHeaderAndBody() {
-    Response response = new ResponseBuilder()
+    Response actualResponse = new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
         .setStatusCode(200)
         .build();
 
-    String expectedHttpResponse = "HTTP/1.1 200 OK\r\n\r\n";
-    assertEquals(response.getHttpResponse(), expectedHttpResponse);
+    assertEquals("200 OK", actualResponse.getStatusCodeMessage());
   }
 }

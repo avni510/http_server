@@ -19,7 +19,7 @@ repositories {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'http_server.ServerRunner'
+        attributes 'Main-Class': 'http_server.Main'
     }
 }
 

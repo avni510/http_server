@@ -3,7 +3,7 @@ package http_server;
 
 import java.net.ServerSocket;
 
-public class ServerRunner {
+public class Main {
 
   public static void main(String[] args) throws Exception {
     Configuration configuration = new Configuration();
@@ -15,5 +15,6 @@ public class ServerRunner {
     ServerCancellationToken serverCancellationToken = new ServerCancellationToken();
     HttpServer httpServer = new HttpServer(server, serverCancellationToken, serverProcessor);
     httpServer.run();
+
   }
 }

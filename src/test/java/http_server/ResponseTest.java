@@ -2,6 +2,8 @@ package http_server;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,8 +22,8 @@ public class ResponseTest {
         .setBody("hello world")
         .build();
 
-    String expectedHttpResponse = "HTTP/1.1 200 OK\r\n" + "Content-Type: text/plain\r\n\r\n"+ "hello world";
-    assertEquals(expectedHttpResponse, response.getHttpResponse());
+    byte[] expectedHttpResponse = ("HTTP/1.1 200 OK\r\n" + "Content-Type: text/plain\r\n\r\n"+ "hello world").getBytes();
+    assertTrue(Arrays.equals(expectedHttpResponse, response.getHttpResponseBytes()));
   }
 
   @Test
@@ -29,11 +31,25 @@ public class ResponseTest {
     Response response = new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
         .setStatusCode(404)
-        .setHeaders(null)
-        .setBody(null)
         .build();
 
-    String expectedHttpResponse = "HTTP/1.1 404 Not Found\r\n\r\n";
-    assertEquals(expectedHttpResponse, response.getHttpResponse());
+    byte[] expectedHttpResponse = ("HTTP/1.1 404 Not Found\r\n\r\n").getBytes();
+
+    assertTrue(Arrays.equals(expectedHttpResponse, response.getHttpResponseBytes()));
+  }
+
+  @Test
+  public void httpResponseIstReturnedWithHeaderButNoBody() {
+    Map<String, String> headers = new HashMap();
+    headers.put("Location", "http://localhost:4444/");
+    Response response = new ResponseBuilder()
+        .setHttpVersion("HTTP/1.1")
+        .setStatusCode(302)
+        .setHeaders(headers)
+        .build();
+
+    byte[] expectedHttpResponse = ("HTTP/1.1 302 Found\r\nLocation: http://localhost:4444/\r\n\r\n").getBytes();
+
+    assertTrue(Arrays.equals(expectedHttpResponse, response.getHttpResponseBytes()));
   }
 }

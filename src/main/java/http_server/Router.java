@@ -11,29 +11,47 @@ public class Router {
     routes.put(new Tuple<>(requestMethod, uri), handler);
   }
 
-  public static String generateHttpResponse(BufferedReader inputStream) throws Exception {
-    Request request;
+  public static Response generateHttpResponse(BufferedReader inputStream) throws Exception {
+    Request request = null;
     RequestParser requestParser = new RequestParser(inputStream);
     try {
       request = requestParser.parse();
     } catch (Exception e) {
       ErrorHandler errorHandler = new ErrorHandler(400);
-      return errorHandler.generate();
+      return errorHandler.generate(request);
     }
-    try {
-      Handler handler = retrieveHandler(request.getRequestMethod(), request.getUri());
-      return handler.generate();
-    } catch (Exception e) {
-      ErrorHandler errorHandler = new ErrorHandler(404);
-      return errorHandler.generate();
+    Handler handler = retrieveHandler(request.getRequestMethod(), request.getUri());
+    if (handler == null) {
+      handler = clientError(request);
     }
-  }
-
-  public static Map<Tuple<Enum<RequestMethod>, String>, Handler> getRoutes(){
-    return routes;
+    return handler.generate(request);
   }
 
   private static Handler retrieveHandler(Enum<RequestMethod> requestMethod, String uri){
-    return routes.get(new Tuple<>(requestMethod, uri));
+    if (uri.contains("?")) {
+      String[] uriParts = uri.split("\\?");
+      return routes.get(new Tuple<>(requestMethod, uriParts[0]));
+    } else {
+      return routes.get(new Tuple<>(requestMethod, uri));
+    }
+  }
+
+  private static Handler clientError(Request request){
+    if (uriExists(request.getUri())){
+      return new ErrorHandler(405);
+    } else {
+      return new ErrorHandler(404);
+    }
+  }
+
+  private static boolean uriExists(String uri){
+    boolean found = false;
+    for(Map.Entry<Tuple<Enum<RequestMethod>, String>, Handler> entry : routes.entrySet()){
+      String uriInRoute = entry.getKey().getSecondElement();
+      if (uriInRoute.equals(uri)){
+        return true;
+      }
+    }
+    return found;
   }
 }

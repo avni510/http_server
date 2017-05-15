@@ -9,3 +9,6 @@
 build/
 .gradle
 
+# reference
+scratch.txt
+
