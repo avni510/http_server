@@ -7,7 +7,7 @@ import java.io.BufferedReader;
 public class ServerProcessor implements Processor {
   private Connection clientConnection;
 
-  public void setClientConnection(Connection clientConnection){
+  public ServerProcessor(Connection clientConnection){
     this.clientConnection = clientConnection;
   }
 
@@ -16,6 +16,7 @@ public class ServerProcessor implements Processor {
       BufferedReader optimizedInputStream = read(clientConnection);
       Response httpResponse = Router.generateHttpResponse(optimizedInputStream);
       write(clientConnection, httpResponse);
+      clientConnection.out().close();
     } catch (Exception e) {
       e.printStackTrace();
     }

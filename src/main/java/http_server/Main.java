@@ -1,6 +1,5 @@
 package http_server;
 
-
 import java.net.ServerSocket;
 
 public class Main {
@@ -11,10 +10,8 @@ public class Main {
     configuration.populateRoutes();
     ServerSocket serverSocket = new ServerSocket(configuration.getPortNumber());
     ConnectionManager server = new Server(serverSocket);
-    ServerProcessor serverProcessor = new ServerProcessor();
     ServerCancellationToken serverCancellationToken = new ServerCancellationToken();
-    HttpServer httpServer = new HttpServer(server, serverCancellationToken, serverProcessor);
-    httpServer.run();
-
+    HttpServer httpServer = new HttpServer(server, serverCancellationToken);
+    httpServer.execute();
   }
 }

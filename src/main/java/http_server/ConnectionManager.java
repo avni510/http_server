@@ -6,4 +6,5 @@ import java.net.Socket;
 
 public interface ConnectionManager {
   Connection accept() throws IOException;
+  void close() throws IOException;
 }

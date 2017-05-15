@@ -22,31 +22,31 @@ public class HttpServerTest {
     return new MockSocket(byteArrayInputStream, byteArrayOutputStream);
   }
 
-  @Before
-  public void setUp() throws Exception {
-    Socket socket = createMockSocket();
-    this.serverSocketConnection = new MockServerSocketConnection(socket);
-    this.server = new MockServer().withAcceptStubbedToReturn(serverSocketConnection);
-    serverCancellationToken = new MockServerCancellationToken();
-    this.serverProcessor = new MockProcessor();
-  }
-
-
-  @Test
-  public void theServerStopsListening() throws Exception {
-    HttpServer httpServer = new HttpServer(server, serverCancellationToken, serverProcessor);
-
-    httpServer.run();
-
-    assertFalse(serverCancellationToken.isListening());
-  }
-
-  @Test
-  public void clientConnectionIsSetup() throws Exception {
-    HttpServer serverListener = new HttpServer(server, serverCancellationToken, serverProcessor);
-
-    serverListener.run();
-
-    assertTrue(serverProcessor.clientConnectionWasSet(serverSocketConnection));
-  }
+//  @Before
+//  public void setUp() throws Exception {
+//    Socket socket = createMockSocket();
+//    this.serverSocketConnection = new MockServerSocketConnection(socket);
+//    this.server = new MockServer().withAcceptStubbedToReturn(serverSocketConnection);
+//    serverCancellationToken = new MockServerCancellationToken();
+//    this.serverProcessor = new MockProcessor();
+//  }
+//
+//
+//  @Test
+//  public void theServerStopsListening() throws Exception {
+//    HttpServer httpServer = new HttpServer(server, serverCancellationToken, serverProcessor);
+//
+//    httpServer.run();
+//
+//    assertFalse(serverCancellationToken.isListening());
+//  }
+//
+//  @Test
+//  public void clientConnectionIsSetup() throws Exception {
+//    HttpServer serverListener = new HttpServer(server, serverCancellationToken, serverProcessor);
+//
+//    serverListener.run();
+//
+//    assertTrue(serverProcessor.clientConnectionWasSet(serverSocketConnection));
+//  }
 }
