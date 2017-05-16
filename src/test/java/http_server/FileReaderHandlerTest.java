@@ -3,8 +3,6 @@ package http_server;
 import org.junit.Test;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
@@ -16,7 +14,7 @@ public class FileReaderHandlerTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/result.txt")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .setHeader("Host: localhost\r\n")
         .build();
     String pathToFile = System.getProperty("user.dir") + "/code/result.txt";
     FileReaderHandler fileReaderHandler = new FileReaderHandler(pathToFile);
@@ -33,7 +31,7 @@ public class FileReaderHandlerTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/result.txt")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost", "Range: bytes=0-5")))
+        .setHeader("Host: localhost\r\nRange: bytes=0-5\r\n")
         .build();
     String pathToFile = System.getProperty("user.dir") + "/code/result.txt";
     FileReaderHandler fileReaderHandler = new FileReaderHandler(pathToFile);
@@ -51,7 +49,7 @@ public class FileReaderHandlerTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/result.txt")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost", "Range: bytes=-5")))
+        .setHeader("Host: localhost\r\nRange: bytes=-5\r\n")
         .build();
     String pathToFile = System.getProperty("user.dir") + "/code/result.txt";
     FileReaderHandler fileReaderHandler = new FileReaderHandler(pathToFile);
@@ -69,7 +67,7 @@ public class FileReaderHandlerTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/result.txt")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost", "Range: bytes=5-")))
+        .setHeader("Host: localhost\r\nRange: bytes=5-\r\n")
         .build();
     String pathToFile = System.getProperty("user.dir") + "/code/result.txt";
     FileReaderHandler fileReaderHandler = new FileReaderHandler(pathToFile);
@@ -87,8 +85,7 @@ public class FileReaderHandlerTest {
         .setRequestMethod(RequestMethod.PATCH)
         .setUri("/result.txt")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost",
-                                                      "If-Match: cc640aa14e96c7e21003963620c42259125749d9")))
+        .setHeader("Host: localhost\r\nIf-Match: cc640aa14e96c7e21003963620c42259125749d9\r\n")
         .setBody("data=foobar")
         .build();
     String pathToFile = System.getProperty("user.dir") + "/code/result.txt";
@@ -118,8 +115,7 @@ public class FileReaderHandlerTest {
         .setRequestMethod(RequestMethod.PATCH)
         .setUri("/result.txt")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost",
-                                                      "If-Match: cc640aa14e96c7e21003963620c42259125749d9")))
+        .setHeader("Host: localhost\r\nIf-Match: cc640aa14e96c7e21003963620c42259125749d9\r\n")
         .setBody("data=foobar")
         .build();
     String pathToFile = System.getProperty("user.dir") + "/code/result.txt";
@@ -129,7 +125,7 @@ public class FileReaderHandlerTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/result.txt")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .setHeader("Host: localhost\r\n")
         .build();
 
     Response actualResponse = fileReaderHandler.generate(getRequest);

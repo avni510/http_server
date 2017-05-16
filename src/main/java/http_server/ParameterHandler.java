@@ -3,18 +3,14 @@ package http_server;
 import java.io.IOException;
 
 import java.net.URLDecoder;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ParameterHandler implements Handler{
 
   public Response generate(Request request) throws IOException {
-    Map<String, String> header = new HashMap();
-    header.put("Content-Type", "text/plain");
     Response response = new ResponseBuilder().
         setHttpVersion("HTTP/1.1")
         .setStatusCode(200)
-        .setHeaders(header)
+        .setHeader("Content-Type", "text/plain")
         .setBody(splitUri(request.getUri()))
         .build();
     return response;

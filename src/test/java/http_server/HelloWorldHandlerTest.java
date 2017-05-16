@@ -16,7 +16,7 @@ public class HelloWorldHandlerTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/hello_world")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .setHeader("Host: localhost")
         .build();
     HelloWorldHandler helloWorldHandler = new HelloWorldHandler();
 

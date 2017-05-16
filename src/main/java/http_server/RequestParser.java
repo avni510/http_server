@@ -9,7 +9,7 @@ public class RequestParser {
   private RequestMethod requestMethod;
   private String uri;
   private String httpVersion;
-  private ArrayList<String> headers;
+  private String headers;
   private String body = null;
 
   public RequestParser(BufferedReader inputStream) throws FileNotFoundException {
@@ -22,20 +22,20 @@ public class RequestParser {
     setRequestLineParts(requestComponents);
     setHeaders(requestComponents);
     setBody(requestComponents);
-    Request request = buildRequest(requestMethod, uri, httpVersion, headers, body);
+    Request request = buildRequest();
     return request;
   }
 
-  private Request buildRequest(RequestMethod requestMethod, String uri, String httpVersion,
-                               ArrayList<String> headers, String body){
-    Request requestNew = new RequestBuilder()
-        .setRequestMethod(requestMethod)
-        .setUri(uri)
-        .setHttpVersion(httpVersion)
-        .setHeader(headers)
-        .setBody(body)
+  private Request buildRequest(){
+
+    Request request = new RequestBuilder()
+        .setRequestMethod(this.requestMethod)
+        .setUri(this.uri)
+        .setHttpVersion(this.httpVersion)
+        .setHeader(this.headers)
+        .setBody(this.body)
         .build();
-    return requestNew;
+    return request;
   }
 
   private String bufferedReaderToString(BufferedReader bufferedReader) throws Exception {
@@ -112,10 +112,10 @@ public class RequestParser {
     boolean bodyExists = bodyExistInRequest(requestParts);
     if (bodyExists) {
       List<String> allHeaders = requestParts.subList(1, requestParts.size() - 1);
-      this.headers = new ArrayList(allHeaders);
+      this.headers = String.join("\r\n", allHeaders);
     } else {
       List<String> allHeaders = requestParts.subList(1, requestParts.size());
-      this.headers = new ArrayList(allHeaders);
+      this.headers = String.join("\r\n", allHeaders);
     }
   }
 

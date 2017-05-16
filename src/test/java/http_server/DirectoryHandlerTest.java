@@ -24,7 +24,7 @@ public class DirectoryHandlerTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .setHeader("Host: localhost\r\n")
         .build();
     String rootDirectory = System.getProperty("user.dir") + "/code";
     DirectoryHandler directoryResponse = new DirectoryHandler(rootDirectory);
@@ -41,7 +41,7 @@ public class DirectoryHandlerTest {
         .setRequestMethod(RequestMethod.HEAD)
         .setUri("/")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .setHeader("Host: localhost\r\n")
         .build();
     String rootDirectory = System.getProperty("user.dir") + "/code";
     DirectoryHandler directoryResponse = new DirectoryHandler(rootDirectory);

@@ -20,8 +20,8 @@ public class ResponseBuilder {
     allStatusCodes.put(204, "204 No Content");
   }
   private String statusCodeMessage;
-  private Map<String, String> headers = null;
   private byte[] body = null;
+  private Header header = new Header();
 
   public ResponseBuilder setHttpVersion(String httpVersion) {
     this.httpVersion = httpVersion;
@@ -33,8 +33,8 @@ public class ResponseBuilder {
     return this;
   }
 
-  public ResponseBuilder setHeaders(Map<String, String> headers) {
-    this.headers = headers;
+  public ResponseBuilder setHeader(String key, String value) {
+    header.add(key, value);
     return this;
   }
 
@@ -49,7 +49,7 @@ public class ResponseBuilder {
   }
 
   public Response build() {
-    return new Response(httpVersion, statusCodeMessage, headers, body);
+    return new Response(httpVersion, statusCodeMessage, header, body);
   }
 
   private byte[] transformIntoBytes(String body){
