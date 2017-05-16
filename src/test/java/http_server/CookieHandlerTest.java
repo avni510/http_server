@@ -3,8 +3,6 @@ package http_server;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
@@ -16,7 +14,7 @@ public class CookieHandlerTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/cookie?type=chocolate")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .setHeader("Host: localhost\r\n")
         .build();
     CookieHandler cookieHandler = new CookieHandler();
 
@@ -32,7 +30,7 @@ public class CookieHandlerTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/eat_cookie")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost", "Cookie: type=chocolate")))
+        .setHeader("Host: localhost\r\nCookie: type=chocolate\r\n")
         .build();
     CookieHandler cookieHandler = new CookieHandler();
 

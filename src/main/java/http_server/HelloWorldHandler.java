@@ -7,12 +7,10 @@ import java.util.Map;
 public class HelloWorldHandler implements Handler{
 
   public Response generate(Request request) throws UnsupportedEncodingException {
-    Map<String, String> header = new HashMap();
-    header.put("Content-Type", "text/plain");
     Response response = new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
         .setStatusCode(200)
-        .setHeaders(header)
+        .setHeader("Content-Type", "text/plain")
         .setBody("hello world")
         .build();
     return response;

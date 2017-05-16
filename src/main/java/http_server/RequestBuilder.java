@@ -6,7 +6,7 @@ public class RequestBuilder {
   private Enum<RequestMethod> requestMethod;
   private String uri;
   private String httpVersion;
-  private ArrayList<String> header = null;
+  private String header = null;
   private String body = null;
 
   public RequestBuilder() {}
@@ -26,7 +26,7 @@ public class RequestBuilder {
     return this;
   }
 
-  public RequestBuilder setHeader(ArrayList<String> header) {
+  public RequestBuilder setHeader(String header) {
     this.header = header;
     return this;
   }

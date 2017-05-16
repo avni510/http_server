@@ -16,4 +16,7 @@ public class MockServer implements ConnectionManager{
   public Connection accept() throws IOException {
     return mockServerSocketConnection;
   }
+
+  public void close() throws IOException {
+  }
 }

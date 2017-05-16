@@ -15,4 +15,8 @@ public class Server implements ConnectionManager {
     Socket clientSocket = serverSocket.accept();
     return new ServerSocketConnection(clientSocket);
   }
+
+  public void close() throws IOException {
+    serverSocket.close();
+  }
 }

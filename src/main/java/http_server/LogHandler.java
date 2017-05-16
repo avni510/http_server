@@ -18,34 +18,29 @@ public class LogHandler implements Handler{
   }
 
   public Response generate(Request request) throws IOException {
-    Response response = null;
+    Response response;
     if (isAuthorized(request)) {
-    Map<String, String> header = new HashMap();
-    header.put("Content-Type", "plain/text");
     response = new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
         .setStatusCode(200)
-        .setHeaders(header)
+        .setHeader("Content-Type", "plain/text")
         .setBody(getBody())
         .build();
     } else {
-      Map<String, String> header = new HashMap();
-      header.put("WWW-Authenticate", "Basic");
-      header.put("realm=", "\"Access to Avni's Server\"");
       response = new ResponseBuilder()
           .setHttpVersion("HTTP/1.1")
           .setStatusCode(401)
-          .setHeaders(header)
+          .setHeader("WWW-Authenticate", "Basic realm=\"Access to Avni's Server\"")
           .build();
     }
     return response;
   }
 
   private boolean isAuthorized(Request request) throws UnsupportedEncodingException {
-    String firstHeader = request.getHeader().get(0);
-    if (firstHeader.contains("Authorization")) {
-      String[] authorizationHeaderParts = firstHeader.split(" ");
-      String encodedAuthorization = authorizationHeaderParts[2];
+    String authorizedHeader = request.getHeaderValue("Authorization");
+    if (authorizedHeader != null) {
+      String[] authorizationHeaderParts = authorizedHeader.split(" ");
+      String encodedAuthorization = authorizationHeaderParts[1];
       String decodedAuthorization = new String(Base64.getDecoder().decode(encodedAuthorization), "UTF-8");
       String[] authorizationParts = decodedAuthorization.split(":");
       return authorizationParts[0].contains(username) && authorizationParts[1].contains(password);

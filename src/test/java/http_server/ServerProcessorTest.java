@@ -22,9 +22,9 @@ public class ServerProcessorTest {
     Socket socket = createMockSocket(request);
     MockServerSocketConnection serverSocketConnection = new MockServerSocketConnection(socket);
     serverSocketConnection.setStoredInputData(request);
-    ServerProcessor serverProcessor = new ServerProcessor();
+    ServerProcessor serverProcessor = new ServerProcessor(serverSocketConnection);
 
-    serverProcessor.execute(serverSocketConnection);
+    serverProcessor.run();
 
     String response = "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\n" + "hello world";
     assertEquals(response, serverSocketConnection.getStoredOutputData());
@@ -36,9 +36,9 @@ public class ServerProcessorTest {
     Socket socket = createMockSocket(request);
     MockServerSocketConnection serverSocketConnection = new MockServerSocketConnection(socket);
     serverSocketConnection.setStoredInputData(request);
-    ServerProcessor serverProcessor = new ServerProcessor();
+    ServerProcessor serverProcessor = new ServerProcessor(serverSocketConnection);
 
-    serverProcessor.execute(serverSocketConnection);
+    serverProcessor.run();
 
     String response = "HTTP/1.1 400 Bad Request\r\n\r\n";
     assertEquals(response, serverSocketConnection.getStoredOutputData());

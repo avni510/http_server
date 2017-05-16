@@ -16,7 +16,7 @@ public class TeapotHandlerTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/coffee")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .setHeader("Host: localhost")
         .build();
     TeapotHandler teapotHandler = new TeapotHandler();
 
@@ -32,7 +32,7 @@ public class TeapotHandlerTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/tea")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .setHeader("Host: localhost")
         .build();
     TeapotHandler teapotHandler = new TeapotHandler();
 

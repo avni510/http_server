@@ -1,20 +1,34 @@
 package http_server;
 
+import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+
 public class HttpServer {
   private ConnectionManager server;
   private CancellationToken serverCancellationToken;
-  private Processor serverProcessor;
+  private ExecutorService threadPool;
 
-  public HttpServer(ConnectionManager server, CancellationToken serverCancellationToken, Processor serverProcessor) {
+  public HttpServer(ConnectionManager server, CancellationToken serverCancellationToken, ExecutorService threadPool) {
     this.server = server;
     this.serverCancellationToken = serverCancellationToken;
-    this.serverProcessor = serverProcessor;
+    this.threadPool = threadPool;
   }
 
-  public void run() throws Exception {
-    while (serverCancellationToken.isListening()) {
-      Connection serverSocketConnection = server.accept();
-      serverProcessor.execute(serverSocketConnection);
+  public void execute() {
+    try {
+      while (serverCancellationToken.isListening()) {
+        threadPool.execute(new ServerProcessor(server.accept()));
+      }
+    }
+    catch(Exception e){
+      e.printStackTrace();
+    } finally {
+      try {
+        threadPool.shutdown();
+        server.close();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
   }
 }

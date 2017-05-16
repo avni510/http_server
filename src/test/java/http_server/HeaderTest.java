@@ -10,58 +10,56 @@ import static org.junit.Assert.*;
 public class HeaderTest {
 
   @Test
-  public void testOneHeaderStringToMap() {
+  public void headersAreAddedToAMap(){
     Header header = new Header();
-    String headerMessage =  "Host: localhost\r\n";
 
-    Map<String, String> actualResult = header.getAllHeaders(headerMessage);
-
+    header.add("Host", "localhost");
+    Map<String, String> actualResult = header.getAllHeaders();
     Map<String, String> expectedResult= new HashMap<>();
     expectedResult.put("Host", "localhost");
-    assertTrue(actualResult.equals(expectedResult));
+    assertTrue(expectedResult.equals(actualResult));
   }
 
   @Test
-  public void testMoreThanOneHeadersStringToMap() {
-    Header header = new Header();
+  public void headersAreConvertedToAMap() {
     String headerMessage =  "Host: localhost\r\n" +
                             "From: someuser@jmarshall.com\r\n" +
-                            "User-Agent: HTTPTool/1.0\r\n";
+                            "User-Agent: HTTPTool/1.0\r\n" +
+                            "Authorization: Basic YWRtaW46aHVudGVyMg==\r\n";
+    Header header = new Header();
 
-    Map<String, String> actualResult = header.getAllHeaders(headerMessage);
+    header.populate(headerMessage);
+    Map<String, String> actualResult = header.getAllHeaders();
 
     Map<String, String> expectedResult= new HashMap<>();
     expectedResult.put("Host", "localhost");
     expectedResult.put("From", "someuser@jmarshall.com");
     expectedResult.put("User-Agent", "HTTPTool/1.0");
-    assertTrue(actualResult.equals(expectedResult));
+    expectedResult.put("Authorization", "Basic YWRtaW46aHVudGVyMg==");
+    assertTrue(expectedResult.equals(actualResult));
   }
 
   @Test
-  public void testOneHeaderInMaptoString() {
+  public void headerMapsAreConvertedToString() {
     Header header = new Header();
-    Map<String, String> headerComponents= new HashMap<>();
-    headerComponents.put("Host", "localhost");
-
-    String actualResult = header.createHttpHeader(headerComponents);
-
-    String expectedResult =  "Host: localhost\r\n";
-    assertTrue(actualResult.equals(expectedResult));
-  }
-
-  @Test
-  public void moreThanOneHeaderInMaptoString() {
-    Header header = new Header();
-    Map<String, String> headerComponents = new HashMap<>();
-    headerComponents.put("Host", "localhost");
-    headerComponents.put("From", "someuser@jmarshall.com");
-    headerComponents.put("User-Agent", "HTTPTool/1.0");
-
-    String actualResult = header.createHttpHeader(headerComponents);
+    header.add("Host", "localhost");
+    header.add("From", "someuser@jmarshall.com");
+    header.add("User-Agent", "HTTPTool/1.0");
+    String actualResult = header.convertHeadersToString();
 
     String expectedResult = "User-Agent: HTTPTool/1.0\r\n" +
                             "Host: localhost\r\n" +
                             "From: someuser@jmarshall.com\r\n";
-    assertTrue(actualResult.equals(expectedResult));
+    assertTrue(expectedResult.equals(actualResult));
+  }
+
+  @Test
+  public void headerValueIsReturned() {
+    Header header = new Header();
+    header.add("Host", "localhost");
+
+    String actualResult = header.getValue("Host");
+
+    assertTrue("localhost".equals(actualResult));
   }
 }

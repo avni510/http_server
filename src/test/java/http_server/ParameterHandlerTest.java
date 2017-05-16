@@ -2,9 +2,6 @@ package http_server;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import static org.junit.Assert.*;
 
 public class ParameterHandlerTest {
@@ -26,7 +23,7 @@ public class ParameterHandlerTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri(setUri())
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .setHeader("Host: localhost")
         .build();
     ParameterHandler parameterHandler = new ParameterHandler();
 

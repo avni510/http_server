@@ -16,7 +16,7 @@ public class OptionsHandlerTest {
         .setRequestMethod(RequestMethod.OPTIONS)
         .setUri("/method_options")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .setHeader("Host: localhost")
         .build();
     RequestMethod[] requestMethodsOnResource = new RequestMethod[]{RequestMethod.GET, RequestMethod.POST,
                                                                    RequestMethod.PUT, RequestMethod.OPTIONS,
@@ -34,7 +34,7 @@ public class OptionsHandlerTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/method_options")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .setHeader("Host: localhost")
         .build();
     RequestMethod[] requestMethodsOnResource = new RequestMethod[]{RequestMethod.GET, RequestMethod.POST,
                                                                    RequestMethod.PUT, RequestMethod.OPTIONS,
@@ -43,7 +43,6 @@ public class OptionsHandlerTest {
 
     Response actualResult = optionsHandler.generate(request);
 
-    String expectedResult = "HTTP/1.1 200 OK\r\n\r\n";
     assertEquals("200 OK", actualResult.getStatusCodeMessage());
   }
 }

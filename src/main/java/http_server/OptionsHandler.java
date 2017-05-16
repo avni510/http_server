@@ -13,13 +13,11 @@ public class OptionsHandler implements Handler{
 
   public Response generate(Request request) throws IOException {
     if (request.getRequestMethod() == RequestMethod.OPTIONS) {
-      Map<String, String> header = new HashMap<>();
       String allAllowedRequestMethods = requestMethodsToString();
-      header.put("Allow", allAllowedRequestMethods);
       Response response = new ResponseBuilder()
           .setHttpVersion("HTTP/1.1")
           .setStatusCode(200)
-          .setHeaders(header)
+          .setHeader("Allow", allAllowedRequestMethods)
           .build();
       return response;
     }

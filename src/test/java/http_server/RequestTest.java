@@ -2,9 +2,6 @@ package http_server;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.*;
@@ -17,7 +14,7 @@ public class RequestTest {
                                 .setRequestMethod(RequestMethod.GET)
                                 .setUri("/")
                                 .setHttpVersion("HTTP/1.1")
-                                .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+                                .setHeader("Host: localhost")
                                 .setBody("data=fatcat")
                                 .build();
 
@@ -30,7 +27,7 @@ public class RequestTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .setHeader("Host: localhost")
         .setBody("data=fatcat")
         .build();
 
@@ -43,7 +40,7 @@ public class RequestTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .setHeader("Host: localhost")
         .setBody("data=fatcat")
         .build();
 
@@ -56,16 +53,17 @@ public class RequestTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost", "Content-Type: text/plain")))
+        .setHeader("Host: localhost\r\nContent-Type: text/plain")
         .setBody("hello world")
         .build();
+    Header header = new Header();
 
-    ArrayList<String> actualResult = request.getHeader();
+    Map<String, String> actualResult = request.getHeader();
 
-    ArrayList<String> expectedResult = new ArrayList<>();
-    expectedResult.add("Host: localhost");
-    expectedResult.add("Content-Type: text/plain");
-    assertTrue(actualResult.equals(expectedResult));
+    header.add("Host", "localhost");
+    header.add("Content-Type", "text/plain");
+    Map<String, String> expectedResult = header.getAllHeaders();
+    assertTrue(expectedResult.equals(actualResult));
   }
 
   @Test
@@ -74,7 +72,7 @@ public class RequestTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .setHeader("Host: localhost")
         .setBody("data=fatcat")
         .build();
 
@@ -89,7 +87,7 @@ public class RequestTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .setHeader("Host: localhost")
         .setBody("data=fatcat")
         .build();
 
@@ -104,7 +102,7 @@ public class RequestTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .setHeader("Host: localhost")
         .build();
 
     String actualResult = request.getEntireBody();
@@ -118,7 +116,7 @@ public class RequestTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .setHeader("Host: localhost")
         .build();
 
     String actualResult = request.getBodyParam("data");

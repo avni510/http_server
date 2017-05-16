@@ -13,12 +13,10 @@ public class ResponseTest {
 
   @Test
   public void httpResponseIstReturnedWithHeaderAndBody() {
-    Map<String, String> headers = new HashMap();
-    headers.put("Content-Type", "text/plain");
     Response response = new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
         .setStatusCode(200)
-        .setHeaders(headers)
+        .setHeader("Content-Type", "text/plain")
         .setBody("hello world")
         .build();
 
@@ -40,12 +38,10 @@ public class ResponseTest {
 
   @Test
   public void httpResponseIstReturnedWithHeaderButNoBody() {
-    Map<String, String> headers = new HashMap();
-    headers.put("Location", "http://localhost:4444/");
     Response response = new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
         .setStatusCode(302)
-        .setHeaders(headers)
+        .setHeader("Location", "http://localhost:4444/")
         .build();
 
     byte[] expectedHttpResponse = ("HTTP/1.1 302 Found\r\nLocation: http://localhost:4444/\r\n\r\n").getBytes();

@@ -9,43 +9,34 @@ public class CookieHandler implements Handler{
   private String cookie = "type=chocolate";
 
   public Response generate(Request request) throws IOException {
-    Response response = null;
-    String cookieKeyAndValue = cookieValue(request.getHeader());
+    Response response;
+    String cookieKeyAndValue = cookieValue(request);
     if (cookie.equals(cookieKeyAndValue)){
-      Map<String, String> header = new HashMap();
-      header.put("Content-Type", "text/plain");
       response = new ResponseBuilder()
           .setHttpVersion("HTTP/1.1")
           .setStatusCode(200)
-          .setHeaders(header)
+          .setHeader("Content-Type", "text/plain")
           .setBody("mmmm chocolate")
           .build();
 
     } else {
-      Map<String, String> header = new HashMap();
-      header.put("Set-Cookie", cookie);
-      header.put("Content-Type", "text/plain");
       response = new ResponseBuilder()
           .setHttpVersion("HTTP/1.1")
           .setStatusCode(200)
-          .setHeaders(header)
+          .setHeader("Content-Type", "text/plain")
+          .setHeader("Set-Cookie", cookie)
           .setBody("Eat")
           .build();
     }
     return response;
   }
 
-  private String cookieValue(ArrayList<String> headers){
+  private String cookieValue(Request request){
     String cookie = null;
-    for (String header: headers) {
-      if (header.contains("Cookie")){
-        cookie = header;
-      }
+    String headerValue = request.getHeaderValue("Cookie");
+    if (headerValue != null){
+      cookie = headerValue;
     }
-    if (cookie == null) {
-      return cookie;
-    }
-    String[] cookieParts = cookie.split(": ");
-    return cookieParts[1];
+    return cookie;
   }
 }

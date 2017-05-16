@@ -5,12 +5,21 @@ import java.io.InputStreamReader;
 import java.io.BufferedReader;
 
 public class ServerProcessor implements Processor {
+  private Connection clientConnection;
 
-  public void execute(Connection clientConnection) throws Exception {
-    BufferedReader optimizedInputStream = read(clientConnection);
-    Response httpResponse = Router.generateHttpResponse(optimizedInputStream);
-    write(clientConnection, httpResponse);
-    clientConnection.out().close();
+  public ServerProcessor(Connection clientConnection){
+    this.clientConnection = clientConnection;
+  }
+
+  public void run() {
+    try {
+      BufferedReader optimizedInputStream = read(clientConnection);
+      Response httpResponse = Router.generateHttpResponse(optimizedInputStream);
+      write(clientConnection, httpResponse);
+      clientConnection.out().close();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   private BufferedReader read(Connection clientConnection) throws IOException {
