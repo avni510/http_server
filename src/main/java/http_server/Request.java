@@ -1,6 +1,5 @@
 package http_server;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,20 +7,28 @@ public class Request {
   private Enum<RequestMethod> requestMethod;
   private String uri;
   private String httpVersion;
-  private ArrayList<String> header = null;
+  private String header = null;
   private String body = null;
+  private Header headerClass = new Header();
 
   public Request(
      Enum<RequestMethod> requestMethod,
      String uri,
      String httpVersion,
-     ArrayList<String> header,
+     String header,
      String body) {
     this.requestMethod = requestMethod;
     this.uri = uri;
     this.httpVersion = httpVersion;
     this.header = header;
     this.body = body;
+    populateHeaders();
+  }
+
+  public void populateHeaders(){
+    if (header != null) {
+      headerClass.populate(header);
+    }
   }
 
   public Enum<RequestMethod> getRequestMethod() {
@@ -36,8 +43,12 @@ public class Request {
     return httpVersion;
   }
 
-  public ArrayList<String> getHeader() {
-    return header;
+  public Map<String, String> getHeader() {
+    return headerClass.getAllHeaders();
+  }
+
+  public String getHeaderValue(String key){
+    return headerClass.getValue(key);
   }
 
   public String getEntireBody() {

@@ -15,13 +15,11 @@ public class FormHandler implements Handler{
   public Response generate(Request request) throws IOException {
     Response response = null;
     if (request.getRequestMethod() == RequestMethod.GET) {
-      Map<String, String> header = new HashMap();
-      header.put("Content-Type", "text/html");
       String bodyValue = getBodyValue();
       response = new ResponseBuilder()
           .setHttpVersion("HTTP/1.1")
           .setStatusCode(200)
-          .setHeaders(header)
+          .setHeader("Content-Type", "text/html")
           .setBody(getBody(bodyValue))
           .build();
     } else if(request.getRequestMethod() == RequestMethod.POST){

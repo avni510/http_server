@@ -27,14 +27,14 @@ public class LogHandlerTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/log")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .setHeader("Host: localhost")
         .build();
     LogHandler logHandler = new LogHandler(setUpLogs(), username, password);
 
     Response actualResponse = logHandler.generate(request);
 
     assertEquals("401 Unauthorized", actualResponse.getStatusCodeMessage());
-    assertEquals("WWW-Authenticate: Basic\r\nrealm=: \"Access to Avni's Server\"\r\n", actualResponse.getHeaders());
+    assertEquals("WWW-Authenticate: Basic realm=\"Access to Avni's Server\"\r\n", actualResponse.getHeaders());
   }
 
   @Test
@@ -47,7 +47,7 @@ public class LogHandlerTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/log")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Authorization: Basic " + encoded)))
+        .setHeader("Authorization: Basic " + encoded)
         .build();
     LogHandler logHandler = new LogHandler(setUpLogs(), username, password);
 

@@ -11,17 +11,16 @@ public class ResponseBuilderTest {
 
   @Test
   public void responseIsReturnedWithHeaderAndBody() {
-    Map<String, String> headers = new HashMap();
-    headers.put("Content-Type", "text/plain");
     Response actualResponse = new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
         .setStatusCode(200)
-        .setHeaders(headers)
+        .setHeader("Set-Cookie", "foobar")
+        .setHeader("Content-Type", "text/plain")
         .setBody("hello world")
         .build();
 
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
-    assertEquals("Content-Type: text/plain\r\n", actualResponse.getHeaders());
+    assertEquals("Set-Cookie: foobar\r\nContent-Type: text/plain\r\n", actualResponse.getHeaders());
     assertEquals("hello world", new String(actualResponse.getBody()));
   }
 

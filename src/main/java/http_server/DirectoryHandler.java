@@ -14,12 +14,10 @@ public class DirectoryHandler implements Handler {
   public Response generate(Request request) throws UnsupportedEncodingException {
     Response response = null;
     if (request.getRequestMethod() == RequestMethod.GET) {
-      Map<String, String> header = new HashMap();
-      header.put("Content-Type", "text/html");
       response = new ResponseBuilder()
           .setHttpVersion("HTTP/1.1")
           .setStatusCode(200)
-          .setHeaders(header)
+          .setHeader("Content-Type", "text/html")
           .setBody(getBody())
           .build();
     } else if (request.getRequestMethod() == RequestMethod.HEAD) {

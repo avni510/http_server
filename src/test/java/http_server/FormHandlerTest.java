@@ -3,8 +3,6 @@ package http_server;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
@@ -25,7 +23,7 @@ public class FormHandlerTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/form")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .setHeader("Host: localhost")
         .build();
 
     FormHandler formHandler = new FormHandler(new DataStore());
@@ -43,7 +41,7 @@ public class FormHandlerTest {
         .setRequestMethod(RequestMethod.POST)
         .setUri("/form")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .setHeader("Host: localhost")
         .setBody("data=fatcat")
         .build();
     FormHandler formHandler = new FormHandler(new DataStore());
@@ -59,7 +57,7 @@ public class FormHandlerTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/form")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .setHeader("Host: localhost")
         .build();
     DataStore dataStore = new DataStore();
     dataStore.storeEntry("data", "fatcat");
@@ -77,7 +75,7 @@ public class FormHandlerTest {
         .setRequestMethod(RequestMethod.PUT)
         .setUri("/form")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .setHeader("Host: localhost")
         .setBody("data=heathcliff")
         .build();
     DataStore dataStore = new DataStore();
@@ -97,7 +95,7 @@ public class FormHandlerTest {
         .setRequestMethod(RequestMethod.DELETE)
         .setUri("/form")
         .setHttpVersion("HTTP/1.1")
-        .setHeader(new ArrayList<>(Arrays.asList("Host: localhost")))
+        .setHeader("Host: localhost")
         .build();
     DataStore dataStore = new DataStore();
     dataStore.storeEntry("data", "fatcat");

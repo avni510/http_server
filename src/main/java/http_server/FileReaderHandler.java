@@ -7,10 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 import java.security.MessageDigest;
 
@@ -27,7 +24,7 @@ public FileReaderHandler(String filePath) {
     Response response = null;
     if (request.getRequestMethod() == RequestMethod.PATCH) {
       String patchedContents = request.getEntireBody();
-      if (fileHashValuesMatch(getifMatchValue(request.getHeader()))){
+      if (fileHashValuesMatch(getIfMatchValue(request))){
         writeToFile(patchedContents);
         response = new ResponseBuilder()
             .setHttpVersion("HTTP/1.1")
@@ -41,57 +38,49 @@ public FileReaderHandler(String filePath) {
       }
     }
     else if (request.getRequestMethod() == RequestMethod.GET && fileExtension().equals("png")) {
-      Map<String, String> header = new HashMap<>();
-      header.put("Content-Type", "image/png");
-      header.put("Content-Length", String.valueOf(getFileLength()));
       response = new ResponseBuilder()
           .setHttpVersion("HTTP/1.1")
           .setStatusCode(200)
-          .setHeaders(header)
+          .setHeader("Content-Type", "image/png")
+          .setHeader("Content-Length", String.valueOf(getFileLength()))
           .setBody(getAllFileContents())
           .build();
     }
     else if (request.getRequestMethod() == RequestMethod.GET && fileExtension().equals("jpeg")) {
-      Map<String, String> header = new HashMap<>();
-      header.put("Content-Type", "image/jpeg");
-      header.put("Content-Length", String.valueOf(getFileLength()));
       response = new ResponseBuilder()
           .setHttpVersion("HTTP/1.1")
           .setStatusCode(200)
-          .setHeaders(header)
+          .setHeader("Content-Type", "image/jpeg")
+          .setHeader("Content-Length", String.valueOf(getFileLength()))
           .setBody(getAllFileContents())
           .build();
     }
     else if (request.getRequestMethod() == RequestMethod.GET && fileExtension().equals("gif")) {
-      Map<String, String> header = new HashMap<>();
-      header.put("Content-Type", "image/gif");
-      header.put("Content-Length", String.valueOf(getFileLength()));
       response = new ResponseBuilder()
           .setHttpVersion("HTTP/1.1")
           .setStatusCode(200)
-          .setHeaders(header)
+          .setHeader("Content-Type", "image/gif")
+          .setHeader("Content-Length", String.valueOf(getFileLength()))
           .setBody(getAllFileContents())
           .build();
     }
     else if (request.getRequestMethod() == RequestMethod.GET) {
-      String rangeHeader = returnRangeHeader(request.getHeader());
+      String rangeHeader = returnRangeHeader(request);
       if (rangeHeader != null) {
         Pair<Integer, Integer> byteRange = getRangeValues(rangeHeader);
-        Map<String, String> header = populateHeaders(byteRange);
         response = new ResponseBuilder()
             .setHttpVersion("HTTP/1.1")
             .setStatusCode(206)
-            .setHeaders(header)
+            .setHeader("Content-Type", "text/plain")
+            .setHeader("Content-Range", "bytes " + byteRange.getKey() + "-" + byteRange.getValue())
             .setBody(getPartialFileContents(byteRange.getKey(), byteRange.getValue()))
             .build();
       } else {
-        Map<String, String> header = new HashMap<>();
-        header.put("Content-Type", "text/plain");
-        header.put("ETag", fileHashValue());
         response = new ResponseBuilder()
             .setHttpVersion("HTTP/1.1")
             .setStatusCode(200)
-            .setHeaders(header)
+            .setHeader("Content-Type", "text/plain")
+            .setHeader("ETag", fileHashValue())
             .setBody(new String(getAllFileContents(), "UTF-8"))
             .build();
       }
@@ -109,19 +98,10 @@ public FileReaderHandler(String filePath) {
     return fileBytes;
   }
 
-  private String getifMatchValue(ArrayList<String> headers){
-    String ifMatch = null;
-    for (String header: headers) {
-      if (header.contains("If-Match")){
-        ifMatch = header;
-      }
-    }
-    if (ifMatch == null){
-      return ifMatch;
-    }
-    String[] ifMatchParts = ifMatch.split(": ");
-    return ifMatchParts[1];
+  private String getIfMatchValue(Request request) {
+    return request.getHeaderValue("If-Match");
   }
+
 
   private String fileHashValue() {
     try {
@@ -151,20 +131,8 @@ public FileReaderHandler(String filePath) {
     }
   }
 
-  private String returnRangeHeader(ArrayList<String> headers){
-    for (String header: headers) {
-      if (header.contains("Range")){
-        return header;
-      }
-    }
-    return null;
-  }
-
-  private Map<String, String> populateHeaders(Pair<Integer, Integer> byteRange){
-    Map<String, String> header = new HashMap<>();
-    header.put("Content-Type", "text/plain");
-    header.put("Content-Range", "bytes " + byteRange.getKey() + "-" + byteRange.getValue());
-    return header;
+  private String returnRangeHeader(Request request){
+    return request.getHeaderValue("Range");
   }
 
   private Pair<Integer, Integer> getRangeValues(String header) {
