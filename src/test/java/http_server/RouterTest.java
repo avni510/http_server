@@ -52,7 +52,7 @@ public class RouterTest {
   public void fileContentsAreSentAsAResponseForResultFile() throws Exception {
     String filePath = System.getProperty("user.dir") + "/code/result.txt";
     BufferedReader bufferedReader = getInputStream("/result.txt");
-    Router.addRoute(RequestMethod.GET, "/result.txt", new FileReaderHandler(filePath));
+    Router.addRoute(RequestMethod.GET, "/result.txt", new FileReaderHandler(filePath, new FileHelper()));
 
     Response actualResponse = Router.generateHttpResponse(bufferedReader);
 
@@ -64,7 +64,7 @@ public class RouterTest {
   public void fileContentsAreSentAsAResponseForValidationFile() throws Exception {
     String filePath = System.getProperty("user.dir") + "/code/validation.txt";
     BufferedReader bufferedReader = getInputStream("/validation.txt");
-    Router.addRoute(RequestMethod.GET, "/validation.txt", new FileReaderHandler(filePath));
+    Router.addRoute(RequestMethod.GET, "/validation.txt", new FileReaderHandler(filePath, new FileHelper()));
 
     Response actualResponse = Router.generateHttpResponse(bufferedReader);
 
@@ -76,7 +76,7 @@ public class RouterTest {
   public void notFoundResponseIsSentForNonExistentFile() throws Exception {
     String filePath = System.getProperty("user.dir") + "/code/validation.txt";
     BufferedReader bufferedReader = getInputStream("/main.txt");
-    Router.addRoute(RequestMethod.GET, "/validation.txt", new FileReaderHandler(filePath));
+    Router.addRoute(RequestMethod.GET, "/validation.txt", new FileReaderHandler(filePath, new FileHelper()));
 
     Response actualResponse = Router.generateHttpResponse(bufferedReader);
 
@@ -97,7 +97,7 @@ public class RouterTest {
   @Test
   public void methodNotAllowedError() throws Exception {
     String filePath = System.getProperty("user.dir") + "/code/result.txt";
-    Router.addRoute(RequestMethod.GET, "/result.txt", new FileReaderHandler(filePath));
+    Router.addRoute(RequestMethod.GET, "/result.txt", new FileReaderHandler(filePath, new FileHelper()));
     String httpRequest = "POST " + "/result.txt" + " HTTP/1.1\r\nHost: localhost\r\n\r\n";
     InputStream inputStream = new ByteArrayInputStream(httpRequest.getBytes());
     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));

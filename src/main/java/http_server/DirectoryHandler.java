@@ -39,7 +39,7 @@ public class DirectoryHandler implements Handler {
   }
 
   private Map<String, String> setFileInformation(){
-    FileManager fileManager = new FileManager();
+    FileHelper fileManager = new FileHelper();
     return fileManager.getNameAndRelativePath(rootDirectoryPath);
   }
 }

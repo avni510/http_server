@@ -76,11 +76,11 @@ public class Configuration {
   }
 
   private void populateFileRoutes(String rootDirectoryPath){
-    FileManager fileManager = new FileManager();
-    Map<String, String> relativeAndAbsolutePaths = fileManager.getRelativeAndAbsolutePath(rootDirectoryPath);
+    FileHelper fileHelper = new FileHelper();
+    Map<String, String> relativeAndAbsolutePaths = fileHelper.getRelativeAndAbsolutePath(rootDirectoryPath);
     for (Map.Entry<String, String> path : relativeAndAbsolutePaths.entrySet()) {
-      Router.addRoute(RequestMethod.GET, path.getKey(), new FileReaderHandler(path.getValue()));
-      Router.addRoute(RequestMethod.PATCH, path.getKey(), new FileReaderHandler(path.getValue()));
+      Router.addRoute(RequestMethod.GET, path.getKey(), new FileReaderHandler(path.getValue(), new FileHelper()));
+      Router.addRoute(RequestMethod.PATCH, path.getKey(), new FileReaderHandler(path.getValue(), new FileHelper()));
     }
   }
 
