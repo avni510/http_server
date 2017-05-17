@@ -2,25 +2,15 @@ package http_server;
 
 import java.util.Map;
 
-public class Configuration {
-  private String defaultDirectory = System.getProperty("user.dir") + "/code";
-  private String defaultPort = "4444";
-  private Integer portNumber;
-  private String  directoryPath;
-  private ConfigurationValidation configurationValidation;
+public class ConfigurationRoutes {
+  private Router router;
+  private String directoryPath;
   private String usernameAuthentication = "admin";
   private String passwordAuthentication = "hunter2";
-  private Router router;
 
-  public Configuration(Router router){
-    this.configurationValidation = new ConfigurationValidation();
+  public ConfigurationRoutes(Router router, String directoryPath){
     this.router = router;
-  }
-
-  public void parse(String[] commandLineArgs){
-    configurationValidation.exitForInvalidArgs(commandLineArgs);
-    portNumber = retrievePort(commandLineArgs);
-    directoryPath = retrieveDirectory(commandLineArgs);
+    this.directoryPath = directoryPath;
   }
 
   public void populateRoutes() {
@@ -49,28 +39,10 @@ public class Configuration {
     populateFileRoutes(directoryPath);
   }
 
-  public Integer getPortNumber(){
-    return portNumber;
-  }
-
-  public String getDirectoryName(){
-    return directoryPath;
-  }
-
-
-  private String retrieveDirectory(String[] commandLineArgs){
-    return configurationValidation.findArg(commandLineArgs, "-d", defaultDirectory);
-  }
-
-  private Integer retrievePort(String[] commandLineArgs) {
-    String port = configurationValidation.findArg(commandLineArgs, "-p", defaultPort);
-    return Integer.parseInt(port);
-  }
-
   private RequestMethod[] methodOptions(){
     return new RequestMethod[]{RequestMethod.GET, RequestMethod.POST,
-                               RequestMethod.PUT, RequestMethod.OPTIONS,
-                               RequestMethod.HEAD};
+        RequestMethod.PUT, RequestMethod.OPTIONS,
+        RequestMethod.HEAD};
   }
 
   private RequestMethod[] methodOptions2(){
