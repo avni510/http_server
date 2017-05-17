@@ -30,9 +30,10 @@ public class RouterTest {
   @Test
   public void helloWorldIsSentAsAResponse() throws Exception {
     BufferedReader bufferedReader = getInputStream("/hello_world");
-    Router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler());
+    Router router = new Router();
+    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler());
 
-    Response actualResponse = Router.generateHttpResponse(bufferedReader);
+    Response actualResponse = router.generateHttpResponse(bufferedReader);
 
     assertEquals("hello world", new String (actualResponse.getBody()));
   }
@@ -41,9 +42,10 @@ public class RouterTest {
   public void htmlOfFilesIsSentAsAResponse() throws Exception {
     String rootDirectoryPath = System.getProperty("user.dir") + "/code";
     BufferedReader bufferedReader = getInputStream("/");
-    Router.addRoute(RequestMethod.GET, "/", new DirectoryHandler(rootDirectoryPath));
+    Router router = new Router();
+    router.addRoute(RequestMethod.GET, "/", new DirectoryHandler(rootDirectoryPath));
 
-    Response actualResponse = Router.generateHttpResponse(bufferedReader);
+    Response actualResponse = router.generateHttpResponse(bufferedReader);
 
     assertEquals(getHtmlBody(), new String(actualResponse.getBody()));
   }
@@ -52,9 +54,10 @@ public class RouterTest {
   public void fileContentsAreSentAsAResponseForResultFile() throws Exception {
     String filePath = System.getProperty("user.dir") + "/code/result.txt";
     BufferedReader bufferedReader = getInputStream("/result.txt");
-    Router.addRoute(RequestMethod.GET, "/result.txt", new FileReaderHandler(filePath, new FileHelper()));
+    Router router = new Router();
+    router.addRoute(RequestMethod.GET, "/result.txt", new FileReaderHandler(filePath, new FileHelper()));
 
-    Response actualResponse = Router.generateHttpResponse(bufferedReader);
+    Response actualResponse = router.generateHttpResponse(bufferedReader);
 
     String fileContents = "module TimeLogger\nend\n";
     assertEquals(fileContents, new String(actualResponse.getBody()));
@@ -64,9 +67,10 @@ public class RouterTest {
   public void fileContentsAreSentAsAResponseForValidationFile() throws Exception {
     String filePath = System.getProperty("user.dir") + "/code/validation.txt";
     BufferedReader bufferedReader = getInputStream("/validation.txt");
-    Router.addRoute(RequestMethod.GET, "/validation.txt", new FileReaderHandler(filePath, new FileHelper()));
+    Router router = new Router();
+    router.addRoute(RequestMethod.GET, "/validation.txt", new FileReaderHandler(filePath, new FileHelper()));
 
-    Response actualResponse = Router.generateHttpResponse(bufferedReader);
+    Response actualResponse = router.generateHttpResponse(bufferedReader);
 
     String fileContents = "x = 1\ny = 2\n";
     assertEquals(fileContents, new String(actualResponse.getBody()));
@@ -76,9 +80,10 @@ public class RouterTest {
   public void notFoundResponseIsSentForNonExistentFile() throws Exception {
     String filePath = System.getProperty("user.dir") + "/code/validation.txt";
     BufferedReader bufferedReader = getInputStream("/main.txt");
-    Router.addRoute(RequestMethod.GET, "/validation.txt", new FileReaderHandler(filePath, new FileHelper()));
+    Router router = new Router();
+    router.addRoute(RequestMethod.GET, "/validation.txt", new FileReaderHandler(filePath, new FileHelper()));
 
-    Response actualResponse = Router.generateHttpResponse(bufferedReader);
+    Response actualResponse = router.generateHttpResponse(bufferedReader);
 
     assertEquals("404 Not Found", actualResponse.getStatusCodeMessage());
   }
@@ -88,8 +93,9 @@ public class RouterTest {
     String httpRequest = "/" + " HTTP/1.1\r\n\r\n";
     InputStream inputStream = new ByteArrayInputStream(httpRequest.getBytes());
     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+    Router router = new Router();
 
-    Response actualResponse = Router.generateHttpResponse(bufferedReader);
+    Response actualResponse = router.generateHttpResponse(bufferedReader);
 
     assertEquals("400 Bad Request", actualResponse.getStatusCodeMessage());
   }
@@ -97,26 +103,28 @@ public class RouterTest {
   @Test
   public void methodNotAllowedError() throws Exception {
     String filePath = System.getProperty("user.dir") + "/code/result.txt";
-    Router.addRoute(RequestMethod.GET, "/result.txt", new FileReaderHandler(filePath, new FileHelper()));
+    Router router = new Router();
+    router.addRoute(RequestMethod.GET, "/result.txt", new FileReaderHandler(filePath, new FileHelper()));
     String httpRequest = "POST " + "/result.txt" + " HTTP/1.1\r\nHost: localhost\r\n\r\n";
     InputStream inputStream = new ByteArrayInputStream(httpRequest.getBytes());
     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
-    Response actualResponse = Router.generateHttpResponse(bufferedReader);
+    Response actualResponse = router.generateHttpResponse(bufferedReader);
 
     assertEquals("405 Method Not Allowed", actualResponse.getStatusCodeMessage());
   }
 
   @Test
   public void uriWithQuestionMark() throws Exception {
-    Router.addRoute(RequestMethod.GET, "/parameters", new ParameterHandler());
+    Router router = new Router();
+    router.addRoute(RequestMethod.GET, "/parameters", new ParameterHandler());
     String httpRequest = "GET " + "/parameters?variable_1=Operators%20%3C%2C%20%3E%2C%20%3D%2C%20" +
                          "!%3D%3B%20%2B%2C%20-%2C%20*%2C%20%26%2C%20%40%2C%20%23%2C%20%24%2C%20%5B%2C%20%" +
                          "5D%3A%20%22is%20that%20all%22%3F&variable_2=stuff" + " HTTP/1.1\r\nHost: localhost\r\n\r\n";
     InputStream inputStream = new ByteArrayInputStream(httpRequest.getBytes());
     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
-    Response actualResponse = Router.generateHttpResponse(bufferedReader);
+    Response actualResponse = router.generateHttpResponse(bufferedReader);
 
     assertEquals(getParametersBody(), new String (actualResponse.getBody()));
   }

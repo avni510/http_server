@@ -16,6 +16,7 @@ public class HttpServerTest {
   private MockProcessor serverProcessor;
   private MockServerSocketConnection serverSocketConnection;
   private MockServer server;
+  private Router router;
 
   private Socket createMockSocket(String request) {
     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(request.getBytes());
@@ -32,13 +33,14 @@ public class HttpServerTest {
     this.server = new MockServer().withAcceptStubbedToReturn(serverSocketConnection);
     serverCancellationToken = new MockServerCancellationToken();
     this.serverProcessor = new MockProcessor(serverSocketConnection);
+    this.router = new Router();
   }
 
 
   @Test
   public void theServerStopsListening() throws Exception {
     ExecutorService threadPool = Executors.newFixedThreadPool(1);
-    HttpServer httpServer = new HttpServer(server, serverCancellationToken, threadPool);
+    HttpServer httpServer = new HttpServer(server, serverCancellationToken, threadPool, router);
 
     httpServer.execute();
 

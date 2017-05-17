@@ -10,9 +10,11 @@ public class Configuration {
   private ConfigurationValidation configurationValidation;
   private String usernameAuthentication = "admin";
   private String passwordAuthentication = "hunter2";
+  private Router router;
 
-  public Configuration(){
+  public Configuration(Router router){
     this.configurationValidation = new ConfigurationValidation();
+    this.router = router;
   }
 
   public void parse(String[] commandLineArgs){
@@ -23,27 +25,27 @@ public class Configuration {
 
   public void populateRoutes() {
     DataStore dataStore = new DataStore();
-    Router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler());
-    Router.addRoute(RequestMethod.GET, "/", new DirectoryHandler(directoryPath));
-    Router.addRoute(RequestMethod.HEAD, "/", new DirectoryHandler(directoryPath));
-    Router.addRoute(RequestMethod.GET, "/form", new FormHandler(dataStore));
-    Router.addRoute(RequestMethod.POST, "/form", new FormHandler(dataStore));
-    Router.addRoute(RequestMethod.PUT, "/form", new FormHandler(dataStore));
-    Router.addRoute(RequestMethod.DELETE, "/form", new FormHandler(dataStore));
-    Router.addRoute(RequestMethod.GET, "/coffee", new TeapotHandler());
-    Router.addRoute(RequestMethod.GET, "/tea", new TeapotHandler());
-    Router.addRoute(RequestMethod.GET, "/redirect", new RedirectHandler());
-    Router.addRoute(RequestMethod.GET, "/method_options", new OptionsHandler(methodOptions()));
-    Router.addRoute(RequestMethod.PUT, "/method_options", new OptionsHandler(methodOptions()));
-    Router.addRoute(RequestMethod.POST, "/method_options", new OptionsHandler(methodOptions()));
-    Router.addRoute(RequestMethod.HEAD, "/method_options", new OptionsHandler(methodOptions()));
-    Router.addRoute(RequestMethod.OPTIONS, "/method_options", new OptionsHandler(methodOptions()));
-    Router.addRoute(RequestMethod.GET, "/method_options2", new OptionsHandler(methodOptions2()));
-    Router.addRoute(RequestMethod.OPTIONS, "/method_options2", new OptionsHandler(methodOptions2()));
-    Router.addRoute(RequestMethod.GET, "/logs", new LogHandler(setLogs(), usernameAuthentication, passwordAuthentication));
-    Router.addRoute(RequestMethod.GET, "/parameters", new ParameterHandler());
-    Router.addRoute(RequestMethod.GET, "/cookie", new CookieHandler());
-    Router.addRoute(RequestMethod.GET, "/eat_cookie", new CookieHandler());
+    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler());
+    router.addRoute(RequestMethod.GET, "/", new DirectoryHandler(directoryPath));
+    router.addRoute(RequestMethod.HEAD, "/", new DirectoryHandler(directoryPath));
+    router.addRoute(RequestMethod.GET, "/form", new FormHandler(dataStore));
+    router.addRoute(RequestMethod.POST, "/form", new FormHandler(dataStore));
+    router.addRoute(RequestMethod.PUT, "/form", new FormHandler(dataStore));
+    router.addRoute(RequestMethod.DELETE, "/form", new FormHandler(dataStore));
+    router.addRoute(RequestMethod.GET, "/coffee", new TeapotHandler());
+    router.addRoute(RequestMethod.GET, "/tea", new TeapotHandler());
+    router.addRoute(RequestMethod.GET, "/redirect", new RedirectHandler());
+    router.addRoute(RequestMethod.GET, "/method_options", new OptionsHandler(methodOptions()));
+    router.addRoute(RequestMethod.PUT, "/method_options", new OptionsHandler(methodOptions()));
+    router.addRoute(RequestMethod.POST, "/method_options", new OptionsHandler(methodOptions()));
+    router.addRoute(RequestMethod.HEAD, "/method_options", new OptionsHandler(methodOptions()));
+    router.addRoute(RequestMethod.OPTIONS, "/method_options", new OptionsHandler(methodOptions()));
+    router.addRoute(RequestMethod.GET, "/method_options2", new OptionsHandler(methodOptions2()));
+    router.addRoute(RequestMethod.OPTIONS, "/method_options2", new OptionsHandler(methodOptions2()));
+    router.addRoute(RequestMethod.GET, "/logs", new LogHandler(setLogs(), usernameAuthentication, passwordAuthentication));
+    router.addRoute(RequestMethod.GET, "/parameters", new ParameterHandler());
+    router.addRoute(RequestMethod.GET, "/cookie", new CookieHandler());
+    router.addRoute(RequestMethod.GET, "/eat_cookie", new CookieHandler());
     populateFileRoutes(directoryPath);
   }
 
@@ -79,8 +81,8 @@ public class Configuration {
     FileHelper fileHelper = new FileHelper();
     Map<String, String> relativeAndAbsolutePaths = fileHelper.getRelativeAndAbsolutePath(rootDirectoryPath);
     for (Map.Entry<String, String> path : relativeAndAbsolutePaths.entrySet()) {
-      Router.addRoute(RequestMethod.GET, path.getKey(), new FileReaderHandler(path.getValue(), new FileHelper()));
-      Router.addRoute(RequestMethod.PATCH, path.getKey(), new FileReaderHandler(path.getValue(), new FileHelper()));
+      router.addRoute(RequestMethod.GET, path.getKey(), new FileReaderHandler(path.getValue(), new FileHelper()));
+      router.addRoute(RequestMethod.PATCH, path.getKey(), new FileReaderHandler(path.getValue(), new FileHelper()));
     }
   }
 

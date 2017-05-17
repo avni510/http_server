@@ -11,17 +11,18 @@ import static org.junit.Assert.*;
 public class ConfigurationTest {
   private String rootPath = System.getProperty("user.dir");
 
-  private Response generateHelloWorldResponse() throws Exception {
+  private Response generateHelloWorldResponse(Router router) throws Exception {
     String request = "GET /hello_world HTTP/1.1\r\nHost: localhost\r\n\r\n";
     ByteArrayInputStream inputStream = new ByteArrayInputStream(request.getBytes());
     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-    return Router.generateHttpResponse(bufferedReader);
+    return router.generateHttpResponse(bufferedReader);
   }
 
 
   @Test
   public void directoryAndPortAreParsed(){
-    Configuration configuration = new Configuration();
+    Router router = new Router();
+    Configuration configuration = new Configuration(router);
 
     String[] commandLineArgs = {"-p", "5000", "-d", rootPath + "/new_directory"};
     configuration.parse(commandLineArgs);
@@ -33,7 +34,8 @@ public class ConfigurationTest {
 
   @Test
   public void defaultDirectoryPathIsReturned() {
-    Configuration configuration = new Configuration();
+    Router router = new Router();
+    Configuration configuration = new Configuration(router);
 
     String[] commandLineArgs = {"-p", "5000"};
     configuration.parse(commandLineArgs);
@@ -44,7 +46,8 @@ public class ConfigurationTest {
 
   @Test
   public void defaultPortIsReturned() {
-    Configuration configuration = new Configuration();
+    Router router = new Router();
+    Configuration configuration = new Configuration(router);
 
     String[] commandLineArgs = {"-d", rootPath + "/new_directory"};
     configuration.parse(commandLineArgs);
@@ -55,7 +58,8 @@ public class ConfigurationTest {
 
   @Test
   public void defaultDirectoryPathAndPortAreReturned() {
-    Configuration configuration = new Configuration();
+    Router router = new Router();
+    Configuration configuration = new Configuration(router);
 
     String[] commandLineArgs = {};
     configuration.parse(commandLineArgs);
@@ -66,13 +70,14 @@ public class ConfigurationTest {
 
   @Test
   public void routesArePopulated() throws Exception {
-    Configuration configuration = new Configuration();
+    Router router = new Router();
+    Configuration configuration = new Configuration(router);
 
     String[] commandLineArgs = {"-d", rootPath +"/code"};
     configuration.parse(commandLineArgs);
     configuration.populateRoutes();
 
-    Response actualResponse = generateHelloWorldResponse();
+    Response actualResponse = generateHelloWorldResponse(router);
     assertEquals("hello world", new String(actualResponse.getBody()));
   }
 }

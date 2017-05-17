@@ -7,7 +7,8 @@ import java.util.concurrent.Executors;
 public class Main {
 
   public static void main(String[] args) throws Exception {
-    Configuration configuration = new Configuration();
+    Router router = new Router();
+    Configuration configuration = new Configuration(router);
     configuration.parse(args);
     configuration.populateRoutes();
 
@@ -17,7 +18,7 @@ public class Main {
     ExecutorService threadPool = Executors.newFixedThreadPool(4);
     ServerCancellationToken serverCancellationToken = new ServerCancellationToken(!threadPool.isShutdown());
 
-    HttpServer httpServer = new HttpServer(server, serverCancellationToken, threadPool);
+    HttpServer httpServer = new HttpServer(server, serverCancellationToken, threadPool, router);
     httpServer.execute();
   }
 }

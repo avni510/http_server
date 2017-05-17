@@ -22,7 +22,9 @@ public class ServerProcessorTest {
     Socket socket = createMockSocket(request);
     MockServerSocketConnection serverSocketConnection = new MockServerSocketConnection(socket);
     serverSocketConnection.setStoredInputData(request);
-    ServerProcessor serverProcessor = new ServerProcessor(serverSocketConnection);
+    Router router = new Router();
+    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler());
+    ServerProcessor serverProcessor = new ServerProcessor(serverSocketConnection, router);
 
     serverProcessor.run();
 
@@ -36,7 +38,8 @@ public class ServerProcessorTest {
     Socket socket = createMockSocket(request);
     MockServerSocketConnection serverSocketConnection = new MockServerSocketConnection(socket);
     serverSocketConnection.setStoredInputData(request);
-    ServerProcessor serverProcessor = new ServerProcessor(serverSocketConnection);
+    Router router = new Router();
+    ServerProcessor serverProcessor = new ServerProcessor(serverSocketConnection, router);
 
     serverProcessor.run();
 

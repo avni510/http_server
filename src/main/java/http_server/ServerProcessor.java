@@ -6,15 +6,17 @@ import java.io.BufferedReader;
 
 public class ServerProcessor implements Processor {
   private Connection clientConnection;
+  private Router router;
 
-  public ServerProcessor(Connection clientConnection){
+  public ServerProcessor(Connection clientConnection, Router router){
     this.clientConnection = clientConnection;
+    this.router = router;
   }
 
   public void run() {
     try {
       BufferedReader optimizedInputStream = read(clientConnection);
-      Response httpResponse = Router.generateHttpResponse(optimizedInputStream);
+      Response httpResponse = router.generateHttpResponse(optimizedInputStream);
       write(clientConnection, httpResponse);
       clientConnection.out().close();
     } catch (Exception e) {
