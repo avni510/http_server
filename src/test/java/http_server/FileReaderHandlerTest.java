@@ -17,7 +17,7 @@ public class FileReaderHandlerTest {
         .setHeader("Host: localhost\r\n")
         .build();
     String pathToFile = System.getProperty("user.dir") + "/code/result.txt";
-    FileReaderHandler fileReaderHandler = new FileReaderHandler(pathToFile);
+    FileReaderHandler fileReaderHandler = new FileReaderHandler(pathToFile, new FileHelper());
 
     Response actualResponse = fileReaderHandler.generate(request);
 
@@ -34,7 +34,7 @@ public class FileReaderHandlerTest {
         .setHeader("Host: localhost\r\nRange: bytes=0-5\r\n")
         .build();
     String pathToFile = System.getProperty("user.dir") + "/code/result.txt";
-    FileReaderHandler fileReaderHandler = new FileReaderHandler(pathToFile);
+    FileReaderHandler fileReaderHandler = new FileReaderHandler(pathToFile, new FileHelper());
 
     Response actualResponse = fileReaderHandler.generate(request);
 
@@ -52,7 +52,7 @@ public class FileReaderHandlerTest {
         .setHeader("Host: localhost\r\nRange: bytes=-5\r\n")
         .build();
     String pathToFile = System.getProperty("user.dir") + "/code/result.txt";
-    FileReaderHandler fileReaderHandler = new FileReaderHandler(pathToFile);
+    FileReaderHandler fileReaderHandler = new FileReaderHandler(pathToFile, new FileHelper());
 
     Response actualResponse = fileReaderHandler.generate(request);
 
@@ -70,7 +70,7 @@ public class FileReaderHandlerTest {
         .setHeader("Host: localhost\r\nRange: bytes=5-\r\n")
         .build();
     String pathToFile = System.getProperty("user.dir") + "/code/result.txt";
-    FileReaderHandler fileReaderHandler = new FileReaderHandler(pathToFile);
+    FileReaderHandler fileReaderHandler = new FileReaderHandler(pathToFile, new FileHelper());
 
     Response actualResponse = fileReaderHandler.generate(request);
 
@@ -89,7 +89,7 @@ public class FileReaderHandlerTest {
         .setBody("data=foobar")
         .build();
     String pathToFile = System.getProperty("user.dir") + "/code/result.txt";
-    FileReaderHandler fileReaderHandler = new FileReaderHandler(pathToFile);
+    FileReaderHandler fileReaderHandler = new FileReaderHandler(pathToFile, new FileHelper());
 
     Response actualResponse = fileReaderHandler.generate(request);
 
@@ -119,7 +119,7 @@ public class FileReaderHandlerTest {
         .setBody("data=foobar")
         .build();
     String pathToFile = System.getProperty("user.dir") + "/code/result.txt";
-    FileReaderHandler fileReaderHandler = new FileReaderHandler(pathToFile);
+    FileReaderHandler fileReaderHandler = new FileReaderHandler(pathToFile, new FileHelper());
     fileReaderHandler.generate(patchRequest);
     Request getRequest = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
