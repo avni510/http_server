@@ -28,6 +28,17 @@ public class RouterTest {
   }
 
   @Test
+  public void routeIsAdded() throws Exception {
+    BufferedReader bufferedReader = getInputStream("/hello_world");
+    Router router = new Router();
+
+    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler());
+    Response actualResponse = router.generateHttpResponse(bufferedReader);
+
+    assertEquals("hello world", new String(actualResponse.getBody()));
+  }
+
+  @Test
   public void helloWorldIsSentAsAResponse() throws Exception {
     BufferedReader bufferedReader = getInputStream("/hello_world");
     Router router = new Router();

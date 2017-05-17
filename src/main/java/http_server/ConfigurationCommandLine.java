@@ -7,11 +7,9 @@ public class ConfigurationCommandLine {
   private Integer portNumber;
   private String  directoryPath;
   private ConfigurationValidation configurationValidation;
-  private Router router;
 
-  public ConfigurationCommandLine(Router router){
+  public ConfigurationCommandLine(){
     this.configurationValidation = new ConfigurationValidation();
-    this.router = router;
   }
 
   public void parse(String[] commandLineArgs){

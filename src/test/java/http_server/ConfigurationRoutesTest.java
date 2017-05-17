@@ -21,9 +21,9 @@ public class ConfigurationRoutesTest {
   @Test
   public void routesArePopulated() throws Exception {
     Router router = new Router();
-    ConfigurationRoutes configurationRoutes = new ConfigurationRoutes(router, rootPath);
+    ConfigurationRoutes configurationRoutes = new ConfigurationRoutes(rootPath);
 
-    configurationRoutes.populateRoutes();
+    configurationRoutes.populateRoutes(router);
 
     Response actualResponse = generateHelloWorldResponse(router);
     assertEquals("hello world", new String(actualResponse.getBody()));

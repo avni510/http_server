@@ -9,8 +9,7 @@ public class ConfigurationCommandLineTest {
 
   @Test
   public void directoryAndPortAreParsed(){
-    Router router = new Router();
-    ConfigurationCommandLine configurationCommandLine = new ConfigurationCommandLine(router);
+    ConfigurationCommandLine configurationCommandLine = new ConfigurationCommandLine();
 
     String[] commandLineArgs = {"-p", "5000", "-d", rootPath + "/new_directory"};
     configurationCommandLine.parse(commandLineArgs);
@@ -22,8 +21,7 @@ public class ConfigurationCommandLineTest {
 
   @Test
   public void defaultDirectoryPathIsReturned() {
-    Router router = new Router();
-    ConfigurationCommandLine configurationCommandLine = new ConfigurationCommandLine(router);
+    ConfigurationCommandLine configurationCommandLine = new ConfigurationCommandLine();
 
     String[] commandLineArgs = {"-p", "5000"};
     configurationCommandLine.parse(commandLineArgs);
@@ -34,8 +32,7 @@ public class ConfigurationCommandLineTest {
 
   @Test
   public void defaultPortIsReturned() {
-    Router router = new Router();
-    ConfigurationCommandLine configurationCommandLine = new ConfigurationCommandLine(router);
+    ConfigurationCommandLine configurationCommandLine = new ConfigurationCommandLine();
 
     String[] commandLineArgs = {"-d", rootPath + "/new_directory"};
     configurationCommandLine.parse(commandLineArgs);
@@ -46,8 +43,7 @@ public class ConfigurationCommandLineTest {
 
   @Test
   public void defaultDirectoryPathAndPortAreReturned() {
-    Router router = new Router();
-    ConfigurationCommandLine configurationCommandLine = new ConfigurationCommandLine(router);
+    ConfigurationCommandLine configurationCommandLine = new ConfigurationCommandLine();
 
     String[] commandLineArgs = {};
     configurationCommandLine.parse(commandLineArgs);

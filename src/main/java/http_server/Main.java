@@ -8,11 +8,11 @@ public class Main {
 
   public static void main(String[] args) throws Exception {
     Router router = new Router();
-    ConfigurationCommandLine configurationCommandLine = new ConfigurationCommandLine(router);
+    ConfigurationCommandLine configurationCommandLine = new ConfigurationCommandLine();
     configurationCommandLine.parse(args);
     String directoryPath = configurationCommandLine.getDirectoryName();
-    ConfigurationRoutes configurationRoutes = new ConfigurationRoutes(router, directoryPath);
-    configurationRoutes.populateRoutes();
+    ConfigurationRoutes configurationRoutes = new ConfigurationRoutes(directoryPath);
+    configurationRoutes.populateRoutes(router);
 
     ServerSocket serverSocket = new ServerSocket(configurationCommandLine.getPortNumber());
     ConnectionManager server = new Server(serverSocket);

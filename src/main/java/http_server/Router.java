@@ -7,8 +7,9 @@ import java.util.Map;
 public class Router {
   private Map<Tuple<Enum<RequestMethod>, String>, Handler> routes = new HashMap();
 
-  public void addRoute(Enum<RequestMethod> requestMethod, String uri, Handler handler) {
+  public Router addRoute(Enum<RequestMethod> requestMethod, String uri, Handler handler) {
     routes.put(new Tuple<>(requestMethod, uri), handler);
+    return this;
   }
 
   public Response generateHttpResponse(BufferedReader inputStream) throws Exception {
