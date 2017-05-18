@@ -13,8 +13,7 @@ public class ConfigurationRoutes {
 
   public Router populateRoutes(Router router) {
     DataStore dataStore = new DataStore();
-    router
-          .addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler())
+    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler())
           .addRoute(RequestMethod.GET, "/", new DirectoryHandler(directoryPath))
           .addRoute(RequestMethod.HEAD, "/", new DirectoryHandler(directoryPath))
           .addRoute(RequestMethod.GET, "/form", new FormHandler(dataStore))
@@ -35,7 +34,7 @@ public class ConfigurationRoutes {
           .addRoute(RequestMethod.GET, "/parameters", new ParameterHandler())
           .addRoute(RequestMethod.GET, "/cookie", new CookieHandler())
           .addRoute(RequestMethod.GET, "/eat_cookie", new CookieHandler());
-    populateFileRoutes(router, directoryPath);
+//    populateFileRoutes(router, directoryPath);
     return router;
   }
 
@@ -47,17 +46,6 @@ public class ConfigurationRoutes {
 
   private RequestMethod[] methodOptions2(){
     return new RequestMethod[]{RequestMethod.GET, RequestMethod.OPTIONS};
-  }
-
-  private Router populateFileRoutes(Router router, String rootDirectoryPath){
-    FileHelper fileHelper = new FileHelper();
-    Map<String, String> relativeAndAbsolutePaths = fileHelper.getRelativeAndAbsolutePath(rootDirectoryPath);
-    for (Map.Entry<String, String> path : relativeAndAbsolutePaths.entrySet()) {
-      router
-           .addRoute(RequestMethod.GET, path.getKey(), new FileReaderHandler(path.getValue(), new FileHelper()))
-           .addRoute(RequestMethod.PATCH, path.getKey(), new FileReaderHandler(path.getValue(), new FileHelper()));
-    }
-    return router;
   }
 
   private DataStore setLogs(){

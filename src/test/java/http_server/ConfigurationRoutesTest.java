@@ -11,11 +11,20 @@ import static org.junit.Assert.*;
 public class ConfigurationRoutesTest {
   private String rootPath = System.getProperty("user.dir");
 
+  private ServerResponse setupServerResponse(Router router){
+    FinalMiddleware finalMiddleware = new FinalMiddleware();
+    String rootDirectoryPath = System.getProperty("user.dir") + "/code";
+    FileMiddleware fileMiddleware = new FileMiddleware(rootDirectoryPath, finalMiddleware);
+    RoutingMiddleware routingMiddleware =  new RoutingMiddleware(router, fileMiddleware);
+    return new ServerResponse(routingMiddleware);
+  }
+
   private Response generateHelloWorldResponse(Router router) throws Exception {
     String request = "GET /hello_world HTTP/1.1\r\nHost: localhost\r\n\r\n";
     ByteArrayInputStream inputStream = new ByteArrayInputStream(request.getBytes());
     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-    return router.generateHttpResponse(bufferedReader);
+    ServerResponse serverResponse = setupServerResponse(router);
+    return serverResponse.getHttpResponse(bufferedReader);
   }
 
   @Test

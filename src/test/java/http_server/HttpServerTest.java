@@ -17,11 +17,24 @@ public class HttpServerTest {
   private MockServerSocketConnection serverSocketConnection;
   private MockServer server;
   private Router router;
+  private ServerResponse serverResponse;
 
   private Socket createMockSocket(String request) {
     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(request.getBytes());
     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
     return new MockSocket(byteArrayInputStream, byteArrayOutputStream);
+  }
+
+  private void setupRouter(){
+    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler());
+  }
+
+  private ServerResponse setupServerResponse(){
+    FinalMiddleware finalMiddleware = new FinalMiddleware();
+    String rootDirectoryPath = System.getProperty("user.dir") + "/code";
+    FileMiddleware fileMiddleware = new FileMiddleware(rootDirectoryPath, finalMiddleware);
+    RoutingMiddleware routingMiddleware =  new RoutingMiddleware(router, fileMiddleware);
+    return new ServerResponse(routingMiddleware);
   }
 
   @Before
@@ -34,13 +47,15 @@ public class HttpServerTest {
     serverCancellationToken = new MockServerCancellationToken();
     this.serverProcessor = new MockProcessor(serverSocketConnection);
     this.router = new Router();
+    setupRouter();
+    this.serverResponse = setupServerResponse();
   }
 
 
   @Test
   public void theServerStopsListening() throws Exception {
     ExecutorService threadPool = Executors.newFixedThreadPool(1);
-    HttpServer httpServer = new HttpServer(server, serverCancellationToken, threadPool, router);
+    HttpServer httpServer = new HttpServer(server, serverCancellationToken, threadPool, serverResponse);
 
     httpServer.execute();
 

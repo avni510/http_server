@@ -16,6 +16,18 @@ public class ServerProcessorTest {
     return new MockSocket(byteArrayInputStream, byteArrayOutputStream);
   }
 
+  private void setupRouter(Router router){
+    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler());
+  }
+
+  private ServerResponse setupServerResponse(Router router){
+    FinalMiddleware finalMiddleware = new FinalMiddleware();
+    String rootDirectoryPath = System.getProperty("user.dir") + "/code";
+    FileMiddleware fileMiddleware = new FileMiddleware(rootDirectoryPath, finalMiddleware);
+    RoutingMiddleware routingMiddleware =  new RoutingMiddleware(router, fileMiddleware);
+    return new ServerResponse(routingMiddleware);
+  }
+
   @Test
   public void responseIsWrittenOutForValidRequest() throws Exception {
     String request = "GET /hello_world HTTP/1.1\r\nHost: localhost\r\n\r\n";
@@ -23,8 +35,9 @@ public class ServerProcessorTest {
     MockServerSocketConnection serverSocketConnection = new MockServerSocketConnection(socket);
     serverSocketConnection.setStoredInputData(request);
     Router router = new Router();
-    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler());
-    ServerProcessor serverProcessor = new ServerProcessor(serverSocketConnection, router);
+    setupRouter(router);
+    ServerResponse serverResponse = setupServerResponse(router);
+    ServerProcessor serverProcessor = new ServerProcessor(serverSocketConnection, serverResponse);
 
     serverProcessor.run();
 
@@ -39,7 +52,9 @@ public class ServerProcessorTest {
     MockServerSocketConnection serverSocketConnection = new MockServerSocketConnection(socket);
     serverSocketConnection.setStoredInputData(request);
     Router router = new Router();
-    ServerProcessor serverProcessor = new ServerProcessor(serverSocketConnection, router);
+    setupRouter(router);
+    ServerResponse serverResponse = setupServerResponse(router);
+    ServerProcessor serverProcessor = new ServerProcessor(serverSocketConnection, serverResponse);
 
     serverProcessor.run();
 

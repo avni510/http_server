@@ -2,146 +2,90 @@ package http_server;
 
 import org.junit.Test;
 
-import java.io.*;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
 public class RouterTest {
-
-  private String getHtmlBody() {
-    return  "<li> <a href=/result.txt>" +
-        "result.txt</a></li>" +
-        "<li> <a href=/validation.txt>" +
-        "validation.txt</a></li>" +
-        "<li> <a href=/log_time_entry.txt>" +
-        "log_time_entry.txt</a></li>";
-  }
-
-  private BufferedReader getInputStream(String uri){
-    String httpRequest = "GET " + uri + " HTTP/1.1\r\nHost: localhost\r\n\r\n";
-    InputStream inputStream = new ByteArrayInputStream(httpRequest.getBytes());
-    return new BufferedReader(new InputStreamReader(inputStream));
-  }
 
   private String getParametersBody(){
     return "variable_1 = Operators <, >, =, !=; +, -, *, &, @, #, $, [, ]: \"is that all\"? variable_2 = stuff ";
   }
 
   @Test
-  public void routeIsAdded() throws Exception {
-    BufferedReader bufferedReader = getInputStream("/hello_world");
+  public void routeIsAdded() throws Exception{
     Router router = new Router();
 
     router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler());
-    Response actualResponse = router.generateHttpResponse(bufferedReader);
 
-    assertEquals("hello world", new String(actualResponse.getBody()));
-  }
-
-  @Test
-  public void helloWorldIsSentAsAResponse() throws Exception {
-    BufferedReader bufferedReader = getInputStream("/hello_world");
-    Router router = new Router();
-    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler());
-
-    Response actualResponse = router.generateHttpResponse(bufferedReader);
-
+    Map<Tuple<Enum<RequestMethod>, String>, Handler> allRoutes = router.getRoutes();
+    Handler handler = allRoutes.get(new Tuple<>(RequestMethod.GET, "/hello_world"));
+    Request request = new RequestBuilder()
+        .setRequestMethod(RequestMethod.GET)
+        .setUri("/hello_world")
+        .setHttpVersion("HTTP/1.1")
+        .setHeader("Host: localhost")
+        .build();
+    Response actualResponse = handler.generate(request);
+    assertEquals("200 OK", actualResponse.getStatusCodeMessage());
     assertEquals("hello world", new String (actualResponse.getBody()));
   }
 
   @Test
-  public void htmlOfFilesIsSentAsAResponse() throws Exception {
-    String rootDirectoryPath = System.getProperty("user.dir") + "/code";
-    BufferedReader bufferedReader = getInputStream("/");
+  public void routeIsRetrieved() throws Exception{
     Router router = new Router();
-    router.addRoute(RequestMethod.GET, "/", new DirectoryHandler(rootDirectoryPath));
+    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler());
 
-    Response actualResponse = router.generateHttpResponse(bufferedReader);
-
-    assertEquals(getHtmlBody(), new String(actualResponse.getBody()));
+    Handler handler = router.retrieveHandler(RequestMethod.GET, "/hello_world");
+    Request request = new RequestBuilder()
+        .setRequestMethod(RequestMethod.GET)
+        .setUri("/hello_world")
+        .setHttpVersion("HTTP/1.1")
+        .setHeader("Host: localhost")
+        .build();
+    Response actualResponse = handler.generate(request);
+    assertEquals("200 OK", actualResponse.getStatusCodeMessage());
+    assertEquals("hello world", new String (actualResponse.getBody()));
   }
 
   @Test
-  public void fileContentsAreSentAsAResponseForResultFile() throws Exception {
-    String filePath = System.getProperty("user.dir") + "/code/result.txt";
-    BufferedReader bufferedReader = getInputStream("/result.txt");
-    Router router = new Router();
-    router.addRoute(RequestMethod.GET, "/result.txt", new FileReaderHandler(filePath, new FileHelper()));
-
-    Response actualResponse = router.generateHttpResponse(bufferedReader);
-
-    String fileContents = "module TimeLogger\nend\n";
-    assertEquals(fileContents, new String(actualResponse.getBody()));
-  }
-
-  @Test
-  public void fileContentsAreSentAsAResponseForValidationFile() throws Exception {
-    String filePath = System.getProperty("user.dir") + "/code/validation.txt";
-    BufferedReader bufferedReader = getInputStream("/validation.txt");
-    Router router = new Router();
-    router.addRoute(RequestMethod.GET, "/validation.txt", new FileReaderHandler(filePath, new FileHelper()));
-
-    Response actualResponse = router.generateHttpResponse(bufferedReader);
-
-    String fileContents = "x = 1\ny = 2\n";
-    assertEquals(fileContents, new String(actualResponse.getBody()));
-  }
-
-  @Test
-  public void notFoundResponseIsSentForNonExistentFile() throws Exception {
-    String filePath = System.getProperty("user.dir") + "/code/validation.txt";
-    BufferedReader bufferedReader = getInputStream("/main.txt");
-    Router router = new Router();
-    router.addRoute(RequestMethod.GET, "/validation.txt", new FileReaderHandler(filePath, new FileHelper()));
-
-    Response actualResponse = router.generateHttpResponse(bufferedReader);
-
-    assertEquals("404 Not Found", actualResponse.getStatusCodeMessage());
-  }
-
-  @Test
-  public void badRequestResponseIsSentForMalformedRequest() throws Exception {
-    String httpRequest = "/" + " HTTP/1.1\r\n\r\n";
-    InputStream inputStream = new ByteArrayInputStream(httpRequest.getBytes());
-    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-    Router router = new Router();
-
-    Response actualResponse = router.generateHttpResponse(bufferedReader);
-
-    assertEquals("400 Bad Request", actualResponse.getStatusCodeMessage());
-  }
-
-  @Test
-  public void methodNotAllowedError() throws Exception {
-    String filePath = System.getProperty("user.dir") + "/code/result.txt";
-    Router router = new Router();
-    router.addRoute(RequestMethod.GET, "/result.txt", new FileReaderHandler(filePath, new FileHelper()));
-    String httpRequest = "POST " + "/result.txt" + " HTTP/1.1\r\nHost: localhost\r\n\r\n";
-    InputStream inputStream = new ByteArrayInputStream(httpRequest.getBytes());
-    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
-    Response actualResponse = router.generateHttpResponse(bufferedReader);
-
-    assertEquals("405 Method Not Allowed", actualResponse.getStatusCodeMessage());
-  }
-
-  @Test
-  public void uriWithQuestionMark() throws Exception {
+  public void handlesARouteWithAQuestionMark() throws Exception{
     Router router = new Router();
     router.addRoute(RequestMethod.GET, "/parameters", new ParameterHandler());
-    String httpRequest = "GET " + "/parameters?variable_1=Operators%20%3C%2C%20%3E%2C%20%3D%2C%20" +
-                         "!%3D%3B%20%2B%2C%20-%2C%20*%2C%20%26%2C%20%40%2C%20%23%2C%20%24%2C%20%5B%2C%20%" +
-                         "5D%3A%20%22is%20that%20all%22%3F&variable_2=stuff" + " HTTP/1.1\r\nHost: localhost\r\n\r\n";
-    InputStream inputStream = new ByteArrayInputStream(httpRequest.getBytes());
-    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
-    Response actualResponse = router.generateHttpResponse(bufferedReader);
+    String httpUri = "/parameters?variable_1=Operators%20%3C%2C%20%3E%2C%20%3D%2C%20" +
+                     "!%3D%3B%20%2B%2C%20-%2C%20*%2C%20%26%2C%20%40%2C%20%23%2C%20%24%2C%20%5B%2C%20%" +
+                     "5D%3A%20%22is%20that%20all%22%3F&variable_2=stuff";
+    Handler handler = router.retrieveHandler(RequestMethod.GET, httpUri);
 
-    assertEquals(getParametersBody(), new String (actualResponse.getBody()));
+    Request request = new RequestBuilder()
+        .setRequestMethod(RequestMethod.GET)
+        .setUri(httpUri)
+        .setHttpVersion("HTTP/1.1")
+        .setHeader("Host: localhost")
+        .build();
+    Response actualResponse = handler.generate(request);
+    assertEquals(getParametersBody(), new String(actualResponse.getBody()));
+
+  }
+
+  @Test
+  public void returnsTrueIfAUriIsInARouter(){
+    Router router = new Router();
+    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler());
+
+    boolean actualResult = router.uriExists("/hello_world");
+
+    assertTrue(actualResult);
+  }
+
+  @Test
+  public void returnsFalseIfAUriIsInARouter(){
+    Router router = new Router();
+    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler());
+
+    boolean actualResult = router.uriExists("/nonexistent_uri");
+
+    assertFalse(actualResult);
   }
 }
-
-
-
-
-

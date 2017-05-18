@@ -7,19 +7,20 @@ public class HttpServer {
   private ConnectionManager server;
   private CancellationToken serverCancellationToken;
   private ExecutorService threadPool;
-  private Router router;
+  private ServerResponse serverResponse;
 
-  public HttpServer(ConnectionManager server, CancellationToken serverCancellationToken, ExecutorService threadPool, Router router) {
+  public HttpServer(ConnectionManager server, CancellationToken serverCancellationToken,
+                    ExecutorService threadPool, ServerResponse serverResponse) {
     this.server = server;
     this.serverCancellationToken = serverCancellationToken;
     this.threadPool = threadPool;
-    this.router = router;
+    this.serverResponse = serverResponse;
   }
 
   public void execute() {
     try {
       while (serverCancellationToken.isListening()) {
-        threadPool.execute(new ServerProcessor(server.accept(), router));
+        threadPool.execute(new ServerProcessor(server.accept(), serverResponse));
       }
     }
     catch(Exception e){
