@@ -34,7 +34,6 @@ public class ConfigurationRoutes {
           .addRoute(RequestMethod.GET, "/parameters", new ParameterHandler())
           .addRoute(RequestMethod.GET, "/cookie", new CookieHandler())
           .addRoute(RequestMethod.GET, "/eat_cookie", new CookieHandler());
-//    populateFileRoutes(router, directoryPath);
     return router;
   }
 

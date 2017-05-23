@@ -13,7 +13,10 @@ public class ServerResponseTest {
   private String rootDirectoryPath;
 
   private String getHtmlBody() {
-    return  "<li> <a href=/result.txt>" +
+    return
+        "<li> <a href=/image.png>" +
+        "image.png</a></li>" +
+        "<li> <a href=/result.txt>" +
         "result.txt</a></li>" +
         "<li> <a href=/validation.txt>" +
         "validation.txt</a></li>" +

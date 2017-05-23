@@ -38,11 +38,13 @@ public class FileHelperTest {
     addNameAndRelativePath(paths, "log_time_entry.txt");
     addNameAndRelativePath(paths, "result.txt");
     addNameAndRelativePath(paths, "validation.txt");
+    addNameAndRelativePath(paths, "image.png");
     return paths;
   }
 
   private Map<String, String> populateRelativeAndAbsolutePaths(){
     Map<String, String> paths = new HashMap();
+    addRelativeAndAbsolutePath(paths, "/image.png");
     addRelativeAndAbsolutePath(paths, "/log_time_entry.txt");
     addRelativeAndAbsolutePath(paths, "/result.txt");
     addRelativeAndAbsolutePath(paths, "/validation.txt");
@@ -146,5 +148,25 @@ public class FileHelperTest {
     Integer actualResult = fileHelper.getLength(filePath);
 
     assertEquals(Integer.valueOf(22), actualResult);
+  }
+
+  @Test
+  public void mimeTypeForPlainTextIsReturned(){
+    FileHelper fileHelper = new FileHelper();
+
+    String filePath = rootFilePath + "/result.txt";
+    String actualResult = fileHelper.getMimeType(filePath);
+
+    assertEquals("text/plain", actualResult);
+  }
+
+  @Test
+  public void mimeTypeForPngIsReturned(){
+    FileHelper fileHelper = new FileHelper();
+
+    String filePath = rootFilePath + "/image.png";
+    String actualResult = fileHelper.getMimeType(filePath);
+
+    assertEquals("image/png", actualResult);
   }
 }

@@ -12,6 +12,7 @@ public class DirectoryHandlerTest {
 
   public String getBody() {
    String body =
+       "<li> <a href=/image.png>image.png</a></li>" +
        "<li> <a href=/result.txt>result.txt</a></li>" +
        "<li> <a href=/validation.txt>validation.txt</a></li>" +
        "<li> <a href=/log_time_entry.txt>log_time_entry.txt</a></li>";

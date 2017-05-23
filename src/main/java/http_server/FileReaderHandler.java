@@ -3,15 +3,6 @@ package http_server;
 import javafx.util.Pair;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import java.util.Arrays;
-
-import java.security.MessageDigest;
-
-import javax.xml.bind.DatatypeConverter;
 
 public class FileReaderHandler implements Handler{
   String filePath;
@@ -40,33 +31,6 @@ public class FileReaderHandler implements Handler{
               .build();
         }
       }
-      else if (request.getRequestMethod() == RequestMethod.GET && fileHelper.getExtension(filePath).equals("png")) {
-        response = new ResponseBuilder()
-            .setHttpVersion("HTTP/1.1")
-            .setStatusCode(200)
-            .setHeader("Content-Type", "image/png")
-            .setHeader("Content-Length", String.valueOf(fileHelper.getLength(filePath)))
-            .setBody(fileHelper.readBytes(filePath))
-            .build();
-      }
-      else if (request.getRequestMethod() == RequestMethod.GET && fileHelper.getExtension(filePath).equals("jpeg")) {
-        response = new ResponseBuilder()
-            .setHttpVersion("HTTP/1.1")
-            .setStatusCode(200)
-            .setHeader("Content-Type", "image/jpeg")
-            .setHeader("Content-Length", String.valueOf(fileHelper.getLength(filePath)))
-            .setBody(fileHelper.readBytes(filePath))
-            .build();
-      }
-      else if (request.getRequestMethod() == RequestMethod.GET && fileHelper.getExtension(filePath).equals("gif")) {
-        response = new ResponseBuilder()
-            .setHttpVersion("HTTP/1.1")
-            .setStatusCode(200)
-            .setHeader("Content-Type", "image/gif")
-            .setHeader("Content-Length", String.valueOf(fileHelper.getLength(filePath)))
-            .setBody(fileHelper.readBytes(filePath))
-            .build();
-      }
       else if (request.getRequestMethod() == RequestMethod.GET) {
         String rangeHeader = returnRangeHeader(request);
         if (rangeHeader != null) {
@@ -82,9 +46,10 @@ public class FileReaderHandler implements Handler{
           response = new ResponseBuilder()
               .setHttpVersion("HTTP/1.1")
               .setStatusCode(200)
-              .setHeader("Content-Type", "text/plain")
+              .setHeader("Content-Type", fileHelper.getMimeType(filePath))
+              .setHeader("Content-Length", String.valueOf(fileHelper.getLength(filePath)))
               .setHeader("ETag", fileHelper.hashValue(filePath))
-              .setBody(new String(fileHelper.readBytes(filePath), "UTF-8"))
+              .setBody(fileHelper.readBytes(filePath))
               .build();
         }
       }

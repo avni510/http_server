@@ -12,6 +12,9 @@ import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.net.FileNameMap;
+import java.net.URLConnection;
+
 
 public class FileHelper {
 
@@ -91,6 +94,11 @@ public class FileHelper {
     File file = new File(filePath);
     Long fileSize = file.length();
     return fileSize.intValue();
+  }
+
+  public String getMimeType(String filePath){
+    FileNameMap fileNameMap = URLConnection.getFileNameMap();
+    return fileNameMap.getContentTypeFor(filePath);
   }
 
   private File[] getFiles(String rootPath) {
