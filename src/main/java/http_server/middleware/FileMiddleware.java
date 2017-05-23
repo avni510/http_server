@@ -2,14 +2,15 @@ package http_server.middleware;
 
 import http_server.handler.file_reader.FileReaderGetHandler;
 import http_server.handler.file_reader.FileReaderPatchHandler;
+
 import http_server.handler.ErrorHandler;
 
 import http_server.Middleware;
-import http_server.Response;
-import http_server.Request;
+import http_server.response.Response;
+import http_server.request.Request;
 import http_server.FileHelper;
 import http_server.Handler;
-import http_server.RequestMethod;
+import http_server.request.RequestMethod;
 
 import java.util.Map;
 

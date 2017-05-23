@@ -1,10 +1,12 @@
 package http_server.handler.methods;
 
 import http_server.Handler;
-import http_server.Request;
-import http_server.Response;
-import http_server.ResponseBuilder;
-import http_server.RequestMethod;
+
+import http_server.request.Request;
+import http_server.request.RequestMethod;
+
+import http_server.response.Response;
+import http_server.response.ResponseBuilder;
 
 import java.io.IOException;
 

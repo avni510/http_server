@@ -1,5 +1,9 @@
 package http_server;
 
+import http_server.request.Request;
+import http_server.request.RequestBuilder;
+import http_server.request.RequestMethod;
+
 public class Support {
 
   public Request createRequest(Enum<RequestMethod> requestMethod, String uri, String httpVersion, String headers, String body){

@@ -1,5 +1,6 @@
 package http_server;
 
+import http_server.request.RequestMethod;
 import org.junit.Test;
 
 import java.util.HashMap;

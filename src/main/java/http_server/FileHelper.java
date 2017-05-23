@@ -86,15 +86,6 @@ public class FileHelper {
     return new String(partialFileBytes);
   }
 
-  public String getExtension(String filePath){
-    String extension = "";
-    int i = filePath.lastIndexOf(".");
-    if (i > 0){
-      extension = filePath.substring(i + 1);
-    }
-    return extension;
-  }
-
   public Integer getLength(String filePath) {
     File file = new File(filePath);
     Long fileSize = file.length();

@@ -1,4 +1,6 @@
-package http_server;
+package http_server.mocks;
+
+import http_server.Connection;
 
 import java.io.IOException;
 import java.io.InputStream;

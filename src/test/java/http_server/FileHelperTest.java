@@ -134,16 +134,6 @@ public class FileHelperTest {
   }
 
   @Test
-  public void fileExtensionIsReturned(){
-    FileHelper fileHelper = new FileHelper();
-
-    String filePath = rootFilePath + "/result.txt";
-    String actualResult = fileHelper.getExtension(filePath);
-
-    assertEquals("txt", actualResult);
-  }
-
-  @Test
   public void fileLengthIsReturned(){
     FileHelper fileHelper = new FileHelper();
 

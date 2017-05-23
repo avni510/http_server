@@ -1,4 +1,4 @@
-package http_server;
+package http_server.request;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

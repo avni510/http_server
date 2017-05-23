@@ -1,11 +1,11 @@
-package http_server;
+package http_server.mocks;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.net.Socket;
 
-class MockSocket extends Socket {
+public class MockSocket extends Socket {
   private InputStream inputStream;
   private OutputStream outputStream;
 

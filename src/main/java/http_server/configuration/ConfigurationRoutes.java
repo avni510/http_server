@@ -1,8 +1,10 @@
 package http_server.configuration;
 
+import http_server.request.RequestMethod;
+
 import http_server.DataStore;
-import http_server.RequestMethod;
 import http_server.Router;
+
 import http_server.handler.HelloWorldGetHandler;
 import http_server.handler.directory.DirectoryGetHandler;
 import http_server.handler.directory.DirectoryHeadHandler;

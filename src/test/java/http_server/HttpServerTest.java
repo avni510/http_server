@@ -6,6 +6,10 @@ import http_server.middleware.FileMiddleware;
 import http_server.middleware.RoutingMiddleware;
 import http_server.middleware.FinalMiddleware;
 
+import http_server.mocks.MockSocket;
+
+import http_server.mocks.*;
+import http_server.request.RequestMethod;
 import org.junit.Before;
 import org.junit.Test;
 

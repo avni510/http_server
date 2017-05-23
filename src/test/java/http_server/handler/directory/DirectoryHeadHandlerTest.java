@@ -1,9 +1,9 @@
 package http_server.handler.directory;
 
-import http_server.Request;
-import http_server.RequestBuilder;
-import http_server.RequestMethod;
-import http_server.Response;
+import http_server.request.Request;
+import http_server.request.RequestBuilder;
+import http_server.request.RequestMethod;
+import http_server.response.Response;
 
 import static org.junit.Assert.assertEquals;
 

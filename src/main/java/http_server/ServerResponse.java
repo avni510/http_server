@@ -2,6 +2,11 @@ package http_server;
 
 import http_server.handler.ErrorHandler;
 
+import http_server.request.Request;
+import http_server.request.RequestParser;
+
+import http_server.response.Response;
+
 import java.io.BufferedReader;
 
 public class ServerResponse {

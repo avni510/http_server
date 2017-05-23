@@ -1,4 +1,6 @@
-package http_server;
+package http_server.mocks;
+
+import http_server.CancellationToken;
 
 public class MockServerCancellationToken implements CancellationToken {
   private boolean listening = true;

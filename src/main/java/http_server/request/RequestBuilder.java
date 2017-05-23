@@ -1,4 +1,4 @@
-package http_server;
+package http_server.request;
 
 public class RequestBuilder {
   private Enum<RequestMethod> requestMethod;

@@ -1,5 +1,6 @@
-package http_server;
+package http_server.request;
 
+import http_server.Header;
 import org.junit.Test;
 
 import java.io.BufferedReader;

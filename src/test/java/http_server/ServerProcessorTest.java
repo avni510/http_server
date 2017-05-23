@@ -8,6 +8,9 @@ import http_server.middleware.FinalMiddleware;
 import http_server.middleware.FileMiddleware;
 import http_server.middleware.RoutingMiddleware;
 
+import http_server.mocks.MockServerSocketConnection;
+import http_server.mocks.MockSocket;
+import http_server.request.RequestMethod;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;

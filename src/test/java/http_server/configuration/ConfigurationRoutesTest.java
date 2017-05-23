@@ -1,6 +1,6 @@
 package http_server.configuration;
 
-import http_server.Response;
+import http_server.response.Response;
 import http_server.Router;
 import http_server.ServerResponse;
 import http_server.middleware.FileMiddleware;

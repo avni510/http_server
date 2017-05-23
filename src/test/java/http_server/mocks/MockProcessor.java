@@ -1,4 +1,4 @@
-package http_server;
+package http_server.mocks;
 
 public class MockProcessor implements Runnable {
   public MockServerSocketConnection clientConnection;

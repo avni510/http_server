@@ -1,5 +1,7 @@
 package http_server;
 
+import http_server.request.RequestMethod;
+
 import java.util.HashMap;
 import java.util.Map;
 

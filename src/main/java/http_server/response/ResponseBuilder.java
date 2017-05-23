@@ -1,4 +1,6 @@
-package http_server;
+package http_server.response;
+
+import http_server.Header;
 
 import java.util.HashMap;
 import java.util.Map;
