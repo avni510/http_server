@@ -1,4 +1,4 @@
-package http_server.handler;
+package http_server.handler.methods;
 
 import http_server.Handler;
 import http_server.Request;

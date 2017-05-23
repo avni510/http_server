@@ -1,5 +1,8 @@
-package http_server;
+package http_server.configuration;
 
+import http_server.Response;
+import http_server.Router;
+import http_server.ServerResponse;
 import http_server.middleware.FileMiddleware;
 import http_server.middleware.RoutingMiddleware;
 import http_server.middleware.FinalMiddleware;

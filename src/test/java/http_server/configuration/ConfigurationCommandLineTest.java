@@ -1,4 +1,4 @@
-package http_server;
+package http_server.configuration;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package http_server;
+package http_server.configuration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
