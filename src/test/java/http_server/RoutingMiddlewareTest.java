@@ -1,8 +1,9 @@
 package http_server;
 
+import http_server.handler.HelloWorldGetHandler;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class RoutingMiddlewareTest {
 

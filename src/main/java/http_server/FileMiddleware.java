@@ -1,5 +1,9 @@
 package http_server;
 
+import http_server.handler.FileReaderGetHandler;
+import http_server.handler.FileReaderPatchHandler;
+import http_server.handler.ErrorHandler;
+
 import java.util.Map;
 
 public class FileMiddleware implements Middleware{

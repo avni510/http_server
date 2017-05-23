@@ -1,5 +1,8 @@
 package http_server;
 
+import http_server.handler.DirectoryGetHandler;
+import http_server.handler.HelloWorldGetHandler;
+
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -7,7 +10,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ServerResponseTest {
   private String rootDirectoryPath;

@@ -1,15 +1,20 @@
 package http_server;
 
+import http_server.handler.HelloWorldGetHandler;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+
 import java.net.Socket;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class HttpServerTest {
   private CancellationToken serverCancellationToken;

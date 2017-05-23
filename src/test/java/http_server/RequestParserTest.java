@@ -1,10 +1,13 @@
 package http_server;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import static org.junit.Assert.assertEquals;
 
 public class RequestParserTest {
   @Test

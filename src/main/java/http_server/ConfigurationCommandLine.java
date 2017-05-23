@@ -1,6 +1,5 @@
 package http_server;
 
-
 public class ConfigurationCommandLine {
   private String defaultDirectory = System.getProperty("user.dir") + "/code";
   private String defaultPort = "4444";

@@ -2,7 +2,6 @@ package http_server;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Map;
 
 public class Response {
   private String CLRF = "\r\n";

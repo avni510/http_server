@@ -1,6 +1,19 @@
 package http_server;
 
-import java.util.Map;
+import http_server.handler.HelloWorldGetHandler;
+import http_server.handler.DirectoryGetHandler;
+import http_server.handler.DirectoryHeadHandler;
+import http_server.handler.FormGetHandler;
+import http_server.handler.FormPostHandler;
+import http_server.handler.FormPutHandler;
+import http_server.handler.FormDeleteHandler;
+import http_server.handler.TeapotGetHandler;
+import http_server.handler.RedirectGetHandler;
+import http_server.handler.MethodsHandler;
+import http_server.handler.MethodsOptionsHandler;
+import http_server.handler.LogGetHandler;
+import http_server.handler.ParametersGetHandler;
+import http_server.handler.CookieGetHandler;
 
 public class ConfigurationRoutes {
   private String directoryPath;

@@ -1,10 +1,15 @@
 package http_server;
 
+import http_server.handler.HelloWorldGetHandler;
+import http_server.handler.ParametersGetHandler;
+
 import org.junit.Test;
 
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 public class RouterTest {
 

@@ -1,11 +1,13 @@
 package http_server;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+import http_server.handler.HelloWorldGetHandler;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+
 import java.net.Socket;
 
 public class ServerProcessorTest {

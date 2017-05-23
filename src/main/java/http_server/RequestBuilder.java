@@ -1,7 +1,5 @@
 package http_server;
 
-import java.util.ArrayList;
-
 public class RequestBuilder {
   private Enum<RequestMethod> requestMethod;
   private String uri;

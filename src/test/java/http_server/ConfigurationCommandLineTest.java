@@ -2,7 +2,7 @@ package http_server;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ConfigurationCommandLineTest {
   private String rootPath = System.getProperty("user.dir");
