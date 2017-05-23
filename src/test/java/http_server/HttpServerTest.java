@@ -26,7 +26,7 @@ public class HttpServerTest {
   }
 
   private void setupRouter(){
-    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler());
+    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler());
   }
 
   private ServerResponse setupServerResponse(){

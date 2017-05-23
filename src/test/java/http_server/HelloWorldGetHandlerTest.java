@@ -6,7 +6,7 @@ import java.io.UnsupportedEncodingException;
 
 import static org.junit.Assert.*;
 
-public class HelloWorldHandlerTest {
+public class HelloWorldGetHandlerTest {
 
   @Test
   public void testResponseIsReturned() throws UnsupportedEncodingException {
@@ -16,9 +16,9 @@ public class HelloWorldHandlerTest {
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
-    HelloWorldHandler helloWorldHandler = new HelloWorldHandler();
+    HelloWorldGetHandler helloWorldGetHandler = new HelloWorldGetHandler();
 
-    Response actualResponse = helloWorldHandler.generate(request);
+    Response actualResponse = helloWorldGetHandler.generate(request);
 
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
     assertEquals("hello world", new String (actualResponse.getBody()));

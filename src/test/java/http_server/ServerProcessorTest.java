@@ -17,7 +17,7 @@ public class ServerProcessorTest {
   }
 
   private void setupRouter(Router router){
-    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler());
+    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler());
   }
 
   private ServerResponse setupServerResponse(Router router){

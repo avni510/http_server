@@ -9,7 +9,7 @@ import java.util.Base64;
 
 import static org.junit.Assert.*;
 
-public class LogHandlerTest {
+public class LogGetHandlerTest {
 
   private DataStore setUpLogs() {
     DataStore dataStore = new DataStore();
@@ -29,9 +29,9 @@ public class LogHandlerTest {
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
-    LogHandler logHandler = new LogHandler(setUpLogs(), username, password);
+    LogGetHandler logGetHandler = new LogGetHandler(setUpLogs(), username, password);
 
-    Response actualResponse = logHandler.generate(request);
+    Response actualResponse = logGetHandler.generate(request);
 
     assertEquals("401 Unauthorized", actualResponse.getStatusCodeMessage());
     assertEquals("WWW-Authenticate: Basic realm=\"Access to Avni's Server\"\r\n", actualResponse.getHeaders());
@@ -49,9 +49,9 @@ public class LogHandlerTest {
         .setHttpVersion("HTTP/1.1")
         .setHeader("Authorization: Basic " + encoded)
         .build();
-    LogHandler logHandler = new LogHandler(setUpLogs(), username, password);
+    LogGetHandler logGetHandler = new LogGetHandler(setUpLogs(), username, password);
 
-    Response actualResponse = logHandler.generate(request);
+    Response actualResponse = logGetHandler.generate(request);
 
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
     assertEquals("HEAD /requests HTTP/1.1 GET /log HTTP/1.1 PUT /these HTTP/1.1 ", new String(actualResponse.getBody()));

@@ -9,7 +9,7 @@ public class RoutingMiddlewareTest {
   @Test
   public void responseIsGenerated() throws Exception {
     Router router = new Router();
-    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler());
+    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler());
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/hello_world")
@@ -30,7 +30,7 @@ public class RoutingMiddlewareTest {
   @Test
   public void methodNotAllowedErrorGenerated() throws Exception {
     Router router = new Router();
-    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler());
+    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler());
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.POST)
         .setUri("/hello_world")
@@ -50,7 +50,7 @@ public class RoutingMiddlewareTest {
   @Test
   public void theNextMiddlewareIsCalled() throws Exception {
     Router router = new Router();
-    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler());
+    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler());
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/result.txt")

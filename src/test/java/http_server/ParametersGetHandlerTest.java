@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class ParameterHandlerTest {
+public class ParametersGetHandlerTest {
 
   private String setUri(){
     return "/parameters?variable_1=Operators" +
@@ -25,9 +25,9 @@ public class ParameterHandlerTest {
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
-    ParameterHandler parameterHandler = new ParameterHandler();
+    ParametersGetHandler parametersGetHandler = new ParametersGetHandler();
 
-    Response actualResponse = parameterHandler.generate(request);
+    Response actualResponse = parametersGetHandler.generate(request);
 
     assertEquals(getBody(), new String (actualResponse.getBody()));
   }

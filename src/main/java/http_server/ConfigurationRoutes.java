@@ -13,7 +13,7 @@ public class ConfigurationRoutes {
 
   public Router populateRoutes(Router router) {
     DataStore dataStore = new DataStore();
-    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler())
+    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler())
           .addRoute(RequestMethod.GET, "/", new DirectoryHandlerGet(directoryPath))
           .addRoute(RequestMethod.HEAD, "/", new DirectoryHandlerHead())
           .addRoute(RequestMethod.GET, "/form", new FormHandlerGet(dataStore))
@@ -23,15 +23,15 @@ public class ConfigurationRoutes {
           .addRoute(RequestMethod.GET, "/coffee", new TeapotHandler())
           .addRoute(RequestMethod.GET, "/tea", new TeapotHandler())
           .addRoute(RequestMethod.GET, "/redirect", new RedirectHandler())
-          .addRoute(RequestMethod.GET, "/method_options", new OptionsHandler(methodOptions()))
-          .addRoute(RequestMethod.PUT, "/method_options", new OptionsHandler(methodOptions()))
-          .addRoute(RequestMethod.POST, "/method_options", new OptionsHandler(methodOptions()))
-          .addRoute(RequestMethod.HEAD, "/method_options", new OptionsHandler(methodOptions()))
-          .addRoute(RequestMethod.OPTIONS, "/method_options", new OptionsHandler(methodOptions()))
-          .addRoute(RequestMethod.GET, "/method_options2", new OptionsHandler(methodOptions2()))
-          .addRoute(RequestMethod.OPTIONS, "/method_options2", new OptionsHandler(methodOptions2()))
-          .addRoute(RequestMethod.GET, "/logs", new LogHandler(setLogs(), usernameAuthentication, passwordAuthentication))
-          .addRoute(RequestMethod.GET, "/parameters", new ParameterHandler())
+          .addRoute(RequestMethod.GET, "/method_options", new MethodsHandler())
+          .addRoute(RequestMethod.PUT, "/method_options", new MethodsHandler())
+          .addRoute(RequestMethod.POST, "/method_options", new MethodsHandler())
+          .addRoute(RequestMethod.HEAD, "/method_options", new MethodsHandler())
+          .addRoute(RequestMethod.OPTIONS, "/method_options", new MethodsOptionsHandler(methodOptions()))
+          .addRoute(RequestMethod.GET, "/method_options2", new MethodsHandler())
+          .addRoute(RequestMethod.OPTIONS, "/method_options2", new MethodsOptionsHandler(methodOptions2()))
+          .addRoute(RequestMethod.GET, "/logs", new LogGetHandler(setLogs(), usernameAuthentication, passwordAuthentication))
+          .addRoute(RequestMethod.GET, "/parameters", new ParametersGetHandler())
           .addRoute(RequestMethod.GET, "/cookie", new CookieHandlerGet())
           .addRoute(RequestMethod.GET, "/eat_cookie", new CookieHandlerGet());
     return router;

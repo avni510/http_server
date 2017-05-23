@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import java.net.URLDecoder;
 
-public class ParameterHandler implements Handler{
+public class ParametersGetHandler implements Handler{
 
   public Response generate(Request request) throws IOException {
     Response response = new ResponseBuilder().

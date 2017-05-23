@@ -16,7 +16,7 @@ public class RouterTest {
   public void routeIsAdded() throws Exception{
     Router router = new Router();
 
-    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler());
+    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler());
 
     Map<Tuple<Enum<RequestMethod>, String>, Handler> allRoutes = router.getRoutes();
     Handler handler = allRoutes.get(new Tuple<>(RequestMethod.GET, "/hello_world"));
@@ -34,7 +34,7 @@ public class RouterTest {
   @Test
   public void routeIsRetrieved() throws Exception{
     Router router = new Router();
-    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler());
+    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler());
 
     Handler handler = router.retrieveHandler(RequestMethod.GET, "/hello_world");
     Request request = new RequestBuilder()
@@ -51,7 +51,7 @@ public class RouterTest {
   @Test
   public void handlesARouteWithAQuestionMark() throws Exception{
     Router router = new Router();
-    router.addRoute(RequestMethod.GET, "/parameters", new ParameterHandler());
+    router.addRoute(RequestMethod.GET, "/parameters", new ParametersGetHandler());
 
     String httpUri = "/parameters?variable_1=Operators%20%3C%2C%20%3E%2C%20%3D%2C%20" +
                      "!%3D%3B%20%2B%2C%20-%2C%20*%2C%20%26%2C%20%40%2C%20%23%2C%20%24%2C%20%5B%2C%20%" +
@@ -72,7 +72,7 @@ public class RouterTest {
   @Test
   public void returnsTrueIfAUriIsInARouter(){
     Router router = new Router();
-    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler());
+    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler());
 
     boolean actualResult = router.uriExists("/hello_world");
 
@@ -82,7 +82,7 @@ public class RouterTest {
   @Test
   public void returnsFalseIfAUriIsInARouter(){
     Router router = new Router();
-    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler());
+    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler());
 
     boolean actualResult = router.uriExists("/nonexistent_uri");
 

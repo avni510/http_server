@@ -6,12 +6,12 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LogHandler implements Handler{
+public class LogGetHandler implements Handler{
   DataStore dataStore;
   String username;
   String password;
 
-  public LogHandler(DataStore dataStore, String username, String password){
+  public LogGetHandler(DataStore dataStore, String username, String password){
     this.dataStore = dataStore;
     this.username = username;
     this.password = password;
