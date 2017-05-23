@@ -1,6 +1,11 @@
 package http_server;
 
+import http_server.middleware.FinalMiddleware;
+import http_server.middleware.FileMiddleware;
+import http_server.middleware.RoutingMiddleware;
+
 import java.net.ServerSocket;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

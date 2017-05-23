@@ -2,6 +2,10 @@ package http_server;
 
 import http_server.handler.HelloWorldGetHandler;
 
+import http_server.middleware.FileMiddleware;
+import http_server.middleware.RoutingMiddleware;
+import http_server.middleware.FinalMiddleware;
+
 import org.junit.Before;
 import org.junit.Test;
 

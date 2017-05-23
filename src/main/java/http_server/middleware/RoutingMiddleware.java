@@ -1,4 +1,10 @@
-package http_server;
+package http_server.middleware;
+
+import http_server.Middleware;
+import http_server.Handler;
+import http_server.Router;
+import http_server.Request;
+import http_server.Response;
 
 import http_server.handler.ErrorHandler;
 

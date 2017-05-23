@@ -1,12 +1,19 @@
-package http_server;
+package http_server.middleware;
 
 import http_server.handler.FileReaderGetHandler;
 import http_server.handler.FileReaderPatchHandler;
 import http_server.handler.ErrorHandler;
 
+import http_server.Middleware;
+import http_server.Response;
+import http_server.Request;
+import http_server.FileHelper;
+import http_server.Handler;
+import http_server.RequestMethod;
+
 import java.util.Map;
 
-public class FileMiddleware implements Middleware{
+public class FileMiddleware implements Middleware {
   private String rootDirectoryPath;
   private Middleware nextMiddleware;
 

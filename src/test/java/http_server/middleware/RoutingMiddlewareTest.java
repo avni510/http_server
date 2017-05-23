@@ -1,6 +1,13 @@
-package http_server;
+package http_server.middleware;
+
+import http_server.Response;
+import http_server.Router;
+import http_server.RequestMethod;
+import http_server.Request;
+import http_server.RequestBuilder;
 
 import http_server.handler.HelloWorldGetHandler;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
