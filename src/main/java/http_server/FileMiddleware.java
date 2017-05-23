@@ -32,7 +32,12 @@ public class FileMiddleware implements Middleware{
   }
 
   private Response getFileHandlerResponse(Request request, FileHelper fileHelper, String absolutePath) throws Exception{
-    Handler handler = new FileReaderHandler(absolutePath, fileHelper);
+    Handler handler = null;
+    if (request.getRequestMethod().equals(RequestMethod.PATCH)){
+      handler = new FileReaderPatchHandler(absolutePath, fileHelper);
+    } else if (request.getRequestMethod().equals(RequestMethod.GET)) {
+      handler = new FileReaderGetHandler(absolutePath, fileHelper);
+    }
     return handler.generate(request);
   }
 

@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import static org.junit.Assert.*;
 
-public class FormHandlerDeleteTest {
+public class FormDeleteHandlerTest {
 
   @Test
   public void aDeleteRequestIsHandled() throws IOException {
@@ -19,9 +19,9 @@ public class FormHandlerDeleteTest {
     DataStore dataStore = new DataStore();
     dataStore.storeEntry("data", "fatcat");
 
-    FormHandlerDelete formHandlerDelete = new FormHandlerDelete(dataStore);
+    FormDeleteHandler formDeleteHandler = new FormDeleteHandler(dataStore);
 
-    Response actualResponse = formHandlerDelete.generate(request);
+    Response actualResponse = formDeleteHandler.generate(request);
 
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
   }

@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RedirectHandler implements Handler {
+public class RedirectGetHandler implements Handler {
 
   public Response generate(Request request) throws IOException {
     Response response = new ResponseBuilder()

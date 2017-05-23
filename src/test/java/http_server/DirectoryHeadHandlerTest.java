@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-public class DirectoryHandlerHeadTest {
+public class DirectoryHeadHandlerTest {
 
   @Test
   public void responseIsReturnedForHeadRequest() throws IOException {
@@ -16,9 +16,9 @@ public class DirectoryHandlerHeadTest {
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost\r\n")
         .build();
-    DirectoryHandlerHead directoryHandlerHead = new DirectoryHandlerHead();
+    DirectoryHeadHandler directoryHeadHandler = new DirectoryHeadHandler();
 
-    Response actualResponse = directoryHandlerHead.generate(request);
+    Response actualResponse = directoryHeadHandler.generate(request);
 
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
   }

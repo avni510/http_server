@@ -3,12 +3,10 @@ package http_server;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
-public class DirectoryHandlerGetTest {
+public class DirectoryGetHandlerTest {
 
   public String getBody() {
    String body =
@@ -28,9 +26,9 @@ public class DirectoryHandlerGetTest {
         .setHeader("Host: localhost\r\n")
         .build();
     String rootDirectory = System.getProperty("user.dir") + "/code";
-    DirectoryHandlerGet directoryHandlerGet = new DirectoryHandlerGet(rootDirectory);
+    DirectoryGetHandler directoryGetHandler = new DirectoryGetHandler(rootDirectory);
 
-    Response actualResponse = directoryHandlerGet.generate(request);
+    Response actualResponse = directoryGetHandler.generate(request);
 
     assertEquals("Content-Type: text/html\r\n", actualResponse.getHeaders());
     assertEquals(getBody(), new String (actualResponse.getBody()));

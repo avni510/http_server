@@ -6,22 +6,20 @@ import java.io.IOException;
 
 import static org.junit.Assert.*;
 
-public class FormHandlerPutTest {
+public class FormPostHandlerTest {
 
   @Test
-  public void aPutRequestIsHandled() throws IOException {
+  public void aPostRequestIsHandled() throws IOException {
     Request request = new RequestBuilder()
-        .setRequestMethod(RequestMethod.PUT)
+        .setRequestMethod(RequestMethod.POST)
         .setUri("/form")
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
-        .setBody("data=heathcliff")
+        .setBody("data=fatcat")
         .build();
-    DataStore dataStore = new DataStore();
+    FormPostHandler formPostHandler = new FormPostHandler(new DataStore());
 
-    FormHandlerPut formHandlerPut = new FormHandlerPut(dataStore);
-
-    Response actualResponse = formHandlerPut.generate(request);
+    Response actualResponse = formPostHandler.generate(request);
 
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
   }

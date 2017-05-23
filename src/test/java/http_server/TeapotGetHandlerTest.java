@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
-public class TeapotHandlerTest {
+public class TeapotGetHandlerTest {
 
   @Test
   public void FourEighteenIsReturnedForCoffeeUri() throws IOException {
@@ -18,9 +18,9 @@ public class TeapotHandlerTest {
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
-    TeapotHandler teapotHandler = new TeapotHandler();
+    TeapotGetHandler teapotGetHandler = new TeapotGetHandler();
 
-    Response actualResponse = teapotHandler.generate(request);
+    Response actualResponse = teapotGetHandler.generate(request);
 
     assertEquals("418 I'm a teapot", actualResponse.getStatusCodeMessage());
     assertEquals("I'm a teapot", new String (actualResponse.getBody()));
@@ -34,9 +34,9 @@ public class TeapotHandlerTest {
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
-    TeapotHandler teapotHandler = new TeapotHandler();
+    TeapotGetHandler teapotGetHandler = new TeapotGetHandler();
 
-    Response actualResponse = teapotHandler.generate(request);
+    Response actualResponse = teapotGetHandler.generate(request);
 
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
   }

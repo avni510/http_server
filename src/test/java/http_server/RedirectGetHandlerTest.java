@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import static org.junit.Assert.*;
 
-public class RedirectHandlerTest {
+public class RedirectGetHandlerTest {
 
   @Test
   public void clientGivenTheRedirectionLocation() throws IOException {
@@ -16,9 +16,9 @@ public class RedirectHandlerTest {
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
-    RedirectHandler redirectHandler = new RedirectHandler();
+    RedirectGetHandler redirectGetHandler = new RedirectGetHandler();
 
-    Response actualResponse = redirectHandler.generate(request);
+    Response actualResponse = redirectGetHandler.generate(request);
 
     assertEquals("302 Found", actualResponse.getStatusCodeMessage());
     assertEquals("Location: /\r\n", actualResponse.getHeaders());

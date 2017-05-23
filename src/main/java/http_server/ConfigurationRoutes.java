@@ -14,15 +14,15 @@ public class ConfigurationRoutes {
   public Router populateRoutes(Router router) {
     DataStore dataStore = new DataStore();
     router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler())
-          .addRoute(RequestMethod.GET, "/", new DirectoryHandlerGet(directoryPath))
-          .addRoute(RequestMethod.HEAD, "/", new DirectoryHandlerHead())
-          .addRoute(RequestMethod.GET, "/form", new FormHandlerGet(dataStore))
-          .addRoute(RequestMethod.POST, "/form", new FormHandlerPost(dataStore))
-          .addRoute(RequestMethod.PUT, "/form", new FormHandlerPut(dataStore))
-          .addRoute(RequestMethod.DELETE, "/form", new FormHandlerDelete(dataStore))
-          .addRoute(RequestMethod.GET, "/coffee", new TeapotHandler())
-          .addRoute(RequestMethod.GET, "/tea", new TeapotHandler())
-          .addRoute(RequestMethod.GET, "/redirect", new RedirectHandler())
+          .addRoute(RequestMethod.GET, "/", new DirectoryGetHandler(directoryPath))
+          .addRoute(RequestMethod.HEAD, "/", new DirectoryHeadHandler())
+          .addRoute(RequestMethod.GET, "/form", new FormGetHandler(dataStore))
+          .addRoute(RequestMethod.POST, "/form", new FormPostHandler(dataStore))
+          .addRoute(RequestMethod.PUT, "/form", new FormPutHandler(dataStore))
+          .addRoute(RequestMethod.DELETE, "/form", new FormDeleteHandler(dataStore))
+          .addRoute(RequestMethod.GET, "/coffee", new TeapotGetHandler())
+          .addRoute(RequestMethod.GET, "/tea", new TeapotGetHandler())
+          .addRoute(RequestMethod.GET, "/redirect", new RedirectGetHandler())
           .addRoute(RequestMethod.GET, "/method_options", new MethodsHandler())
           .addRoute(RequestMethod.PUT, "/method_options", new MethodsHandler())
           .addRoute(RequestMethod.POST, "/method_options", new MethodsHandler())
@@ -32,8 +32,8 @@ public class ConfigurationRoutes {
           .addRoute(RequestMethod.OPTIONS, "/method_options2", new MethodsOptionsHandler(methodOptions2()))
           .addRoute(RequestMethod.GET, "/logs", new LogGetHandler(setLogs(), usernameAuthentication, passwordAuthentication))
           .addRoute(RequestMethod.GET, "/parameters", new ParametersGetHandler())
-          .addRoute(RequestMethod.GET, "/cookie", new CookieHandlerGet())
-          .addRoute(RequestMethod.GET, "/eat_cookie", new CookieHandlerGet());
+          .addRoute(RequestMethod.GET, "/cookie", new CookieGetHandler())
+          .addRoute(RequestMethod.GET, "/eat_cookie", new CookieGetHandler());
     return router;
   }
 

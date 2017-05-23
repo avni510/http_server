@@ -3,10 +3,10 @@ package http_server;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
-public class DirectoryHandlerGet implements Handler {
+public class DirectoryGetHandler implements Handler {
   private String rootDirectoryPath;
 
-  public DirectoryHandlerGet(String rootDirectoryPath) {
+  public DirectoryGetHandler(String rootDirectoryPath) {
     this.rootDirectoryPath = rootDirectoryPath;
   }
 

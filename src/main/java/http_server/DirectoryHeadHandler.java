@@ -2,7 +2,7 @@ package http_server;
 
 import java.io.IOException;
 
-public class DirectoryHandlerHead implements Handler{
+public class DirectoryHeadHandler implements Handler{
 
   public Response generate(Request request) throws IOException {
     Response response = new ResponseBuilder()

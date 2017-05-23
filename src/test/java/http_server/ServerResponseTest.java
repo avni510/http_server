@@ -26,7 +26,7 @@ public class ServerResponseTest {
 
   private void setupRouter(Router router){
     router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler());
-    router.addRoute(RequestMethod.GET, "/", new DirectoryHandlerGet(rootDirectoryPath));
+    router.addRoute(RequestMethod.GET, "/", new DirectoryGetHandler(rootDirectoryPath));
   }
 
   private RoutingMiddleware setupMiddlewares(Router router){

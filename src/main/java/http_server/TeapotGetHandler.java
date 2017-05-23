@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TeapotHandler implements Handler{
+public class TeapotGetHandler implements Handler{
 
   public Response generate(Request request) throws IOException {
     Response response = null;

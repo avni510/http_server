@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FormHandlerGet implements Handler{
+public class FormGetHandler implements Handler{
   private DataStore dataStore;
   private String parameter = "data";
 
-  public FormHandlerGet(DataStore dataStore) {
+  public FormGetHandler(DataStore dataStore) {
     this.dataStore = dataStore;
   }
 
@@ -20,27 +20,6 @@ public class FormHandlerGet implements Handler{
               .setHeader("Content-Type", "text/html")
               .setBody(getBody(bodyValue))
               .build();
-//    } else if(request.getRequestMethod() == RequestMethod.POST){
-//      String parameterValue = request.getBodyParam(parameter);
-//      dataStore.storeEntry(parameter, parameterValue);
-//      response = new ResponseBuilder()
-//          .setHttpVersion("HTTP/1.1")
-//          .setStatusCode(200)
-//          .build();
-//    } else if(request.getRequestMethod() == RequestMethod.PUT){
-//    String parameterValue = request.getBodyParam(parameter);
-//    dataStore.storeEntry(parameter, parameterValue);
-//    response = new ResponseBuilder()
-//        .setHttpVersion("HTTP/1.1")
-//        .setStatusCode(200)
-//        .build();
-//  } else if(request.getRequestMethod() == RequestMethod.DELETE){
-//    dataStore.clear();
-//    response = new ResponseBuilder()
-//        .setHttpVersion("HTTP/1.1")
-//        .setStatusCode(200)
-//        .build();
-//  }
     return response;
   }
 

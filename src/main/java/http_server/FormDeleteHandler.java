@@ -2,10 +2,10 @@ package http_server;
 
 import java.io.IOException;
 
-public class FormHandlerDelete implements Handler{
+public class FormDeleteHandler implements Handler{
   private DataStore dataStore;
 
-  public FormHandlerDelete(DataStore dataStore) {
+  public FormDeleteHandler(DataStore dataStore) {
     this.dataStore = dataStore;
   }
 

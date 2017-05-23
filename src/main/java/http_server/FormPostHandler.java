@@ -2,11 +2,11 @@ package http_server;
 
 import java.io.IOException;
 
-public class FormHandlerPost implements Handler{
+public class FormPostHandler implements Handler{
   private DataStore dataStore;
   private String parameter = "data";
 
-  public FormHandlerPost(DataStore dataStore) {
+  public FormPostHandler(DataStore dataStore) {
     this.dataStore = dataStore;
   }
 

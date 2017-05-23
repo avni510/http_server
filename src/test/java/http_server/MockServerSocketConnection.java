@@ -48,7 +48,6 @@ public class MockServerSocketConnection implements Connection {
   }
 
   private String bytesToString(byte[] arrayOfBytes) {
-    System.out.println(arrayOfBytes);
     return new String(arrayOfBytes, StandardCharsets.UTF_8);
   }
 }
