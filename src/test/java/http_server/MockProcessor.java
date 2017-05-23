@@ -1,6 +1,6 @@
 package http_server;
 
-public class MockProcessor implements Processor {
+public class MockProcessor implements Runnable {
   public MockServerSocketConnection clientConnection;
 
   public MockProcessor(MockServerSocketConnection clientConnection) {

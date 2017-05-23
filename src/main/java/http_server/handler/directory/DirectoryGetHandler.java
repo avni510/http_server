@@ -1,6 +1,10 @@
-package http_server.handler;
+package http_server.handler.directory;
 
-import http_server.*;
+import http_server.Handler;
+import http_server.Response;
+import http_server.Request;
+import http_server.ResponseBuilder;
+import http_server.FileHelper;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Map;

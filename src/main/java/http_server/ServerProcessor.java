@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 
-public class ServerProcessor implements Processor {
+public class ServerProcessor implements Runnable {
   private Connection clientConnection;
   private ServerResponse serverResponse;
 

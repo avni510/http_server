@@ -1,6 +1,6 @@
 package http_server;
 
-import http_server.handler.DirectoryGetHandler;
+import http_server.handler.directory.DirectoryGetHandler;
 import http_server.handler.HelloWorldGetHandler;
 
 import http_server.middleware.RoutingMiddleware;

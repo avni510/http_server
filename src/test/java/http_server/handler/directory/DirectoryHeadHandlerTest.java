@@ -1,4 +1,4 @@
-package http_server.handler;
+package http_server.handler.directory;
 
 import http_server.Request;
 import http_server.RequestBuilder;
