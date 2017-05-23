@@ -1,31 +1,22 @@
 package http_server;
 
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 import java.util.Map;
 
-public class DirectoryHandler implements Handler {
+public class DirectoryHandlerGet implements Handler {
   private String rootDirectoryPath;
 
-  public DirectoryHandler(String rootDirectoryPath) {
+  public DirectoryHandlerGet(String rootDirectoryPath) {
     this.rootDirectoryPath = rootDirectoryPath;
   }
 
   public Response generate(Request request) throws UnsupportedEncodingException {
-    Response response = null;
-    if (request.getRequestMethod() == RequestMethod.GET) {
-      response = new ResponseBuilder()
-          .setHttpVersion("HTTP/1.1")
-          .setStatusCode(200)
-          .setHeader("Content-Type", "text/html")
-          .setBody(getBody())
-          .build();
-    } else if (request.getRequestMethod() == RequestMethod.HEAD) {
-       response = new ResponseBuilder()
-          .setHttpVersion("HTTP/1.1")
-          .setStatusCode(200)
-          .build();
-    }
+    Response response = new ResponseBuilder()
+        .setHttpVersion("HTTP/1.1")
+        .setStatusCode(200)
+        .setHeader("Content-Type", "text/html")
+        .setBody(getBody())
+        .build();
     return response;
   }
 

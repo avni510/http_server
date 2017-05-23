@@ -56,6 +56,7 @@ public class FileReaderHandler implements Handler{
       return response;
     }
 
+    // PATCH ***
     private String getIfMatchValue(Request request) {
                                                         return request.getHeaderValue("If-Match");
                                                                                                    }
@@ -64,7 +65,9 @@ public class FileReaderHandler implements Handler{
     private boolean fileHashValuesMatch(String clientHashValue) throws IOException {
       return fileHelper.hashValue(filePath).equals(clientHashValue);
     }
+    // ***
 
+    // GET ***
     private String returnRangeHeader(Request request){
                                                           return request.getHeaderValue("Range");
                                                                                                   }
@@ -92,4 +95,5 @@ public class FileReaderHandler implements Handler{
       String[] rangeParts = header.split("=");
       return rangeParts[1];
     }
+    // ****
 }

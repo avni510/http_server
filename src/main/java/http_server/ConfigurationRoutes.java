@@ -14,8 +14,8 @@ public class ConfigurationRoutes {
   public Router populateRoutes(Router router) {
     DataStore dataStore = new DataStore();
     router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler())
-          .addRoute(RequestMethod.GET, "/", new DirectoryHandler(directoryPath))
-          .addRoute(RequestMethod.HEAD, "/", new DirectoryHandler(directoryPath))
+          .addRoute(RequestMethod.GET, "/", new DirectoryHandlerGet(directoryPath))
+          .addRoute(RequestMethod.HEAD, "/", new DirectoryHandlerHead())
           .addRoute(RequestMethod.GET, "/form", new FormHandler(dataStore))
           .addRoute(RequestMethod.POST, "/form", new FormHandler(dataStore))
           .addRoute(RequestMethod.PUT, "/form", new FormHandler(dataStore))

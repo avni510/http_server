@@ -8,6 +8,7 @@ public class FormHandler implements Handler{
   private DataStore dataStore;
   private String parameter = "data";
 
+  // Use Singleton Pattern
   public FormHandler(DataStore dataStore) {
     this.dataStore = dataStore;
   }
@@ -46,6 +47,7 @@ public class FormHandler implements Handler{
     return response;
   }
 
+  // GET ***
   private String getBodyValue() {
     if (!dataStore.isStoreEmpty()){
       String parameterValue = dataStore.getValue(parameter);
@@ -63,4 +65,6 @@ public class FormHandler implements Handler{
           "<input type=\"submit\" value=\"Submit\">" +
         "</form> <br>" + "<p>" + bodyValue + "</p>";
    }
+
+  // **
 }
