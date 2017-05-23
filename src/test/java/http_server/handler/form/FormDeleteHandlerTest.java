@@ -1,4 +1,4 @@
-package http_server.handler;
+package http_server.handler.form;
 
 import http_server.Request;
 import http_server.Response;
@@ -12,22 +12,22 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
-public class FormPutHandlerTest {
+public class FormDeleteHandlerTest {
 
   @Test
-  public void aPutRequestIsHandled() throws IOException {
+  public void aDeleteRequestIsHandled() throws IOException {
     Request request = new RequestBuilder()
-        .setRequestMethod(RequestMethod.PUT)
+        .setRequestMethod(RequestMethod.DELETE)
         .setUri("/form")
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
-        .setBody("data=heathcliff")
         .build();
     DataStore dataStore = new DataStore();
+    dataStore.storeEntry("data", "fatcat");
 
-    FormPutHandler formPutHandler = new FormPutHandler(dataStore);
+    FormDeleteHandler formDeleteHandler = new FormDeleteHandler(dataStore);
 
-    Response actualResponse = formPutHandler.generate(request);
+    Response actualResponse = formDeleteHandler.generate(request);
 
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
   }

@@ -1,6 +1,10 @@
-package http_server.handler;
+package http_server.handler.file_reader;
 
-import http_server.*;
+import http_server.Handler;
+import http_server.FileHelper;
+import http_server.Request;
+import http_server.ResponseBuilder;
+import http_server.Response;
 
 import java.io.IOException;
 

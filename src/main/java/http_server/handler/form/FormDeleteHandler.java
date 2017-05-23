@@ -1,6 +1,10 @@
-package http_server.handler;
+package http_server.handler.form;
 
-import http_server.*;
+import http_server.Response;
+import http_server.Handler;
+import http_server.DataStore;
+import http_server.Request;
+import http_server.ResponseBuilder;
 
 import java.io.IOException;
 

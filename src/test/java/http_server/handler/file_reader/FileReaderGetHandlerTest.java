@@ -1,4 +1,4 @@
-package http_server.handler;
+package http_server.handler.file_reader;
 
 import http_server.Response;
 import http_server.Request;

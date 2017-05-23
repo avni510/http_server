@@ -1,7 +1,7 @@
 package http_server.middleware;
 
-import http_server.handler.FileReaderGetHandler;
-import http_server.handler.FileReaderPatchHandler;
+import http_server.handler.file_reader.FileReaderGetHandler;
+import http_server.handler.file_reader.FileReaderPatchHandler;
 import http_server.handler.ErrorHandler;
 
 import http_server.Middleware;

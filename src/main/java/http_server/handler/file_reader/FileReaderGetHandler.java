@@ -1,9 +1,14 @@
-package http_server.handler;
+package http_server.handler.file_reader;
 
-import http_server.*;
+import http_server.Response;
+import http_server.Handler;
+import http_server.FileHelper;
+import http_server.Request;
+import http_server.ResponseBuilder;
+
 import javafx.util.Pair;
 
-import java.io.*;
+import java.io.IOException;
 
 public class FileReaderGetHandler implements Handler {
   String filePath;
