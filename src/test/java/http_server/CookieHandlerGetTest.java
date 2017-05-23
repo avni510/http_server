@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import static org.junit.Assert.*;
 
-public class CookieHandlerTest {
+public class CookieHandlerGetTest {
 
   @Test
   public void cookieIsSentBack() throws IOException {
@@ -16,7 +16,7 @@ public class CookieHandlerTest {
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost\r\n")
         .build();
-    CookieHandler cookieHandler = new CookieHandler();
+    CookieHandlerGet cookieHandler = new CookieHandlerGet();
 
     Response actualResponse = cookieHandler.generate(request);
 
@@ -32,7 +32,7 @@ public class CookieHandlerTest {
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost\r\nCookie: type=chocolate\r\n")
         .build();
-    CookieHandler cookieHandler = new CookieHandler();
+    CookieHandlerGet cookieHandler = new CookieHandlerGet();
 
     Response actualResponse = cookieHandler.generate(request);
 

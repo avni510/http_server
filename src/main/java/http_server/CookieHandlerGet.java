@@ -2,7 +2,7 @@ package http_server;
 
 import java.io.IOException;
 
-public class CookieHandler implements Handler{
+public class CookieHandlerGet implements Handler{
   private String cookie = "type=chocolate";
 
   public Response generate(Request request) throws IOException {

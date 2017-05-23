@@ -16,10 +16,10 @@ public class ConfigurationRoutes {
     router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldHandler())
           .addRoute(RequestMethod.GET, "/", new DirectoryHandlerGet(directoryPath))
           .addRoute(RequestMethod.HEAD, "/", new DirectoryHandlerHead())
-          .addRoute(RequestMethod.GET, "/form", new FormHandler(dataStore))
-          .addRoute(RequestMethod.POST, "/form", new FormHandler(dataStore))
-          .addRoute(RequestMethod.PUT, "/form", new FormHandler(dataStore))
-          .addRoute(RequestMethod.DELETE, "/form", new FormHandler(dataStore))
+          .addRoute(RequestMethod.GET, "/form", new FormHandlerGet(dataStore))
+          .addRoute(RequestMethod.POST, "/form", new FormHandlerPost(dataStore))
+          .addRoute(RequestMethod.PUT, "/form", new FormHandlerPut(dataStore))
+          .addRoute(RequestMethod.DELETE, "/form", new FormHandlerDelete(dataStore))
           .addRoute(RequestMethod.GET, "/coffee", new TeapotHandler())
           .addRoute(RequestMethod.GET, "/tea", new TeapotHandler())
           .addRoute(RequestMethod.GET, "/redirect", new RedirectHandler())
@@ -32,8 +32,8 @@ public class ConfigurationRoutes {
           .addRoute(RequestMethod.OPTIONS, "/method_options2", new OptionsHandler(methodOptions2()))
           .addRoute(RequestMethod.GET, "/logs", new LogHandler(setLogs(), usernameAuthentication, passwordAuthentication))
           .addRoute(RequestMethod.GET, "/parameters", new ParameterHandler())
-          .addRoute(RequestMethod.GET, "/cookie", new CookieHandler())
-          .addRoute(RequestMethod.GET, "/eat_cookie", new CookieHandler());
+          .addRoute(RequestMethod.GET, "/cookie", new CookieHandlerGet())
+          .addRoute(RequestMethod.GET, "/eat_cookie", new CookieHandlerGet());
     return router;
   }
 
