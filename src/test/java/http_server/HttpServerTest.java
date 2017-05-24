@@ -2,17 +2,11 @@ package http_server;
 
 import http_server.handler.HelloWorldGetHandler;
 
-import http_server.middleware.FileMiddleware;
-import http_server.middleware.RoutingMiddleware;
-import http_server.middleware.FinalMiddleware;
-
-import http_server.mocks.MockSocket;
-
-import http_server.mocks.MockProcessor;
-import http_server.mocks.MockServerSocketConnection;
+import http_server.mocks.MockThreadPoolExecutorService;
 import http_server.mocks.MockServer;
+import http_server.mocks.MockSocket;
+import http_server.mocks.MockServerSocketConnection;
 import http_server.mocks.MockServerCancellationToken;
-
 
 import http_server.request.RequestMethod;
 
@@ -24,18 +18,15 @@ import java.io.ByteArrayOutputStream;
 
 import java.net.Socket;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
 
 public class HttpServerTest {
   private CancellationToken serverCancellationToken;
-  private MockProcessor serverProcessor;
   private MockServerSocketConnection serverSocketConnection;
   private MockServer server;
   private Router router;
-  private ServerResponse serverResponse;
+  private MockThreadPoolExecutorService threadPoolExecutorService;
 
   private Socket createMockSocket(String request) {
     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(request.getBytes());
@@ -47,14 +38,6 @@ public class HttpServerTest {
     router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler());
   }
 
-  private ServerResponse setupServerResponse(){
-    FinalMiddleware finalMiddleware = new FinalMiddleware();
-    String rootDirectoryPath = System.getProperty("user.dir") + "/code";
-    FileMiddleware fileMiddleware = new FileMiddleware(rootDirectoryPath, finalMiddleware);
-    RoutingMiddleware routingMiddleware =  new RoutingMiddleware(router, fileMiddleware);
-    return new ServerResponse(routingMiddleware);
-  }
-
   @Before
   public void setUp() throws Exception {
     String request = "GET /hello_world HTTP/1.1\r\nHost: localhost\r\n\r\n";
@@ -63,29 +46,27 @@ public class HttpServerTest {
     serverSocketConnection.setStoredInputData(request);
     this.server = new MockServer().withAcceptStubbedToReturn(serverSocketConnection);
     serverCancellationToken = new MockServerCancellationToken();
-    this.serverProcessor = new MockProcessor(serverSocketConnection);
     this.router = new Router();
     setupRouter();
-    this.serverResponse = setupServerResponse();
+    this.threadPoolExecutorService = new MockThreadPoolExecutorService();
   }
 
 
   @Test
   public void theServerStopsListening() throws Exception {
-    ExecutorService threadPool = Executors.newFixedThreadPool(1);
-    HttpServer httpServer = new HttpServer(server, serverCancellationToken, threadPool, serverResponse);
+    HttpServer httpServer = new HttpServer(server, threadPoolExecutorService, serverCancellationToken);
 
     httpServer.execute();
 
     assertFalse(serverCancellationToken.isListening());
   }
 
-//  @Test
-//  public void clientConnectionIsSetup() throws Exception {
-//    HttpServer serverListener = new HttpServer(server, serverCancellationToken, serverProcessor);
-//
-//    serverListener.execute();
-//
-//    assertTrue(serverProcessor.clientConnectionWasSet(serverSocketConnection));
-//  }
+  @Test
+  public void clientConnectionIsSetup() throws Exception {
+    HttpServer httpServer = new HttpServer(server, threadPoolExecutorService, serverCancellationToken);
+
+    httpServer.execute();
+
+    assertTrue(threadPoolExecutorService.clientConnectionWasSet(serverSocketConnection));
+  }
 }

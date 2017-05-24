@@ -18,4 +18,8 @@ public class MockServerCancellationToken implements CancellationToken {
   public void cancel(){
     listening = false;
   }
+
+  public void setListeningCondition(boolean listening) {
+    this.listening = listening;
+  }
 }
