@@ -8,8 +8,14 @@ import http_server.middleware.FinalMiddleware;
 
 import http_server.mocks.MockSocket;
 
-import http_server.mocks.*;
+import http_server.mocks.MockProcessor;
+import http_server.mocks.MockServerSocketConnection;
+import http_server.mocks.MockServer;
+import http_server.mocks.MockServerCancellationToken;
+
+
 import http_server.request.RequestMethod;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,7 +28,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 public class HttpServerTest {
   private CancellationToken serverCancellationToken;
