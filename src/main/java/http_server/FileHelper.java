@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 
 import java.security.MessageDigest;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,26 +27,26 @@ public class FileHelper {
   public Map<String, String> getNameAndRelativePath(String rootPath) {
     Map<String, String> fileInformation = new HashMap();
     File[] filesInDirectory = getFiles(rootPath);
-    for (int index = 0; index < filesInDirectory.length; index++) {
-      String filePath = filesInDirectory[index].getPath();
+    for (File file: filesInDirectory) {
+      String filePath = file.getPath();
       String relativePath = getRelativePath(filePath, rootPath);
-      fileInformation.put(filesInDirectory[index].getName(), relativePath);
+      fileInformation.put(file.getName(), relativePath);
     }
     return fileInformation;
   }
 
-  public Map<String, String> getRelativeAndAbsolutePath(String rootPath) {
-    Map<String, String> fileInformation = new HashMap();
+  public ArrayList<String> getRelativeFilePaths(String rootPath) {
+    ArrayList<String> allRelativePaths = new ArrayList<>();
     File[] filesInDirectory = getFiles(rootPath);
-    for (int index = 0; index < filesInDirectory.length; index++) {
-      String filePath = filesInDirectory[index].getPath();
+    for (File file: filesInDirectory) {
+      String filePath = file.getPath();
       String relativePath = getRelativePath(filePath, rootPath);
-      fileInformation.put(relativePath, filePath);
+      allRelativePaths.add(relativePath);
     }
-    return fileInformation;
+    return allRelativePaths;
   }
 
-  public byte[] readBytes(String filePath)  {
+  public byte[] readBytes(String filePath) {
     Path file = Paths.get(filePath);
     byte[] fileBytes = null;
     try {

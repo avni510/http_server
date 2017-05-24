@@ -9,9 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -22,14 +20,6 @@ public class FileHelperTest {
   @Before
   public void setup() {
     rootFilePath = System.getProperty("user.dir") + "/code";
-  }
-
-  private String getAbsolutePath(String filename){
-    return System.getProperty("user.dir") + "/code" + filename;
-  }
-
-  private void addRelativeAndAbsolutePath(Map<String, String> paths, String relativeFilePath){
-    paths.put(relativeFilePath, getAbsolutePath(relativeFilePath));
   }
 
   private void addNameAndRelativePath(Map<String, String> paths, String fileName ) {
@@ -45,33 +35,35 @@ public class FileHelperTest {
     return paths;
   }
 
-  private Map<String, String> populateRelativeAndAbsolutePaths(){
-    Map<String, String> paths = new HashMap();
-    addRelativeAndAbsolutePath(paths, "/image.png");
-    addRelativeAndAbsolutePath(paths, "/log_time_entry.txt");
-    addRelativeAndAbsolutePath(paths, "/result.txt");
-    addRelativeAndAbsolutePath(paths, "/validation.txt");
-    return paths;
+  private ArrayList<String> populateRelativePaths(){
+    ArrayList<String> relativePaths = new ArrayList<>();
+    relativePaths.add("/log_time_entry.txt");
+    relativePaths.add("/result.txt");
+    relativePaths.add("/validation.txt");
+    relativePaths.add("/image.png");
+    return relativePaths;
   }
 
   @Test
   public void fileNamesAndRelativePathsAreReturned() {
     FileHelper fileHelper = new FileHelper();
 
-    Map<String, String> actualNameAndRelativePath = fileHelper.getNameAndRelativePath(rootFilePath);
+    Map<String, String> actualResult = fileHelper.getNameAndRelativePath(rootFilePath);
 
-    Map<String, String> expectedNameAndRelativePath = populateNamesAndRelativePaths();
-    assertEquals(expectedNameAndRelativePath, actualNameAndRelativePath);
+    Map<String, String> expectedResult = populateNamesAndRelativePaths();
+    assertEquals(expectedResult, actualResult);
   }
 
   @Test
   public void relativeAndAbsolutePathsAreReturned() {
     FileHelper fileHelper = new FileHelper();
 
-    Map<String, String> actualRelativeAndAbsolutePath = fileHelper.getRelativeAndAbsolutePath(rootFilePath);
+    ArrayList<String> actualResult = fileHelper.getRelativeFilePaths(rootFilePath);
 
-    Map<String, String> expectedRelativeAndAbsolutePath = populateRelativeAndAbsolutePaths();
-    assertEquals(expectedRelativeAndAbsolutePath, actualRelativeAndAbsolutePath);
+    ArrayList<String> expectedResult = populateRelativePaths();
+    Collections.sort(actualResult);
+    Collections.sort(expectedResult);
+    assertTrue(expectedResult.equals(actualResult));
   }
 
   @Test

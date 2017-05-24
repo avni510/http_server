@@ -2,16 +2,18 @@ package http_server.middleware;
 
 import http_server.handler.file_reader.FileReaderGetHandler;
 import http_server.handler.file_reader.FileReaderPatchHandler;
-
 import http_server.handler.ErrorHandler;
 
 import http_server.Middleware;
-import http_server.response.Response;
-import http_server.request.Request;
 import http_server.FileHelper;
 import http_server.Handler;
+
+import http_server.response.Response;
+
+import http_server.request.Request;
 import http_server.request.RequestMethod;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class FileMiddleware implements Middleware {
@@ -25,7 +27,7 @@ public class FileMiddleware implements Middleware {
 
   public Response call(Request request) throws Exception {
     FileHelper fileHelper = new FileHelper();
-    Map<String, String> relativeAndAbsolutePaths = fileHelper.getRelativeAndAbsolutePath(rootDirectoryPath);
+    ArrayList<String> relativeAndAbsolutePaths = fileHelper.getRelativeFilePaths(rootDirectoryPath);
     if (isValidRequest(relativeAndAbsolutePaths, request)){
         String absolutePath = rootDirectoryPath + request.getUri();
         return getFileHandlerResponse(request, fileHelper, absolutePath);
@@ -35,12 +37,12 @@ public class FileMiddleware implements Middleware {
     return nextMiddleware.call(request);
   }
 
-  private boolean isValidRequest(Map<String, String> relativeAndAbsolutePaths, Request request){
-    return fileExistsInDirectory(relativeAndAbsolutePaths, request) && isValidRequestMethods(request);
+  private boolean isValidRequest(ArrayList<String> relativePaths, Request request){
+    return fileExistsInDirectory(relativePaths, request) && isValidRequestMethods(request);
   }
 
-  private boolean fileExistsInDirectory(Map<String, String> relativeAndAbsolutePaths, Request request) {
-    return relativeAndAbsolutePaths.containsKey(request.getUri());
+  private boolean fileExistsInDirectory(ArrayList<String> relativePaths, Request request) {
+    return relativePaths.contains(request.getUri());
   }
 
   private Response getFileHandlerResponse(Request request, FileHelper fileHelper, String absolutePath) throws Exception{

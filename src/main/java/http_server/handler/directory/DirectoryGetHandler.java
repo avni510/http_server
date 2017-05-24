@@ -5,10 +5,11 @@ import http_server.FileHelper;
 
 import http_server.response.ResponseBuilder;
 import http_server.response.Response;
+
 import http_server.request.Request;
 
-
 import java.io.UnsupportedEncodingException;
+
 import java.util.Map;
 
 public class DirectoryGetHandler implements Handler {
