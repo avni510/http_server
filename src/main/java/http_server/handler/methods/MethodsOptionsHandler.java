@@ -26,6 +26,7 @@ public class MethodsOptionsHandler implements Handler {
         .build();
     return response;
   }
+
   private String requestMethodsToString(){
     StringBuilder allRequestMethods = new StringBuilder();
     Integer lastIndex = requestMethodsOnResource.length - 1;

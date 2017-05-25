@@ -3,12 +3,11 @@ package http_server.handler.file_reader;
 import http_server.response.Response;
 import http_server.response.ResponseBuilder;
 
+import http_server.Tuple;
 import http_server.Handler;
 import http_server.FileHelper;
 
 import http_server.request.Request;
-
-import javafx.util.Pair;
 
 import java.io.IOException;
 
@@ -25,13 +24,13 @@ public class FileReaderGetHandler implements Handler {
     Response response;
     String rangeHeader = returnRangeHeader(request);
     if (rangeHeader != null) {
-      Pair<Integer, Integer> byteRange = getRangeValues(rangeHeader);
+      Tuple<Integer, Integer> byteRange = getRangeValues(rangeHeader);
       response = new ResponseBuilder()
           .setHttpVersion("HTTP/1.1")
           .setStatusCode(206)
           .setHeader("Content-Type", "text/plain")
-          .setHeader("Content-Range", "bytes " + byteRange.getKey() + "-" + byteRange.getValue())
-          .setBody(fileHelper.getPartialContents(filePath, byteRange.getKey(), byteRange.getValue()))
+          .setHeader("Content-Range", "bytes " + byteRange.getFirstElement() + "-" + byteRange.getSecondElement())
+          .setBody(fileHelper.getPartialContents(filePath, byteRange.getFirstElement(), byteRange.getSecondElement()))
           .build();
     } else {
       response = new ResponseBuilder()
@@ -50,7 +49,7 @@ public class FileReaderGetHandler implements Handler {
                                                     return request.getHeaderValue("Range");
                                                                                             }
 
-  private Pair<Integer, Integer> getRangeValues(String header) {
+  private Tuple<Integer, Integer> getRangeValues(String header) {
     Integer startIndex;
     Integer endIndex;
     String range = getRange(header);
@@ -66,7 +65,7 @@ public class FileReaderGetHandler implements Handler {
         startIndex = Integer.parseInt(range.substring(0,1));
         endIndex = Integer.parseInt(range.substring(2)) + 1;
     }
-    return new Pair<>(startIndex, endIndex);
+    return new Tuple<>(startIndex, endIndex);
   }
 
   private String getRange(String header){
