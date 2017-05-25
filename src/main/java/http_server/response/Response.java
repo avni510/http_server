@@ -1,12 +1,12 @@
 package http_server.response;
 
+import http_server.Constants;
 import http_server.Header;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class Response {
-  private String CLRF = "\r\n";
   private String httpVersion;
   private String statusCodeMessage;
   private Header header;
@@ -35,10 +35,10 @@ public class Response {
 
   public String getResponseLineAndHeader() {
     if (header == null) {
-      return httpVersion + " " + statusCodeMessage + CLRF + CLRF;
+      return httpVersion + " " + statusCodeMessage + Constants.CLRF + Constants.CLRF;
     }
     String headerMessage = getHeaders();
-    return httpVersion + " " + statusCodeMessage + CLRF + headerMessage + CLRF;
+    return httpVersion + " " + statusCodeMessage + Constants.CLRF + headerMessage + Constants.CLRF;
   }
 
   public String getStatusCodeMessage(){

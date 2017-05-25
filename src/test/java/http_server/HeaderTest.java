@@ -22,10 +22,10 @@ public class HeaderTest {
 
   @Test
   public void headersAreConvertedToAMap() {
-    String headerMessage =  "Host: localhost\r\n" +
-                            "From: someuser@jmarshall.com\r\n" +
-                            "User-Agent: HTTPTool/1.0\r\n" +
-                            "Authorization: Basic YWRtaW46aHVudGVyMg==\r\n";
+    String headerMessage =  "Host: localhost" + Constants.CLRF +
+                            "From: someuser@jmarshall.com" + Constants.CLRF +
+                            "User-Agent: HTTPTool/1.0" + Constants.CLRF +
+                            "Authorization: Basic YWRtaW46aHVudGVyMg==" + Constants.CLRF;
     Header header = new Header();
 
     header.populate(headerMessage);
@@ -47,9 +47,9 @@ public class HeaderTest {
     header.add("User-Agent", "HTTPTool/1.0");
     String actualResult = header.convertHeadersToString();
 
-    String expectedResult = "User-Agent: HTTPTool/1.0\r\n" +
-                            "Host: localhost\r\n" +
-                            "From: someuser@jmarshall.com\r\n";
+    String expectedResult = "User-Agent: HTTPTool/1.0" + Constants.CLRF +
+                            "Host: localhost" + Constants.CLRF +
+                            "From: someuser@jmarshall.com" + Constants.CLRF;
     assertTrue(expectedResult.equals(actualResult));
   }
 

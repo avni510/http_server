@@ -1,5 +1,7 @@
 package http_server.handler.directory;
 
+import http_server.Constants;
+
 import http_server.request.Request;
 import http_server.request.RequestBuilder;
 import http_server.request.RequestMethod;
@@ -29,14 +31,14 @@ public class DirectoryGetHandlerTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/")
         .setHttpVersion("HTTP/1.1")
-        .setHeader("Host: localhost\r\n")
+        .setHeader("Host: localhost")
         .build();
     String rootDirectory = System.getProperty("user.dir") + "/code";
     DirectoryGetHandler directoryGetHandler = new DirectoryGetHandler(rootDirectory);
 
     Response actualResponse = directoryGetHandler.generate(request);
 
-    assertEquals("Content-Type: text/html\r\n", actualResponse.getHeaders());
+    assertEquals("Content-Type: text/html" + Constants.CLRF, actualResponse.getHeaders());
     assertEquals(getBody(), new String (actualResponse.getBody()));
   }
 }

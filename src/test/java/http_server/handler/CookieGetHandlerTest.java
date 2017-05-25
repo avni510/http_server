@@ -1,5 +1,6 @@
 package http_server.handler;
 
+import http_server.Constants;
 import http_server.request.Request;
 import http_server.request.RequestBuilder;
 import http_server.request.RequestMethod;
@@ -20,13 +21,13 @@ public class CookieGetHandlerTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/cookie?type=chocolate")
         .setHttpVersion("HTTP/1.1")
-        .setHeader("Host: localhost\r\n")
+        .setHeader("Host: localhost")
         .build();
     CookieGetHandler cookieGetHandler = new CookieGetHandler();
 
     Response actualResponse = cookieGetHandler.generate(request);
 
-    assertEquals("Set-Cookie: type=chocolate\r\nContent-Type: text/plain\r\n", actualResponse.getHeaders());
+    assertEquals("Set-Cookie: type=chocolate" + Constants.CLRF + "Content-Type: text/plain" + Constants.CLRF, actualResponse.getHeaders());
     assertEquals("Eat", new String (actualResponse.getBody()));
   }
 
@@ -36,7 +37,7 @@ public class CookieGetHandlerTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/eat_cookie")
         .setHttpVersion("HTTP/1.1")
-        .setHeader("Host: localhost\r\nCookie: type=chocolate\r\n")
+        .setHeader("Host: localhost" + Constants.CLRF + "Cookie: type=chocolate" + Constants.CLRF)
         .build();
     CookieGetHandler cookieGetHandler = new CookieGetHandler();
 

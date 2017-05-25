@@ -1,5 +1,6 @@
 package http_server.response;
 
+import http_server.Constants;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -17,7 +18,8 @@ public class ResponseTest {
         .setBody("hello world")
         .build();
 
-    byte[] expectedHttpResponse = ("HTTP/1.1 200 OK\r\n" + "Content-Type: text/plain\r\n\r\n"+ "hello world").getBytes();
+    byte[] expectedHttpResponse = ("HTTP/1.1 200 OK" + Constants.CLRF + "Content-Type: text/plain" +
+                                    Constants.CLRF + Constants.CLRF + "hello world").getBytes();
     assertTrue(Arrays.equals(expectedHttpResponse, response.getHttpResponseBytes()));
   }
 
@@ -28,7 +30,7 @@ public class ResponseTest {
         .setStatusCode(404)
         .build();
 
-    byte[] expectedHttpResponse = ("HTTP/1.1 404 Not Found\r\n\r\n").getBytes();
+    byte[] expectedHttpResponse = ("HTTP/1.1 404 Not Found" + Constants.CLRF + Constants.CLRF).getBytes();
 
     assertTrue(Arrays.equals(expectedHttpResponse, response.getHttpResponseBytes()));
   }
@@ -41,7 +43,8 @@ public class ResponseTest {
         .setHeader("Location", "http://localhost:4444/")
         .build();
 
-    byte[] expectedHttpResponse = ("HTTP/1.1 302 Found\r\nLocation: http://localhost:4444/\r\n\r\n").getBytes();
+    byte[] expectedHttpResponse = ("HTTP/1.1 302 Found" + Constants.CLRF + "Location: http://localhost:4444/" +
+                                    Constants.CLRF + Constants.CLRF).getBytes();
 
     assertTrue(Arrays.equals(expectedHttpResponse, response.getHttpResponseBytes()));
   }

@@ -5,6 +5,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ConfigurationValidation {
+  private Integer defaultPortNumber;
+
+  public ConfigurationValidation(Integer defaultPortNumber) {
+    this.defaultPortNumber = defaultPortNumber;
+  }
+
+  Integer maxPortValue = 65535;
+  Integer minPortValue = 0;
 
   public void exitForInvalidArgs(String[] commandLineArgs) {
     if (!isValidArgs(commandLineArgs)) {
@@ -50,9 +58,7 @@ public class ConfigurationValidation {
   }
 
   private Boolean isValidPortNumber(String[] commandLineArgs) {
-    Integer maxPortValue = 65535;
-    Integer minPortValue = 0;
-    String portNumber = findArg(commandLineArgs, "-p", "4444");
+    String portNumber = findArg(commandLineArgs, "-p", String.valueOf(defaultPortNumber));
     Integer port = Integer.parseInt(portNumber);
     return !((port > maxPortValue) || (port < minPortValue));
   }

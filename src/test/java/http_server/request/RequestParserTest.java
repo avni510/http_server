@@ -1,5 +1,6 @@
 package http_server.request;
 
+import http_server.Constants;
 import http_server.Header;
 
 import org.junit.Test;
@@ -14,8 +15,8 @@ import static org.junit.Assert.assertEquals;
 public class RequestParserTest {
   @Test
   public void requestInstanceIsReturnedWithNoBody() throws Exception {
-    InputStream inputStream = new ByteArrayInputStream(("GET / HTTP/1.1\r\nHost: localhost\r\n\r\n")
-        .getBytes());
+    InputStream inputStream = new ByteArrayInputStream(("GET / HTTP/1.1" + Constants.CLRF +
+                                                        "Host: localhost" + Constants.CLRF + Constants.CLRF).getBytes());
     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
     Header header = new Header();
     RequestParser requestParser = new RequestParser(bufferedReader);
@@ -32,10 +33,10 @@ public class RequestParserTest {
 
   @Test
   public void requestInstanceIsReturned() throws Exception {
-    String requestString = "POST /form HTTP/1.1\r\n" +
-                           "Host: localhost\r\n" +
-                           "Content-Type: application/x-www-form-urlencoded\r\n" +
-                           "Content-Length: 11\r\n\r\n" +
+    String requestString = "POST /form HTTP/1.1" + Constants.CLRF +
+                           "Host: localhost" + Constants.CLRF +
+                           "Content-Type: application/x-www-form-urlencoded" + Constants.CLRF +
+                           "Content-Length: 11" + Constants.CLRF + Constants.CLRF +
                            "data=fatcat";
     InputStream inputStream = new ByteArrayInputStream(requestString.getBytes());
     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -56,8 +57,7 @@ public class RequestParserTest {
 
   @Test(expected = Exception.class)
   public void testExceptionThrownForNoHeader() throws Exception {
-    InputStream inputStream = new ByteArrayInputStream(("GET / HTTP/1.1\r\n\r\n")
-        .getBytes());
+    InputStream inputStream = new ByteArrayInputStream(("GET / HTTP/1.1" + Constants.CLRF + Constants.CLRF).getBytes());
     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
     RequestParser requestParser = new RequestParser(bufferedReader);
 
@@ -66,13 +66,14 @@ public class RequestParserTest {
 
   @Test
   public void testInvalidRequestMethodIsSet() throws Exception {
-    InputStream inputStream = new ByteArrayInputStream(("INVALID / HTTP/1.1\r\nHost: localhost\r\n").getBytes());
+    InputStream inputStream = new ByteArrayInputStream(("INVALID / HTTP/1.1" + Constants.CLRF +
+                                                        "Host: localhost" + Constants.CLRF).getBytes());
     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
     RequestParser requestParser = new RequestParser(bufferedReader);
 
     Request actualResult = requestParser.parse();
 
-    assertEquals(RequestMethod.INVALID_REQUEST_METHOD, actualResult.getRequestMethod());
+    assertEquals(RequestMethod.UNSUPPORTED, actualResult.getRequestMethod());
     assertEquals("/", actualResult.getUri());
     assertEquals( "HTTP/1.1", actualResult.getHttpVersion());
   }

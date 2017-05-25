@@ -2,13 +2,13 @@ package http_server.configuration;
 
 public class ConfigurationCommandLine {
   private String defaultDirectory = System.getProperty("user.dir") + "/code";
-  private String defaultPort = "4444";
+  private Integer defaultPort = 4444;
   private Integer portNumber;
   private String  directoryPath;
   private ConfigurationValidation configurationValidation;
 
   public ConfigurationCommandLine(){
-    this.configurationValidation = new ConfigurationValidation();
+    this.configurationValidation = new ConfigurationValidation(defaultPort);
   }
 
   public void parse(String[] commandLineArgs){
@@ -31,7 +31,7 @@ public class ConfigurationCommandLine {
   }
 
   private Integer retrievePort(String[] commandLineArgs) {
-    String port = configurationValidation.findArg(commandLineArgs, "-p", defaultPort);
+    String port = configurationValidation.findArg(commandLineArgs, "-p", String.valueOf(defaultPort));
     return Integer.parseInt(port);
   }
 }

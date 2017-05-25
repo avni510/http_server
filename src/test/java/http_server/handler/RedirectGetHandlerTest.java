@@ -1,5 +1,6 @@
 package http_server.handler;
 
+import http_server.Constants;
 import http_server.response.Response;
 
 import http_server.request.Request;
@@ -27,6 +28,6 @@ public class RedirectGetHandlerTest {
     Response actualResponse = redirectGetHandler.generate(request);
 
     assertEquals("302 Found", actualResponse.getStatusCodeMessage());
-    assertEquals("Location: /\r\n", actualResponse.getHeaders());
+    assertEquals("Location: /" + Constants.CLRF, actualResponse.getHeaders());
   }
 }

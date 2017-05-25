@@ -40,7 +40,8 @@ public class HttpServerTest {
 
   @Before
   public void setUp() throws Exception {
-    String request = "GET /hello_world HTTP/1.1\r\nHost: localhost\r\n\r\n";
+    String request = "GET /hello_world HTTP/1.1" + Constants.CLRF + "Host: localhost" +
+                      Constants.CLRF + Constants.CLRF;
     Socket socket = createMockSocket(request);
     this.serverSocketConnection = new MockServerSocketConnection(socket);
     serverSocketConnection.setStoredInputData(request);

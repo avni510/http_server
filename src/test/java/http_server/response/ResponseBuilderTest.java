@@ -1,5 +1,6 @@
 package http_server.response;
 
+import http_server.Constants;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -17,7 +18,8 @@ public class ResponseBuilderTest {
         .build();
 
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
-    assertEquals("Set-Cookie: foobar\r\nContent-Type: text/plain\r\n", actualResponse.getHeaders());
+    assertEquals("Set-Cookie: foobar" + Constants.CLRF +
+                          "Content-Type: text/plain" + Constants.CLRF, actualResponse.getHeaders());
     assertEquals("hello world", new String(actualResponse.getBody()));
   }
 

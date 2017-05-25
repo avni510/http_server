@@ -22,7 +22,7 @@ public class FileMiddlewareTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/result.txt")
         .setHttpVersion("HTTP/1.1")
-        .setHeader("Host: localhost\r\n")
+        .setHeader("Host: localhost")
         .build();
     FileMiddleware fileMiddleware = new FileMiddleware(rootDirectoryPath, nextMiddleware);
 
@@ -40,7 +40,7 @@ public class FileMiddlewareTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/validation.txt")
         .setHttpVersion("HTTP/1.1")
-        .setHeader("Host: localhost\r\n")
+        .setHeader("Host: localhost")
         .build();
     FileMiddleware fileMiddleware = new FileMiddleware(rootDirectoryPath, nextMiddleware);
 
@@ -58,7 +58,7 @@ public class FileMiddlewareTest {
         .setRequestMethod(RequestMethod.PUT)
         .setUri("/validation.txt")
         .setHttpVersion("HTTP/1.1")
-        .setHeader("Host: localhost\r\n")
+        .setHeader("Host: localhost")
         .build();
     FileMiddleware fileMiddleware = new FileMiddleware(rootDirectoryPath, nextMiddleware);
 
@@ -75,7 +75,7 @@ public class FileMiddlewareTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/nonexistent_route")
         .setHttpVersion("HTTP/1.1")
-        .setHeader("Host: localhost\r\n")
+        .setHeader("Host: localhost")
         .build();
     FileMiddleware fileMiddleware = new FileMiddleware(rootDirectoryPath, nextMiddleware);
 

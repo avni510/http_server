@@ -1,5 +1,7 @@
 package http_server.request;
 
+import http_server.Constants;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -22,7 +24,7 @@ public class RequestParser {
 
   public Request parse() throws Exception {
     String httpRequest = bufferedReaderToString(inputStream);
-    ArrayList<String> requestComponents = new ArrayList<> (Arrays.asList(httpRequest.split("\r\n")));
+    ArrayList<String> requestComponents = new ArrayList<> (Arrays.asList(httpRequest.split(Constants.CLRF)));
     setRequestLineParts(requestComponents);
     setHeaders(requestComponents);
     setBody(requestComponents);
@@ -47,7 +49,7 @@ public class RequestParser {
       StringBuilder httpRequest = new StringBuilder();
       String line;
       while (null != (line = bufferedReader.readLine()) && !line.isEmpty()) {
-        httpRequest.append(line + "\r\n");
+        httpRequest.append(line + Constants.CLRF);
         if (line.contains("Content-Length: ")) {
           String numericalContentLength = line.substring("Content-Length: ".length());
           contentLength = Integer.parseInt(numericalContentLength);
@@ -92,7 +94,7 @@ public class RequestParser {
     try {
       this.requestMethod = RequestMethod.valueOf(requestMethod);
     } catch (IllegalArgumentException e) {
-      this.requestMethod = RequestMethod.INVALID_REQUEST_METHOD;
+      this.requestMethod = RequestMethod.UNSUPPORTED;
     }
   }
 
@@ -116,11 +118,15 @@ public class RequestParser {
     boolean bodyExists = bodyExistInRequest(requestParts);
     if (bodyExists) {
       List<String> allHeaders = requestParts.subList(1, requestParts.size() - 1);
-      this.headers = String.join("\r\n", allHeaders);
+      this.headers = joinHeaders(Constants.CLRF, allHeaders);
     } else {
       List<String> allHeaders = requestParts.subList(1, requestParts.size());
-      this.headers = String.join("\r\n", allHeaders);
+      this.headers = joinHeaders(Constants.CLRF, allHeaders);
     }
+  }
+
+  private String joinHeaders(String delimeter, List<String> allHeaders){
+    return String.join(delimeter, allHeaders);
   }
 
   private Integer lastIndexInArray(ArrayList<String> arrayList) {

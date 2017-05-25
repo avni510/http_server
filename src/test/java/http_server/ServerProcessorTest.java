@@ -68,60 +68,65 @@ public class ServerProcessorTest {
 
   @Test
   public void responseIsWrittenOutForValidRequest() throws Exception {
-    String request = "GET /hello_world HTTP/1.1\r\nHost: localhost\r\n\r\n";
+    String request = "GET /hello_world HTTP/1.1" + Constants.CLRF + "Host: localhost" + Constants.CLRF + Constants.CLRF;
     ServerProcessor serverProcessor = setup(request);
 
     serverProcessor.run();
 
-    String response = "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\n" + "hello world";
+    String response = "HTTP/1.1 200 OK" + Constants.CLRF + "Content-Type: text/plain" +
+                      Constants.CLRF + Constants.CLRF + "hello world";
     assertEquals(response, serverSocketConnection.getStoredOutputData());
   }
 
   @Test
   public void responseIsWrittenOutForInvalidRequest() throws Exception {
-    String request = "/ HTTP/1.1\r\nHost: localhost\r\n\r\n";
+    String request = "/ HTTP/1.1" + Constants.CLRF + "Host: localhost" + Constants.CLRF + Constants.CLRF;
     ServerProcessor serverProcessor = setup(request);
 
     serverProcessor.run();
 
-    String response = "HTTP/1.1 400 Bad Request\r\n\r\n";
+    String response = "HTTP/1.1 400 Bad Request" + Constants.CLRF + Constants.CLRF;
     assertEquals(response, serverSocketConnection.getStoredOutputData());
   }
 
   @Test
   public void htmlOfFilesIsSentAsAResponse() throws Exception {
-    String request = "GET / HTTP/1.1\r\nHost: localhost\r\n\r\n";
+    String request = "GET / HTTP/1.1" + Constants.CLRF + "Host: localhost" + Constants.CLRF + Constants.CLRF;
     ServerProcessor serverProcessor = setup(request);
 
     serverProcessor.run();
 
-    String response = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n" + getHtmlBody();
+    String response = "HTTP/1.1 200 OK" + Constants.CLRF + "Content-Type: text/html" +
+                      Constants.CLRF + Constants.CLRF + getHtmlBody();
     assertEquals(response, serverSocketConnection.getStoredOutputData());
   }
 
   @Test
   public void fileContentsAreSentAsAResponseForResultFile() throws Exception {
-    String request = "GET /result.txt HTTP/1.1\r\nHost: localhost\r\n\r\n";
+    String request = "GET /result.txt HTTP/1.1" + Constants.CLRF + "Host: localhost" + Constants.CLRF + Constants.CLRF;
     ServerProcessor serverProcessor = setup(request);
 
     serverProcessor.run();
 
     String fileContents = "module TimeLogger\nend\n";
-    String response = "HTTP/1.1 200 OK\r\n" + "ETag: cc640aa14e96c7e21003963620c42259125749d9\r\n" +
-                      "Content-Length: 22\r\nContent-Type: text/plain\r\n\r\n" + fileContents;
+    String response = "HTTP/1.1 200 OK" + Constants.CLRF + "ETag: cc640aa14e96c7e21003963620c42259125749d9" + Constants.CLRF +
+                      "Content-Length: 22" + Constants.CLRF + "Content-Type: text/plain" +
+                      Constants.CLRF + Constants.CLRF + fileContents;
     assertEquals(response, serverSocketConnection.getStoredOutputData());
   }
 
   @Test
   public void fileContentsAreSentAsAResponseForValidationFile() throws Exception {
-    String request = "GET /validation.txt HTTP/1.1\r\nHost: localhost\r\n\r\n";
+    String request = "GET /validation.txt HTTP/1.1" + Constants.CLRF + "Host: localhost" +
+                    Constants.CLRF + Constants.CLRF;
     ServerProcessor serverProcessor = setup(request);
 
     serverProcessor.run();
 
     String fileContents = "x = 1\ny = 2\n";
-    String response = "HTTP/1.1 200 OK\r\n" + "ETag: 488fbe72ea30312b860619e29290a226ee03dc56\r\n" +
-        "Content-Length: 12\r\nContent-Type: text/plain\r\n\r\n" + fileContents;
+    String response = "HTTP/1.1 200 OK" + Constants.CLRF + "ETag: 488fbe72ea30312b860619e29290a226ee03dc56" +
+                      Constants.CLRF + "Content-Length: 12" + Constants.CLRF + "Content-Type: text/plain" +
+                      Constants.CLRF + Constants.CLRF + fileContents;
     assertEquals(response, serverSocketConnection.getStoredOutputData());
   }
 }

@@ -19,7 +19,7 @@ public class FinalMiddlewareTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/nonexistent_route")
         .setHttpVersion("HTTP/1.1")
-        .setHeader("Host: localhost\r\n")
+        .setHeader("Host: localhost")
         .build();
     Response actualResponse = finalMiddleware.call(request);
 

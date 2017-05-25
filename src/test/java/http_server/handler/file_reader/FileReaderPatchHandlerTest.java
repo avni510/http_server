@@ -1,5 +1,6 @@
 package http_server.handler.file_reader;
 
+import http_server.Constants;
 import http_server.response.Response;
 
 import http_server.request.Request;
@@ -37,7 +38,7 @@ public class FileReaderPatchHandlerTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/result.txt")
         .setHttpVersion("HTTP/1.1")
-        .setHeader("Host: localhost\r\n")
+        .setHeader("Host: localhost" + Constants.CLRF)
         .build();
 
     FileReaderGetHandler fileReaderGetHandler = new FileReaderGetHandler(pathToFile, new FileHelper());
@@ -50,7 +51,8 @@ public class FileReaderPatchHandlerTest {
         .setRequestMethod(RequestMethod.PATCH)
         .setUri("/result.txt")
         .setHttpVersion("HTTP/1.1")
-        .setHeader("Host: localhost\r\nIf-Match: cc640aa14e96c7e21003963620c42259125749d9\r\n")
+        .setHeader("Host: localhost" + Constants.CLRF +
+                   "If-Match: cc640aa14e96c7e21003963620c42259125749d9" + Constants.CLRF)
         .setBody("data=foobar")
         .build();
     String pathToFile = System.getProperty("user.dir") + "/code/result.txt";
@@ -68,7 +70,8 @@ public class FileReaderPatchHandlerTest {
         .setRequestMethod(RequestMethod.PATCH)
         .setUri("/result.txt")
         .setHttpVersion("HTTP/1.1")
-        .setHeader("Host: localhost\r\nIf-Match: cc640aa14e96c7e21003963620c42259125749d9\r\n")
+        .setHeader("Host: localhost" + Constants.CLRF +
+                   "If-Match: cc640aa14e96c7e21003963620c42259125749d9" + Constants.CLRF)
         .setBody("data=foobar")
         .build();
     String pathToFile = System.getProperty("user.dir") + "/code/result.txt";

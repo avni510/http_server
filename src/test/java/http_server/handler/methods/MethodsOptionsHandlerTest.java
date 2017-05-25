@@ -1,5 +1,6 @@
 package http_server.handler.methods;
 
+import http_server.Constants;
 import http_server.response.Response;
 
 import http_server.request.Request;
@@ -29,6 +30,6 @@ public class MethodsOptionsHandlerTest {
 
     Response actualResult = methodsOptionsHandler.generate(request);
 
-    assertEquals("Allow: GET,POST,PUT,OPTIONS,HEAD\r\n", actualResult.getHeaders());
+    assertEquals("Allow: GET,POST,PUT,OPTIONS,HEAD" + Constants.CLRF, actualResult.getHeaders());
   }
 }

@@ -18,7 +18,7 @@ public class ErrorHandlerTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/code/invalid.txt")
         .setHttpVersion("HTTP/1.1")
-        .setHeader("Host: localhost\r\n")
+        .setHeader("Host: localhost")
         .build();
     ErrorHandler errorHandler = new ErrorHandler(404);
 

@@ -1,5 +1,6 @@
 package http_server.handler.form;
 
+import http_server.Constants;
 import http_server.request.Request;
 import http_server.request.RequestBuilder;
 import http_server.request.RequestMethod;
@@ -39,7 +40,7 @@ public class FormGetHandlerTest {
     Response actualResponse = formGetHandler.generate(request);
 
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
-    assertEquals("Content-Type: text/html\r\n", actualResponse.getHeaders());
+    assertEquals("Content-Type: text/html" + Constants.CLRF, actualResponse.getHeaders());
     assertEquals(getBody(""), new String(actualResponse.getBody()));
   }
 

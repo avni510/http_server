@@ -1,5 +1,6 @@
 package http_server.request;
 
+import http_server.Constants;
 import http_server.Header;
 
 import org.junit.Test;
@@ -56,7 +57,7 @@ public class RequestTest {
         .setRequestMethod(RequestMethod.GET)
         .setUri("/")
         .setHttpVersion("HTTP/1.1")
-        .setHeader("Host: localhost\r\nContent-Type: text/plain")
+        .setHeader("Host: localhost" + Constants.CLRF + "Content-Type: text/plain")
         .setBody("hello world")
         .build();
     Header header = new Header();
