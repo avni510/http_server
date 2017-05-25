@@ -24,23 +24,23 @@ import java.net.URLConnection;
 
 public class FileHelper {
 
-  public Map<String, String> getNameAndRelativePath(String rootPath) {
+  public Map<String, String> getNameAndRelativePath(String rootDirectoryPath) {
     Map<String, String> fileInformation = new HashMap();
-    File[] filesInDirectory = getFiles(rootPath);
+    File[] filesInDirectory = getFiles(rootDirectoryPath);
     for (File file: filesInDirectory) {
-      String filePath = file.getPath();
-      String relativePath = getRelativePath(filePath, rootPath);
+      String fileAbsolutePath = file.getPath();
+      String relativePath = getRelativePath(fileAbsolutePath, rootDirectoryPath);
       fileInformation.put(file.getName(), relativePath);
     }
     return fileInformation;
   }
 
-  public ArrayList<String> getRelativeFilePaths(String rootPath) {
+  public ArrayList<String> getRelativeFilePaths(String rootDirectoryPath) {
     ArrayList<String> allRelativePaths = new ArrayList<>();
-    File[] filesInDirectory = getFiles(rootPath);
+    File[] filesInDirectory = getFiles(rootDirectoryPath);
     for (File file: filesInDirectory) {
-      String filePath = file.getPath();
-      String relativePath = getRelativePath(filePath, rootPath);
+      String fileAbsolutePath = file.getPath();
+      String relativePath = getRelativePath(fileAbsolutePath, rootDirectoryPath);
       allRelativePaths.add(relativePath);
     }
     return allRelativePaths;

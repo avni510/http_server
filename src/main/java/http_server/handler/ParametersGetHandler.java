@@ -14,19 +14,19 @@ import java.net.URLDecoder;
 public class ParametersGetHandler implements Handler {
 
   public Response generate(Request request) throws IOException {
-    Response response = new ResponseBuilder().
-        setHttpVersion("HTTP/1.1")
+    return new ResponseBuilder()
+        .setHttpVersion("HTTP/1.1")
         .setStatusCode(200)
         .setHeader("Content-Type", "text/plain")
-        .setBody(splitUri(request.getUri()))
+        .setBody(decodeUri(request.getUri()))
         .build();
-    return response;
   }
 
-  private String splitUri(String uri) {
+  private String decodeUri(String uri) {
     if (uri.contains("?")) {
       String[] splitUri = uri.split("\\?");
-      return decodedParameterComponents(splitUri[1]);
+      String encodedParameter = splitUri[1];
+      return decodedParameter(encodedParameter);
     } else {
       return uri;
     }
@@ -42,12 +42,14 @@ public class ParametersGetHandler implements Handler {
     return decodedString;
   }
 
-  private String decodedParameterComponents(String uri) {
+  private String decodedParameter(String uri) {
     StringBuilder decodedParameters = new StringBuilder();
-    String[] splitUri = uri.split("&");
-    for(String param: splitUri){
-      String[] splitParameters = param.split("=");
-      decodedParameters.append(splitParameters[0] + " = " + decodeString(splitParameters[1]) + " ");
+    String[] encodedSplitParameters = uri.split("&");
+    for(String param: encodedSplitParameters){
+      String[] splitKeyAndValue = param.split("=");
+      String variableName = splitKeyAndValue[0];
+      String variableValue = splitKeyAndValue[1];
+      decodedParameters.append(variableName + " = " + decodeString(variableValue) + " ");
     }
     return decodedParameters.toString();
   }

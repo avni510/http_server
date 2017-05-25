@@ -10,6 +10,7 @@ import http_server.DataStore;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+
 import java.util.Base64;
 import java.util.Map;
 
@@ -25,22 +26,28 @@ public class LogGetHandler implements Handler {
   }
 
   public Response generate(Request request) throws IOException {
-    Response response;
     if (isAuthorized(request)) {
-    response = new ResponseBuilder()
+      return handleAuthorizedRequest();
+    } else {
+      return handleUnAuthorizedRequest();
+    }
+  }
+
+  private Response handleAuthorizedRequest(){
+    return new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
         .setStatusCode(200)
         .setHeader("Content-Type", "plain/text")
         .setBody(getBody())
         .build();
-    } else {
-      response = new ResponseBuilder()
-          .setHttpVersion("HTTP/1.1")
-          .setStatusCode(401)
-          .setHeader("WWW-Authenticate", "Basic realm=\"Access to Avni's Server\"")
-          .build();
-    }
-    return response;
+  }
+
+  private Response handleUnAuthorizedRequest(){
+    return new ResponseBuilder()
+        .setHttpVersion("HTTP/1.1")
+        .setStatusCode(401)
+        .setHeader("WWW-Authenticate", "Basic realm=\"Access to Avni's Server\"")
+        .build();
   }
 
   private boolean isAuthorized(Request request) throws UnsupportedEncodingException {

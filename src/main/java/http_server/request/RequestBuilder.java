@@ -35,11 +35,6 @@ public class RequestBuilder {
   }
 
   public Request build() {
-    return new Request(
-        requestMethod,
-        uri,
-        httpVersion,
-        header,
-        body);
+    return new Request(requestMethod, uri, httpVersion, header, body);
   }
 }

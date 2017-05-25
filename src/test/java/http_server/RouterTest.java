@@ -48,6 +48,7 @@ public class RouterTest {
     router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler());
 
     Handler handler = router.retrieveHandler(RequestMethod.GET, "/hello_world");
+
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/hello_world")
@@ -91,7 +92,7 @@ public class RouterTest {
   }
 
   @Test
-  public void returnsFalseIfAUriIsInARouter(){
+  public void returnsFalseIfAUriIsNotInARouter(){
     Router router = new Router();
     router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler());
 

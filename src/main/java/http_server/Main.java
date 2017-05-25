@@ -7,23 +7,21 @@ import http_server.middleware.FinalMiddleware;
 import http_server.middleware.FileMiddleware;
 import http_server.middleware.RoutingMiddleware;
 
+import java.io.IOException;
 import java.net.ServerSocket;
 
 public class Main {
   private static ConfigurationCommandLine configurationCommandLine;
+  private static Server server;
+  private static Router router;
+  private static String directoryPath;
+  private static ServerCancellationToken serverCancellationToken;
+  private static RoutingMiddleware app;
 
   public static void main(String[] args) throws Exception {
-    Router router = new Router();
-    configCommandLineArgs(args);
-    String directoryPath = configurationCommandLine.getDirectoryName();
-    configRoutes(directoryPath, router);
+    config(args);
 
-    ServerSocket serverSocket = new ServerSocket(configurationCommandLine.getPortNumber());
-    ConnectionManager server = new Server(serverSocket);
-    ServerCancellationToken serverCancellationToken = new ServerCancellationToken();
-    RoutingMiddleware app = setupFirstMiddleware(directoryPath, router);
-
-    serverCancellationToken.setListeningCondition(true);
+    initialize();
 
     ThreadPoolExecutorService threadPoolExecutorService = new ThreadPoolExecutorService(app, serverCancellationToken);
 
@@ -31,14 +29,29 @@ public class Main {
     httpServer.execute();
   }
 
+  private static void config(String[] args){
+    router = new Router();
+    configCommandLineArgs(args);
+    directoryPath = configurationCommandLine.getDirectoryName();
+    configRoutes();
+  }
+
   private static void configCommandLineArgs(String[] args){
     configurationCommandLine = new ConfigurationCommandLine();
     configurationCommandLine.parse(args);
   }
 
-  private static void configRoutes(String directoryPath, Router router){
+  private static void configRoutes(){
     ConfigurationRoutes configurationRoutes = new ConfigurationRoutes(directoryPath);
     configurationRoutes.populateRoutes(router);
+  }
+
+  private static void initialize() throws IOException {
+    ServerSocket serverSocket = new ServerSocket(configurationCommandLine.getPortNumber());
+    server = new Server(serverSocket);
+    serverCancellationToken = new ServerCancellationToken();
+    app = setupFirstMiddleware(directoryPath, router);
+    serverCancellationToken.setListeningCondition(true);
   }
 
   private static RoutingMiddleware setupFirstMiddleware(String directoryPath, Router router){

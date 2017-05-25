@@ -21,26 +21,33 @@ public class FileReaderPatchHandler implements Handler {
 
   public Response generate(Request request) throws IOException {
     Response response;
-    String patchedContents = request.getEntireBody();
     if (fileHashValuesMatch(getIfMatchValue(request))){
-      fileHelper.write(patchedContents, filePath);
-      response = new ResponseBuilder()
-          .setHttpVersion("HTTP/1.1")
-          .setStatusCode(204)
-          .build();
+      response = handleFileHashValuesMatch(request);
     } else {
-      response = new ResponseBuilder()
-          .setHttpVersion("HTTP/1.1")
-          .setStatusCode(400)
-          .build();
+      response = handleFileHashValuesDoNotMatch();
     }
     return response;
+  }
+
+  private Response handleFileHashValuesMatch(Request request){
+    String patchedContents = request.getEntireBody();
+    fileHelper.write(patchedContents, filePath);
+    return new ResponseBuilder()
+        .setHttpVersion("HTTP/1.1")
+        .setStatusCode(204)
+        .build();
+  }
+
+  private Response handleFileHashValuesDoNotMatch(){
+    return new ResponseBuilder()
+        .setHttpVersion("HTTP/1.1")
+        .setStatusCode(400)
+        .build();
   }
 
   private String getIfMatchValue(Request request) {
     return request.getHeaderValue("If-Match");
   }
-
 
   private boolean fileHashValuesMatch(String clientHashValue) throws IOException {
     return fileHelper.hashValue(filePath).equals(clientHashValue);

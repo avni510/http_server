@@ -15,10 +15,9 @@ public class ErrorHandler implements Handler {
   }
 
   public Response generate(Request request){
-    Response response = new ResponseBuilder()
+    return new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
         .setStatusCode(errorCode)
         .build();
-    return response;
   }
 }

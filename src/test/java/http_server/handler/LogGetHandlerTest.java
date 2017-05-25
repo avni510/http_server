@@ -1,6 +1,7 @@
 package http_server.handler;
 
 import http_server.Constants;
+
 import http_server.response.Response;
 
 import http_server.request.Request;
@@ -41,7 +42,8 @@ public class LogGetHandlerTest {
     Response actualResponse = logGetHandler.generate(request);
 
     assertEquals("401 Unauthorized", actualResponse.getStatusCodeMessage());
-    assertEquals("WWW-Authenticate: Basic realm=\"Access to Avni's Server\"" + Constants.CLRF, actualResponse.getHeaders());
+    assertEquals("WWW-Authenticate: Basic realm=\"Access to Avni's Server\"" + Constants.CLRF,
+                          actualResponse.getHeaders());
   }
 
   @Test
@@ -61,6 +63,7 @@ public class LogGetHandlerTest {
     Response actualResponse = logGetHandler.generate(request);
 
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
-    assertEquals("HEAD /requests HTTP/1.1 GET /log HTTP/1.1 PUT /these HTTP/1.1 ", new String(actualResponse.getBody()));
+    assertEquals("HEAD /requests HTTP/1.1 GET /log HTTP/1.1 PUT /these HTTP/1.1 ",
+                          new String(actualResponse.getBody()));
   }
 }

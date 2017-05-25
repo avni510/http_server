@@ -19,17 +19,17 @@ public class FormGetHandler implements Handler {
   }
 
   public Response generate(Request request) throws IOException {
-    String bodyValue = getBodyValue();
+    String dataValue = getDataValue();
     Response response = new ResponseBuilder()
               .setHttpVersion("HTTP/1.1")
               .setStatusCode(200)
               .setHeader("Content-Type", "text/html")
-              .setBody(getBody(bodyValue))
+              .setBody(getBody(dataValue))
               .build();
     return response;
   }
 
-  private String getBodyValue() {
+  private String getDataValue() {
     if (!dataStore.isStoreEmpty()){
       String parameterValue = dataStore.getValue(parameter);
       return parameter + "=" + parameterValue;

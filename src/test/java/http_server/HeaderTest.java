@@ -12,10 +12,11 @@ public class HeaderTest {
   @Test
   public void headersAreAddedToAMap(){
     Header header = new Header();
-
     header.add("Host", "localhost");
+
     Map<String, String> actualResult = header.getAllHeaders();
-    Map<String, String> expectedResult= new HashMap<>();
+
+    Map<String, String> expectedResult = new HashMap<>();
     expectedResult.put("Host", "localhost");
     assertTrue(expectedResult.equals(actualResult));
   }
@@ -27,8 +28,8 @@ public class HeaderTest {
                             "User-Agent: HTTPTool/1.0" + Constants.CLRF +
                             "Authorization: Basic YWRtaW46aHVudGVyMg==" + Constants.CLRF;
     Header header = new Header();
-
     header.populate(headerMessage);
+
     Map<String, String> actualResult = header.getAllHeaders();
 
     Map<String, String> expectedResult= new HashMap<>();
@@ -45,6 +46,7 @@ public class HeaderTest {
     header.add("Host", "localhost");
     header.add("From", "someuser@jmarshall.com");
     header.add("User-Agent", "HTTPTool/1.0");
+
     String actualResult = header.convertHeadersToString();
 
     String expectedResult = "User-Agent: HTTPTool/1.0" + Constants.CLRF +

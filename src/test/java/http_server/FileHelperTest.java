@@ -9,7 +9,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -69,8 +73,8 @@ public class FileHelperTest {
   @Test
   public void fileBytesAreReturned(){
     FileHelper fileHelper = new FileHelper();
-
     String filePath = rootFilePath + "/result.txt";
+
     byte[] actualResult = fileHelper.readBytes(filePath);
 
     Path path = Paths.get(filePath);

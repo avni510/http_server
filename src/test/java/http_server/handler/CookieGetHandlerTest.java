@@ -1,6 +1,7 @@
 package http_server.handler;
 
 import http_server.Constants;
+
 import http_server.request.Request;
 import http_server.request.RequestBuilder;
 import http_server.request.RequestMethod;
@@ -27,7 +28,8 @@ public class CookieGetHandlerTest {
 
     Response actualResponse = cookieGetHandler.generate(request);
 
-    assertEquals("Set-Cookie: type=chocolate" + Constants.CLRF + "Content-Type: text/plain" + Constants.CLRF, actualResponse.getHeaders());
+    assertEquals("Set-Cookie: type=chocolate" + Constants.CLRF +
+                          "Content-Type: text/plain" + Constants.CLRF, actualResponse.getHeaders());
     assertEquals("Eat", new String (actualResponse.getBody()));
   }
 

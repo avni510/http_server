@@ -13,12 +13,8 @@ public class Request {
   private String body = null;
   private Header headerClass = new Header();
 
-  public Request(
-     Enum<RequestMethod> requestMethod,
-     String uri,
-     String httpVersion,
-     String header,
-     String body) {
+  public Request(Enum<RequestMethod> requestMethod, String uri, String httpVersion,
+                 String header, String body) {
     this.requestMethod = requestMethod;
     this.uri = uri;
     this.httpVersion = httpVersion;

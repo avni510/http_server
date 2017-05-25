@@ -1,7 +1,7 @@
 package http_server.handler.file_reader;
 
 import http_server.Constants;
-import http_server.configuration.ConfigurationValidation;
+
 import http_server.response.Response;
 
 import http_server.request.Request;

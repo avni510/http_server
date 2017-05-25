@@ -13,26 +13,31 @@ public class CookieGetHandler implements Handler {
   private String cookie = "type=chocolate";
 
   public Response generate(Request request) throws IOException {
-    Response response;
-    String cookieKeyAndValue = cookieValue(request);
-    if (cookie.equals(cookieKeyAndValue)){
-      response = new ResponseBuilder()
-          .setHttpVersion("HTTP/1.1")
-          .setStatusCode(200)
-          .setHeader("Content-Type", "text/plain")
-          .setBody("mmmm chocolate")
-          .build();
-
+    String requestCookie = cookieValue(request);
+    if (cookie.equals(requestCookie)){
+      return handleCookieRequest();
     } else {
-      response = new ResponseBuilder()
-          .setHttpVersion("HTTP/1.1")
-          .setStatusCode(200)
-          .setHeader("Content-Type", "text/plain")
-          .setHeader("Set-Cookie", cookie)
-          .setBody("Eat")
-          .build();
+      return handleSetCookie();
     }
-    return response;
+  }
+
+  private Response handleCookieRequest(){
+    return new ResponseBuilder()
+        .setHttpVersion("HTTP/1.1")
+        .setStatusCode(200)
+        .setHeader("Content-Type", "text/plain")
+        .setBody("mmmm chocolate")
+        .build();
+  }
+
+  private Response handleSetCookie(){
+    return new ResponseBuilder()
+        .setHttpVersion("HTTP/1.1")
+        .setStatusCode(200)
+        .setHeader("Content-Type", "text/plain")
+        .setHeader("Set-Cookie", cookie)
+        .setBody("Eat")
+        .build();
   }
 
   private String cookieValue(Request request){

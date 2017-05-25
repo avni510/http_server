@@ -20,7 +20,8 @@ public class Router {
   public Handler retrieveHandler(Enum<RequestMethod> requestMethod, String uri){
     if (uri.contains("?")) {
       String[] uriParts = uri.split("\\?");
-      return routes.get(new Tuple<>(requestMethod, uriParts[0]));
+      String uriWithoutQuestionMark = uriParts[0];
+      return routes.get(new Tuple<>(requestMethod, uriWithoutQuestionMark));
     } else {
       return routes.get(new Tuple<>(requestMethod, uri));
     }
@@ -28,9 +29,9 @@ public class Router {
 
   public boolean uriExists(String uri){
     boolean found = false;
-    for(Map.Entry<Tuple<Enum<RequestMethod>, String>, Handler> entry : routes.entrySet()){
-      String uriInRoute = entry.getKey().getSecondElement();
-      if (uriInRoute.equals(uri)){
+    for(Map.Entry<Tuple<Enum<RequestMethod>, String>, Handler> route : routes.entrySet()){
+      String uriInRouter = route.getKey().getSecondElement();
+      if (uriInRouter.equals(uri)){
         return true;
       }
     }

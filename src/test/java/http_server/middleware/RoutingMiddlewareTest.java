@@ -10,11 +10,22 @@ import http_server.request.RequestBuilder;
 
 import http_server.handler.HelloWorldGetHandler;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class RoutingMiddlewareTest {
+  String rootDirectoryPath = System.getProperty("user.dir") + "/code";
+  private RoutingMiddleware routingMiddleware;
+  private FileMiddleware fileMiddleware;
+  private FinalMiddleware finalMiddleware;
+
+  private void setupPreviousMiddlewares(Router router){
+    finalMiddleware = new FinalMiddleware();
+    fileMiddleware = new FileMiddleware(rootDirectoryPath, finalMiddleware);
+    routingMiddleware = new RoutingMiddleware(router, fileMiddleware);
+  }
 
   @Test
   public void responseIsGenerated() throws Exception {
@@ -26,10 +37,7 @@ public class RoutingMiddlewareTest {
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
-    String rootDirectoryPath = System.getProperty("user.dir") + "/code";
-    FinalMiddleware finalMiddleware = new FinalMiddleware();
-    FileMiddleware fileMiddleware = new FileMiddleware(rootDirectoryPath, finalMiddleware);
-    RoutingMiddleware routingMiddleware = new RoutingMiddleware(router, fileMiddleware);
+    setupPreviousMiddlewares(router);
 
     Response actualResponse = routingMiddleware.call(request);
 
@@ -47,10 +55,7 @@ public class RoutingMiddlewareTest {
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
-    String rootDirectoryPath = System.getProperty("user.dir") + "/code";
-    FinalMiddleware finalMiddleware = new FinalMiddleware();
-    FileMiddleware fileMiddleware = new FileMiddleware(rootDirectoryPath, finalMiddleware);
-    RoutingMiddleware routingMiddleware = new RoutingMiddleware(router, fileMiddleware);
+    setupPreviousMiddlewares(router);
 
     Response actualResponse = routingMiddleware.call(request);
 
@@ -67,10 +72,7 @@ public class RoutingMiddlewareTest {
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost\r\n")
         .build();
-    String rootDirectoryPath = System.getProperty("user.dir") + "/code";
-    FinalMiddleware finalMiddleware = new FinalMiddleware();
-    FileMiddleware fileMiddleware = new FileMiddleware(rootDirectoryPath, finalMiddleware);
-    RoutingMiddleware routingMiddleware = new RoutingMiddleware(router, fileMiddleware);
+    setupPreviousMiddlewares(router);
 
     Response actualResponse = routingMiddleware.call(request);
 

@@ -20,7 +20,7 @@ public class DirectoryHeadHandlerTest {
         .setRequestMethod(RequestMethod.HEAD)
         .setUri("/")
         .setHttpVersion("HTTP/1.1")
-        .setHeader("Host: localhost\r\n")
+        .setHeader("Host: localhost")
         .build();
     DirectoryHeadHandler directoryHeadHandler = new DirectoryHeadHandler();
 

@@ -2,6 +2,7 @@ package http_server.middleware;
 
 import http_server.handler.file_reader.FileReaderGetHandler;
 import http_server.handler.file_reader.FileReaderPatchHandler;
+
 import http_server.handler.ErrorHandler;
 
 import http_server.Middleware;
@@ -14,7 +15,6 @@ import http_server.request.Request;
 import http_server.request.RequestMethod;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class FileMiddleware implements Middleware {
   private String rootDirectoryPath;
@@ -27,11 +27,11 @@ public class FileMiddleware implements Middleware {
 
   public Response call(Request request) throws Exception {
     FileHelper fileHelper = new FileHelper();
-    ArrayList<String> relativeAndAbsolutePaths = fileHelper.getRelativeFilePaths(rootDirectoryPath);
-    if (isValidRequest(relativeAndAbsolutePaths, request)){
+    ArrayList<String> relativePaths = fileHelper.getRelativeFilePaths(rootDirectoryPath);
+    if (isValidRequest(relativePaths, request)){
         String absolutePath = rootDirectoryPath + request.getUri();
         return getFileHandlerResponse(request, fileHelper, absolutePath);
-    } else if (fileExistsInDirectory(relativeAndAbsolutePaths, request)) {
+    } else if (fileExistsInDirectory(relativePaths, request)) {
       return methodNotAllowed(request);
     }
     return nextMiddleware.call(request);

@@ -15,12 +15,12 @@ public class RequestTest {
   @Test
   public void requestMethodIsReturned(){
     Request request = new RequestBuilder()
-                                .setRequestMethod(RequestMethod.GET)
-                                .setUri("/")
-                                .setHttpVersion("HTTP/1.1")
-                                .setHeader("Host: localhost")
-                                .setBody("data=fatcat")
-                                .build();
+        .setRequestMethod(RequestMethod.GET)
+        .setUri("/")
+        .setHttpVersion("HTTP/1.1")
+        .setHeader("Host: localhost")
+        .setBody("data=fatcat")
+        .build();
 
     assertEquals(RequestMethod.GET, request.getRequestMethod());
   }

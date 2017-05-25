@@ -32,10 +32,16 @@ public class DirectoryGetHandler implements Handler {
   private String getBody() {
     Map<String, String> fileInformation = setFileInformation();
     StringBuilder body = new StringBuilder();
-    for (Map.Entry<String, String> entry : fileInformation.entrySet()) {
-      body.append("<li> <a href=" + entry.getValue() + ">" + entry.getKey() + "</a></li>");
+    for (Map.Entry<String, String> file : fileInformation.entrySet()) {
+      String fileName = file.getKey();
+      String fileLink = file.getValue();
+      body.append(getHtml(fileName, fileLink));
     }
     return body.toString();
+  }
+
+  private String getHtml(String name, String link){
+    return "<li> <a href=" + link + ">" + name + "</a></li>";
   }
 
   private Map<String, String> setFileInformation(){

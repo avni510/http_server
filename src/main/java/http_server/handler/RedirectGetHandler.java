@@ -12,11 +12,10 @@ import java.io.IOException;
 public class RedirectGetHandler implements Handler {
 
   public Response generate(Request request) throws IOException {
-    Response response = new ResponseBuilder()
+    return new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
         .setStatusCode(302)
         .setHeader("Location", "/")
         .build();
-    return response;
   }
 }

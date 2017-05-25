@@ -35,10 +35,6 @@ public class ServerProcessor implements Runnable {
    return new BufferedReader(new InputStreamReader(clientConnection.in()));
   }
 
-  private void write(Connection clientConnection, Response response) throws Exception{
-    clientConnection.out().write(response.getHttpResponseBytes());
-  }
-
   private Response getHttpResponse(BufferedReader inputStream) throws Exception {
     RequestParser requestParser = new RequestParser(inputStream);
     Request request = null;
@@ -49,5 +45,9 @@ public class ServerProcessor implements Runnable {
       return errorHandler.generate(request);
     }
     return app.call(request);
+  }
+
+  private void write(Connection clientConnection, Response response) throws Exception{
+    clientConnection.out().write(response.getHttpResponseBytes());
   }
 }

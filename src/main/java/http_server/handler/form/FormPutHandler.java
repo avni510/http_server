@@ -19,12 +19,19 @@ public class FormPutHandler implements Handler {
   }
 
   public Response generate(Request request) throws IOException {
-    String parameterValue = request.getBodyParam(parameter);
-    dataStore.storeEntry(parameter, parameterValue);
-    Response response = new ResponseBuilder()
-                .setHttpVersion("HTTP/1.1")
-                .setStatusCode(200)
-                .build();
-    return response;
+    String dataValue = getDataValue(request);
+    storeData(dataValue);
+    return new ResponseBuilder()
+        .setHttpVersion("HTTP/1.1")
+        .setStatusCode(200)
+        .build();
+  }
+
+  private String getDataValue(Request request){
+    return request.getBodyParam(parameter);
+  }
+
+  private void storeData(String dataValue){
+    dataStore.storeEntry(parameter, dataValue);
   }
 }

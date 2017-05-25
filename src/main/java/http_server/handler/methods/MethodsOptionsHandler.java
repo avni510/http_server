@@ -19,12 +19,11 @@ public class MethodsOptionsHandler implements Handler {
 
   public Response generate(Request request) throws IOException {
     String allAllowedRequestMethods = requestMethodsToString();
-    Response response = new ResponseBuilder()
+    return new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
         .setStatusCode(200)
         .setHeader("Allow", allAllowedRequestMethods)
         .build();
-    return response;
   }
 
   private String requestMethodsToString(){
