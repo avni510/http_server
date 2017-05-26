@@ -38,9 +38,11 @@ $ java -jar build/libs/http_server.jar
 
 To specify port number and directory
 ```
-$ java -jar build/libs/http_server.jar -p <port Number> -d <directory path>
+$ java -jar build/libs/http_server.jar -p <port number> -d <directory path>
 ```
 Valid port numbers are between 0 and 65535
+
+Navigate in your browser to `http://localhost:<port number>`
 
 `CTRL+C` to quit the server
 
