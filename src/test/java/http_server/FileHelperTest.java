@@ -4,14 +4,19 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Arrays;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class FileHelperTest {
   private String rootFilePath;
@@ -19,14 +24,6 @@ public class FileHelperTest {
   @Before
   public void setup() {
     rootFilePath = System.getProperty("user.dir") + "/code";
-  }
-
-  private String getAbsolutePath(String filename){
-    return System.getProperty("user.dir") + "/code" + filename;
-  }
-
-  private void addRelativeAndAbsolutePath(Map<String, String> paths, String relativeFilePath){
-    paths.put(relativeFilePath, getAbsolutePath(relativeFilePath));
   }
 
   private void addNameAndRelativePath(Map<String, String> paths, String fileName ) {
@@ -38,42 +35,46 @@ public class FileHelperTest {
     addNameAndRelativePath(paths, "log_time_entry.txt");
     addNameAndRelativePath(paths, "result.txt");
     addNameAndRelativePath(paths, "validation.txt");
+    addNameAndRelativePath(paths, "image.png");
     return paths;
   }
 
-  private Map<String, String> populateRelativeAndAbsolutePaths(){
-    Map<String, String> paths = new HashMap();
-    addRelativeAndAbsolutePath(paths, "/log_time_entry.txt");
-    addRelativeAndAbsolutePath(paths, "/result.txt");
-    addRelativeAndAbsolutePath(paths, "/validation.txt");
-    return paths;
+  private ArrayList<String> populateRelativePaths(){
+    ArrayList<String> relativePaths = new ArrayList<>();
+    relativePaths.add("/log_time_entry.txt");
+    relativePaths.add("/result.txt");
+    relativePaths.add("/validation.txt");
+    relativePaths.add("/image.png");
+    return relativePaths;
   }
 
   @Test
   public void fileNamesAndRelativePathsAreReturned() {
     FileHelper fileHelper = new FileHelper();
 
-    Map<String, String> actualNameAndRelativePath = fileHelper.getNameAndRelativePath(rootFilePath);
+    Map<String, String> actualResult = fileHelper.getNameAndRelativePath(rootFilePath);
 
-    Map<String, String> expectedNameAndRelativePath = populateNamesAndRelativePaths();
-    assertEquals(expectedNameAndRelativePath, actualNameAndRelativePath);
+    Map<String, String> expectedResult = populateNamesAndRelativePaths();
+    assertEquals(expectedResult, actualResult);
   }
 
   @Test
   public void relativeAndAbsolutePathsAreReturned() {
     FileHelper fileHelper = new FileHelper();
 
-    Map<String, String> actualRelativeAndAbsolutePath = fileHelper.getRelativeAndAbsolutePath(rootFilePath);
+    ArrayList<String> actualResult = fileHelper.getRelativeFilePaths(rootFilePath);
 
-    Map<String, String> expectedRelativeAndAbsolutePath = populateRelativeAndAbsolutePaths();
-    assertEquals(expectedRelativeAndAbsolutePath, actualRelativeAndAbsolutePath);
+    ArrayList<String> expectedResult = populateRelativePaths();
+    Collections.sort(actualResult);
+    Collections.sort(expectedResult);
+    assertTrue(expectedResult.equals(actualResult));
   }
 
   @Test
   public void fileBytesAreReturned(){
     FileHelper fileHelper = new FileHelper();
-
     String filePath = rootFilePath + "/result.txt";
+
     byte[] actualResult = fileHelper.readBytes(filePath);
 
     Path path = Paths.get(filePath);
@@ -129,16 +130,6 @@ public class FileHelperTest {
   }
 
   @Test
-  public void fileExtensionIsReturned(){
-    FileHelper fileHelper = new FileHelper();
-
-    String filePath = rootFilePath + "/result.txt";
-    String actualResult = fileHelper.getExtension(filePath);
-
-    assertEquals("txt", actualResult);
-  }
-
-  @Test
   public void fileLengthIsReturned(){
     FileHelper fileHelper = new FileHelper();
 
@@ -146,5 +137,25 @@ public class FileHelperTest {
     Integer actualResult = fileHelper.getLength(filePath);
 
     assertEquals(Integer.valueOf(22), actualResult);
+  }
+
+  @Test
+  public void mimeTypeForPlainTextIsReturned(){
+    FileHelper fileHelper = new FileHelper();
+
+    String filePath = rootFilePath + "/result.txt";
+    String actualResult = fileHelper.getMimeType(filePath);
+
+    assertEquals("text/plain", actualResult);
+  }
+
+  @Test
+  public void mimeTypeForPngIsReturned(){
+    FileHelper fileHelper = new FileHelper();
+
+    String filePath = rootFilePath + "/image.png";
+    String actualResult = fileHelper.getMimeType(filePath);
+
+    assertEquals("image/png", actualResult);
   }
 }

@@ -2,7 +2,6 @@ package http_server;
 
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -10,6 +9,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.net.Socket;
+
+import static org.junit.Assert.assertEquals;
 
 public class ServerSocketConnectionTest {
   private InputStream inputStream;
