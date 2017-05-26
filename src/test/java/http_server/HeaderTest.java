@@ -5,30 +5,31 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 public class HeaderTest {
 
   @Test
   public void headersAreAddedToAMap(){
     Header header = new Header();
-
     header.add("Host", "localhost");
+
     Map<String, String> actualResult = header.getAllHeaders();
-    Map<String, String> expectedResult= new HashMap<>();
+
+    Map<String, String> expectedResult = new HashMap<>();
     expectedResult.put("Host", "localhost");
     assertTrue(expectedResult.equals(actualResult));
   }
 
   @Test
   public void headersAreConvertedToAMap() {
-    String headerMessage =  "Host: localhost\r\n" +
-                            "From: someuser@jmarshall.com\r\n" +
-                            "User-Agent: HTTPTool/1.0\r\n" +
-                            "Authorization: Basic YWRtaW46aHVudGVyMg==\r\n";
+    String headerMessage =  "Host: localhost" + Constants.CLRF +
+                            "From: someuser@jmarshall.com" + Constants.CLRF +
+                            "User-Agent: HTTPTool/1.0" + Constants.CLRF +
+                            "Authorization: Basic YWRtaW46aHVudGVyMg==" + Constants.CLRF;
     Header header = new Header();
-
     header.populate(headerMessage);
+
     Map<String, String> actualResult = header.getAllHeaders();
 
     Map<String, String> expectedResult= new HashMap<>();
@@ -45,11 +46,12 @@ public class HeaderTest {
     header.add("Host", "localhost");
     header.add("From", "someuser@jmarshall.com");
     header.add("User-Agent", "HTTPTool/1.0");
+
     String actualResult = header.convertHeadersToString();
 
-    String expectedResult = "User-Agent: HTTPTool/1.0\r\n" +
-                            "Host: localhost\r\n" +
-                            "From: someuser@jmarshall.com\r\n";
+    String expectedResult = "User-Agent: HTTPTool/1.0" + Constants.CLRF +
+                            "Host: localhost" + Constants.CLRF +
+                            "From: someuser@jmarshall.com" + Constants.CLRF;
     assertTrue(expectedResult.equals(actualResult));
   }
 

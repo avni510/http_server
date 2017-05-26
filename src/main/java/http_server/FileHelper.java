@@ -1,43 +1,52 @@
 package http_server;
 
 import javax.xml.bind.DatatypeConverter;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 import java.security.MessageDigest;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import java.net.FileNameMap;
+import java.net.URLConnection;
+
+
 public class FileHelper {
 
-  public Map<String, String> getNameAndRelativePath(String rootPath) {
+  public Map<String, String> getNameAndRelativePath(String rootDirectoryPath) {
     Map<String, String> fileInformation = new HashMap();
-    File[] filesInDirectory = getFiles(rootPath);
-    for (int index = 0; index < filesInDirectory.length; index++) {
-      String filePath = filesInDirectory[index].getPath();
-      String relativePath = getRelativePath(filePath, rootPath);
-      fileInformation.put(filesInDirectory[index].getName(), relativePath);
+    File[] filesInDirectory = getFiles(rootDirectoryPath);
+    for (File file: filesInDirectory) {
+      String fileAbsolutePath = file.getPath();
+      String relativePath = getRelativePath(fileAbsolutePath, rootDirectoryPath);
+      fileInformation.put(file.getName(), relativePath);
     }
     return fileInformation;
   }
 
-  public Map<String, String> getRelativeAndAbsolutePath(String rootPath) {
-    Map<String, String> fileInformation = new HashMap();
-    File[] filesInDirectory = getFiles(rootPath);
-    for (int index = 0; index < filesInDirectory.length; index++) {
-      String filePath = filesInDirectory[index].getPath();
-      String relativePath = getRelativePath(filePath, rootPath);
-      fileInformation.put(relativePath, filePath);
+  public ArrayList<String> getRelativeFilePaths(String rootDirectoryPath) {
+    ArrayList<String> allRelativePaths = new ArrayList<>();
+    File[] filesInDirectory = getFiles(rootDirectoryPath);
+    for (File file: filesInDirectory) {
+      String fileAbsolutePath = file.getPath();
+      String relativePath = getRelativePath(fileAbsolutePath, rootDirectoryPath);
+      allRelativePaths.add(relativePath);
     }
-    return fileInformation;
+    return allRelativePaths;
   }
 
-  public byte[] readBytes(String filePath)  {
+  public byte[] readBytes(String filePath) {
     Path file = Paths.get(filePath);
     byte[] fileBytes = null;
     try {
@@ -78,19 +87,15 @@ public class FileHelper {
     return new String(partialFileBytes);
   }
 
-  public String getExtension(String filePath){
-    String extension = "";
-    int i = filePath.lastIndexOf(".");
-    if (i > 0){
-      extension = filePath.substring(i + 1);
-    }
-    return extension;
-  }
-
   public Integer getLength(String filePath) {
     File file = new File(filePath);
     Long fileSize = file.length();
     return fileSize.intValue();
+  }
+
+  public String getMimeType(String filePath){
+    FileNameMap fileNameMap = URLConnection.getFileNameMap();
+    return fileNameMap.getContentTypeFor(filePath);
   }
 
   private File[] getFiles(String rootPath) {

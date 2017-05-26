@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Header {
-  private String CLRF = "\r\n";
   private Map<String, String> headerStore = new HashMap<>();
 
   public void add(String key, String value){
@@ -24,7 +23,7 @@ public class Header {
   public String convertHeadersToString(){
     StringBuilder allHeaders = new StringBuilder();
     for (Map.Entry<String, String> header : headerStore.entrySet()) {
-      allHeaders.append(header.getKey() + ": " + header.getValue() + CLRF);
+      allHeaders.append(header.getKey() + ": " + header.getValue() + Constants.CLRF);
     }
     return allHeaders.toString();
   }
@@ -34,7 +33,7 @@ public class Header {
   }
 
   private ArrayList<String[]> splitIntoHeaderParts(String headers) {
-    String[] splitEachHeader = headers.split("\r\n");
+    String[] splitEachHeader = headers.split(Constants.CLRF);
     ArrayList<String[]> headerMessageComponents = new ArrayList<>();
     for(String header : splitEachHeader) {
       headerMessageComponents.add(header.split(": "));
