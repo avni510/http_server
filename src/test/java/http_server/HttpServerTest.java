@@ -2,7 +2,7 @@ package http_server;
 
 import http_server.handler.HelloWorldGetHandler;
 
-import http_server.mocks.MockThreadPoolExecutorService;
+import http_server.mocks.MockServerExecutor;
 import http_server.mocks.MockServer;
 import http_server.mocks.MockSocket;
 import http_server.mocks.MockServerSocketConnection;
@@ -26,7 +26,7 @@ public class HttpServerTest {
   private MockServerSocketConnection serverSocketConnection;
   private MockServer server;
   private Router router;
-  private MockThreadPoolExecutorService threadPoolExecutorService;
+  private MockServerExecutor serverExecutor;
 
   private Socket createMockSocket(String request) {
     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(request.getBytes());
@@ -49,13 +49,13 @@ public class HttpServerTest {
     serverCancellationToken = new MockServerCancellationToken();
     this.router = new Router();
     setupRouter();
-    this.threadPoolExecutorService = new MockThreadPoolExecutorService();
+    this.serverExecutor = new MockServerExecutor();
   }
 
 
   @Test
   public void theServerStopsListening() throws Exception {
-    HttpServer httpServer = new HttpServer(server, threadPoolExecutorService, serverCancellationToken);
+    HttpServer httpServer = new HttpServer(server, serverExecutor, serverCancellationToken);
 
     httpServer.execute();
 
@@ -64,10 +64,10 @@ public class HttpServerTest {
 
   @Test
   public void clientConnectionIsSetup() throws Exception {
-    HttpServer httpServer = new HttpServer(server, threadPoolExecutorService, serverCancellationToken);
+    HttpServer httpServer = new HttpServer(server, serverExecutor, serverCancellationToken);
 
     httpServer.execute();
 
-    assertTrue(threadPoolExecutorService.clientConnectionWasSet(serverSocketConnection));
+    assertTrue(serverExecutor.clientConnectionWasSet(serverSocketConnection));
   }
 }

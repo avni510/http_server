@@ -1,6 +1,6 @@
 package http_server;
 
-public interface IExecutorService {
+public interface ServerExecutorService {
   void execute(Connection connection);
   void shutdown();
 }

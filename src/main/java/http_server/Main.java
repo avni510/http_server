@@ -7,54 +7,44 @@ import http_server.middleware.FinalMiddleware;
 import http_server.middleware.FileMiddleware;
 import http_server.middleware.RoutingMiddleware;
 
-import java.io.IOException;
 import java.net.ServerSocket;
 
 public class Main {
-  private static ConfigurationCommandLine configurationCommandLine;
-  private static Server server;
-  private static Router router;
-  private static String directoryPath;
-  private static ServerCancellationToken serverCancellationToken;
-  private static RoutingMiddleware app;
 
   public static void main(String[] args) throws Exception {
-    config(args);
+    ConfigurationCommandLine configurationCommandLine = configCommandLine(args);
+    String directoryPath = configurationCommandLine.getDirectoryName();
+    Integer portNumber = configurationCommandLine.getPortNumber();
 
-    initialize();
+    Router router = configRoutes(directoryPath);
 
-    ThreadPoolExecutorService threadPoolExecutorService = new ThreadPoolExecutorService(app, serverCancellationToken);
+    ServerSocket serverSocket = new ServerSocket(portNumber);
+    Server server = new Server(serverSocket);
 
-    HttpServer httpServer = new HttpServer(server, threadPoolExecutorService, serverCancellationToken);
+    RoutingMiddleware app = setupApp(router, directoryPath);
+
+    ServerExecutor serverExecutor = new ServerExecutor(app);
+
+    ServerCancellationToken serverCancellationToken = new ServerCancellationToken();
+    serverCancellationToken.setListeningCondition(true);
+
+    HttpServer httpServer = new HttpServer(server, serverExecutor, serverCancellationToken);
     httpServer.execute();
   }
 
-  private static void config(String[] args){
-    router = new Router();
-    configCommandLineArgs(args);
-    directoryPath = configurationCommandLine.getDirectoryName();
-    configRoutes();
-  }
-
-  private static void configCommandLineArgs(String[] args){
-    configurationCommandLine = new ConfigurationCommandLine();
+  private static ConfigurationCommandLine configCommandLine(String[] args){
+    ConfigurationCommandLine configurationCommandLine = new ConfigurationCommandLine();
     configurationCommandLine.parse(args);
+    return configurationCommandLine;
   }
 
-  private static void configRoutes(){
+  private static Router configRoutes(String directoryPath){
+    Router router = new Router();
     ConfigurationRoutes configurationRoutes = new ConfigurationRoutes(directoryPath);
-    configurationRoutes.populateRoutes(router);
+    return configurationRoutes.populateRoutes(router);
   }
 
-  private static void initialize() throws IOException {
-    ServerSocket serverSocket = new ServerSocket(configurationCommandLine.getPortNumber());
-    server = new Server(serverSocket);
-    serverCancellationToken = new ServerCancellationToken();
-    app = setupFirstMiddleware(directoryPath, router);
-    serverCancellationToken.setListeningCondition(true);
-  }
-
-  private static RoutingMiddleware setupFirstMiddleware(String directoryPath, Router router){
+  private static RoutingMiddleware setupApp(Router router, String directoryPath){
     FinalMiddleware finalMiddleware = new FinalMiddleware();
     FileMiddleware fileMiddleware = new FileMiddleware(directoryPath, finalMiddleware);
     return new RoutingMiddleware(router, fileMiddleware);
