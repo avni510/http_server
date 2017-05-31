@@ -1,5 +1,6 @@
 package http_server;
 
+import http_server.cobspec.FileHelper;
 import org.junit.Before;
 import org.junit.Test;
 

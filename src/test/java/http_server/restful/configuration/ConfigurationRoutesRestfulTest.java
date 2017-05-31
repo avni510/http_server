@@ -1,4 +1,4 @@
-package http_server.configuration;
+package http_server.restful.configuration;
 
 import http_server.DataStore;
 import http_server.Handler;

@@ -1,5 +1,6 @@
 package http_server.handler.methods;
 
+import http_server.cobspec.handler.methods.MethodsHandler;
 import http_server.response.Response;
 
 import http_server.request.Request;

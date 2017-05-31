@@ -1,4 +1,4 @@
-package http_server.handler.users;
+package http_server.restful.users;
 
 import http_server.DataStore;
 
@@ -7,6 +7,7 @@ import http_server.request.RequestBuilder;
 import http_server.request.RequestMethod;
 
 import http_server.response.Response;
+import http_server.restful.handler.users.UsersPostHandler;
 import org.junit.Test;
 
 import java.io.IOException;

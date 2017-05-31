@@ -2,6 +2,7 @@ package http_server.handler;
 
 import http_server.Constants;
 
+import http_server.cobspec.handler.CookieGetHandler;
 import http_server.request.Request;
 import http_server.request.RequestBuilder;
 import http_server.request.RequestMethod;

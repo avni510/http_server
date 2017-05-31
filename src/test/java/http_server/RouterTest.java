@@ -1,7 +1,7 @@
 package http_server;
 
-import http_server.handler.HelloWorldGetHandler;
-import http_server.handler.ParametersGetHandler;
+import http_server.cobspec.handler.HelloWorldGetHandler;
+import http_server.cobspec.handler.ParametersGetHandler;
 
 import http_server.request.Request;
 import http_server.request.RequestBuilder;

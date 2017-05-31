@@ -2,6 +2,7 @@ package http_server.handler.form;
 
 import http_server.Constants;
 
+import http_server.cobspec.handler.form.FormGetHandler;
 import http_server.request.Request;
 import http_server.request.RequestBuilder;
 import http_server.request.RequestMethod;

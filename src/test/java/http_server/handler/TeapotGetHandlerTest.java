@@ -1,5 +1,6 @@
 package http_server.handler;
 
+import http_server.cobspec.handler.TeapotGetHandler;
 import http_server.response.Response;
 
 import http_server.request.Request;

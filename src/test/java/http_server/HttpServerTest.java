@@ -1,6 +1,6 @@
 package http_server;
 
-import http_server.handler.HelloWorldGetHandler;
+import http_server.cobspec.handler.HelloWorldGetHandler;
 
 import http_server.mocks.MockServerExecutor;
 import http_server.mocks.MockServer;

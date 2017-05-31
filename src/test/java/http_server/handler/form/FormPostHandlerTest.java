@@ -1,5 +1,6 @@
 package http_server.handler.form;
 
+import http_server.cobspec.handler.form.FormPostHandler;
 import http_server.request.Request;
 import http_server.request.RequestBuilder;
 import http_server.request.RequestMethod;

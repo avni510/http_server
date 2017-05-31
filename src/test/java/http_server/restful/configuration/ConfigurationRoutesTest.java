@@ -1,8 +1,9 @@
-package http_server.configuration;
+package http_server.restful.configuration;
 
 import http_server.Handler;
 import http_server.Router;
 
+import http_server.cobspec.configuration.ConfigurationRoutes;
 import http_server.request.Request;
 import http_server.request.RequestBuilder;
 import http_server.request.RequestMethod;

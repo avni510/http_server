@@ -2,6 +2,7 @@ package http_server.handler;
 
 import http_server.Constants;
 
+import http_server.cobspec.handler.RedirectGetHandler;
 import http_server.response.Response;
 
 import http_server.request.Request;

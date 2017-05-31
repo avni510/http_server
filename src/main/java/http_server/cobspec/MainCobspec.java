@@ -1,15 +1,15 @@
 package http_server;
 
-import http_server.configuration.ConfigurationCommandLine;
-import http_server.configuration.ConfigurationRoutes;
+import http_server.cobspec.configuration.ConfigurationCommandLine;
+import http_server.cobspec.configuration.ConfigurationRoutes;
 
 import http_server.middleware.FinalMiddleware;
-import http_server.middleware.FileMiddleware;
+import http_server.cobspec.middleware.FileMiddleware;
 import http_server.middleware.RoutingMiddleware;
 
 import java.net.ServerSocket;
 
-public class Main {
+public class MainCobspec {
 
   public static void main(String[] args) throws Exception {
     ConfigurationCommandLine configurationCommandLine = configCommandLine(args);

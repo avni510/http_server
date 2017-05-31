@@ -1,5 +1,6 @@
 package http_server.handler;
 
+import http_server.cobspec.handler.ParametersGetHandler;
 import http_server.response.Response;
 
 import http_server.request.Request;

@@ -1,4 +1,4 @@
-package http_server.handler.directory;
+package http_server.cobspec.handler.directory;
 
 import http_server.Constants;
 
