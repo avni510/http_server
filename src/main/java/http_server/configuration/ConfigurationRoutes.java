@@ -33,7 +33,8 @@ public class ConfigurationRoutes {
     this.directoryPath = directoryPath;
   }
 
-  public Router populateRoutes(Router router) {
+  public Router buildRouter() {
+    Router router = new Router();
     DataStore dataStore = new DataStore();
     router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler())
           .addRoute(RequestMethod.GET, "/", new DirectoryGetHandler(directoryPath))

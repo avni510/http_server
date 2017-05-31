@@ -39,9 +39,8 @@ public class Main {
   }
 
   private static Router configRoutes(String directoryPath){
-    Router router = new Router();
     ConfigurationRoutes configurationRoutes = new ConfigurationRoutes(directoryPath);
-    return configurationRoutes.populateRoutes(router);
+    return configurationRoutes.buildRouter();
   }
 
   private static RoutingMiddleware setupApp(Router router, String directoryPath){
