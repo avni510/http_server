@@ -25,4 +25,16 @@ public class DataStore {
   public boolean isStoreEmpty(){
     return data.isEmpty();
   }
+
+  public int count(){
+    return data.size();
+  }
+
+  public void delete(String key) {
+    data.remove(key);
+  }
+
+  public boolean keyExists(String key){
+   return data.containsKey(key);
+  }
 }

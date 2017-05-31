@@ -46,4 +46,34 @@ public class DataStoreTest {
 
     assertTrue(dataStore.isStoreEmpty());
   }
+
+  @Test
+  public void getCountOfAllEntriesInDataStore(){
+    DataStore dataStore = new DataStore();
+    dataStore.storeEntry("data", "fatcat");
+
+    Integer actualResult = dataStore.count();
+
+    assertEquals(new Integer(1), actualResult);
+  }
+
+  @Test
+  public void anEntryIsDeleted(){
+    DataStore dataStore = new DataStore();
+    dataStore.storeEntry("data", "fatcat");
+
+    dataStore.delete("data");
+
+    assertTrue(dataStore.isStoreEmpty());
+  }
+
+  @Test
+  public void returnsTrueIfAValueExists(){
+    DataStore dataStore = new DataStore();
+    dataStore.storeEntry("data", "fatcat");
+
+    boolean result = dataStore.keyExists("data");
+
+    assertTrue(result);
+  }
 }
