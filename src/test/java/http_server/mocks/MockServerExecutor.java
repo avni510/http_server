@@ -1,9 +1,9 @@
 package http_server.mocks;
 
 import http_server.Connection;
-import http_server.IExecutorService;
+import http_server.ServerExecutorService;
 
-public class MockThreadPoolExecutorService implements IExecutorService {
+public class MockServerExecutor implements ServerExecutorService {
   private Connection connection;
 
   public void execute(Connection connection) {

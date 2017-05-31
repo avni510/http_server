@@ -18,10 +18,9 @@ public class ConfigurationRoutesTest {
 
   @Test
   public void routesArePopulated() throws Exception {
-    Router router = new Router();
     ConfigurationRoutes configurationRoutes = new ConfigurationRoutes(rootPath);
 
-    configurationRoutes.populateRoutes(router);
+    Router router = configurationRoutes.buildRouter();
 
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)

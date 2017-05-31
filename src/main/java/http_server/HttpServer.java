@@ -5,12 +5,12 @@ import java.io.IOException;
 public class HttpServer {
   private ConnectionManager server;
   private CancellationToken serverCancellationToken;
-  private IExecutorService threadPoolExecutorService;
+  private ServerExecutorService serverExecutor;
 
-  public HttpServer(ConnectionManager server, IExecutorService threadPoolExecutorService,
+  public HttpServer(ConnectionManager server, ServerExecutorService serverExecutor,
                     CancellationToken serverCancellationToken) {
     this.server = server;
-    this.threadPoolExecutorService = threadPoolExecutorService;
+    this.serverExecutor = serverExecutor;
     this.serverCancellationToken = serverCancellationToken;
   }
 
@@ -18,14 +18,14 @@ public class HttpServer {
     try {
       while (serverCancellationToken.isListening()) {
         Connection connection = server.accept();
-        threadPoolExecutorService.execute(connection);
+        serverExecutor.execute(connection);
       }
     }
     catch(Exception e){
       e.printStackTrace();
     } finally {
       try {
-        threadPoolExecutorService.shutdown();
+        serverExecutor.shutdown();
         server.close();
       } catch (IOException e) {
         e.printStackTrace();
