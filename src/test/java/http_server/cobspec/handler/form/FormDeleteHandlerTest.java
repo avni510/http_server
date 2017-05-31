@@ -1,6 +1,6 @@
-package http_server.handler.form;
+package http_server.cobspec.handler.form;
 
-import http_server.cobspec.handler.form.FormPostHandler;
+import http_server.cobspec.handler.form.FormDeleteHandler;
 import http_server.request.Request;
 import http_server.request.RequestBuilder;
 import http_server.request.RequestMethod;
@@ -15,20 +15,22 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
-public class FormPostHandlerTest {
+public class FormDeleteHandlerTest {
 
   @Test
-  public void aPostRequestIsHandled() throws IOException {
+  public void aDeleteRequestIsHandled() throws IOException {
     Request request = new RequestBuilder()
-        .setRequestMethod(RequestMethod.POST)
+        .setRequestMethod(RequestMethod.DELETE)
         .setUri("/form")
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
-        .setBody("data=fatcat")
         .build();
-    FormPostHandler formPostHandler = new FormPostHandler(new DataStore());
+    DataStore dataStore = new DataStore();
+    dataStore.storeEntry("data", "fatcat");
 
-    Response actualResponse = formPostHandler.generate(request);
+    FormDeleteHandler formDeleteHandler = new FormDeleteHandler(dataStore);
+
+    Response actualResponse = formDeleteHandler.generate(request);
 
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
   }

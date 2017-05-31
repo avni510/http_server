@@ -1,4 +1,4 @@
-package http_server.handler.file_reader;
+package http_server.cobspec.handler.file_reader;
 
 import http_server.Constants;
 

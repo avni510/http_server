@@ -1,4 +1,4 @@
-package http_server.handler.methods;
+package http_server.cobspec.handler.methods;
 
 import http_server.cobspec.handler.methods.MethodsHandler;
 import http_server.response.Response;

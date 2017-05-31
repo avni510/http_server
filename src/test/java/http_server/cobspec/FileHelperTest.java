@@ -1,4 +1,4 @@
-package http_server;
+package http_server.cobspec;
 
 import http_server.cobspec.FileHelper;
 import org.junit.Before;

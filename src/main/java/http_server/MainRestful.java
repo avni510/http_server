@@ -1,10 +1,9 @@
-package http_server.restful;
+package http_server;
 
-import http_server.*;
 import http_server.restful.configuration.ConfigurationRoutesRestful;
-import http_server.restful.middleware.DataStoreMiddleware;
 import http_server.middleware.FinalMiddleware;
 import http_server.middleware.RoutingMiddleware;
+import http_server.restful.middleware.DataStoreMiddleware;
 
 import java.net.ServerSocket;
 

@@ -1,28 +1,28 @@
-package http_server.configuration;
+package http_server.cobspec.configuration;
 
 import http_server.request.RequestMethod;
 
 import http_server.DataStore;
 import http_server.Router;
 
-import http_server.handler.HelloWorldGetHandler;
+import http_server.cobspec.handler.HelloWorldGetHandler;
 
-import http_server.handler.TeapotGetHandler;
-import http_server.handler.RedirectGetHandler;
-import http_server.handler.LogGetHandler;
-import http_server.handler.ParametersGetHandler;
-import http_server.handler.CookieGetHandler;
+import http_server.cobspec.handler.TeapotGetHandler;
+import http_server.cobspec.handler.RedirectGetHandler;
+import http_server.cobspec.handler.LogGetHandler;
+import http_server.cobspec.handler.ParametersGetHandler;
+import http_server.cobspec.handler.CookieGetHandler;
 
-import http_server.handler.form.FormGetHandler;
-import http_server.handler.form.FormPostHandler;
-import http_server.handler.form.FormPutHandler;
-import http_server.handler.form.FormDeleteHandler;
+import http_server.cobspec.handler.form.FormGetHandler;
+import http_server.cobspec.handler.form.FormPostHandler;
+import http_server.cobspec.handler.form.FormPutHandler;
+import http_server.cobspec.handler.form.FormDeleteHandler;
 
-import http_server.handler.methods.MethodsHandler;
-import http_server.handler.methods.MethodsOptionsHandler;
+import http_server.cobspec.handler.methods.MethodsHandler;
+import http_server.cobspec.handler.methods.MethodsOptionsHandler;
 
-import http_server.handler.directory.DirectoryGetHandler;
-import http_server.handler.directory.DirectoryHeadHandler;
+import http_server.cobspec.handler.directory.DirectoryGetHandler;
+import http_server.cobspec.handler.directory.DirectoryHeadHandler;
 
 public class ConfigurationRoutes {
   private String directoryPath;

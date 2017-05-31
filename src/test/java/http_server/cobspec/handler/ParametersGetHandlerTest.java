@@ -1,4 +1,4 @@
-package http_server.handler;
+package http_server.cobspec.handler;
 
 import http_server.cobspec.handler.ParametersGetHandler;
 import http_server.response.Response;

@@ -1,4 +1,4 @@
-package http_server.handler.form;
+package http_server.cobspec.handler.form;
 
 import http_server.response.Response;
 import http_server.response.ResponseBuilder;

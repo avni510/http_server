@@ -1,4 +1,4 @@
-package http_server.restful.configuration;
+package http_server.cobspec.configuration;
 
 import http_server.Handler;
 import http_server.Router;

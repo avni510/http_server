@@ -1,4 +1,4 @@
-package http_server;
+package http_server.cobspec;
 
 import javax.xml.bind.DatatypeConverter;
 

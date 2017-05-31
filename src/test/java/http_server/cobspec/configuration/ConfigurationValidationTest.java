@@ -1,4 +1,4 @@
-package http_server.restful.configuration;
+package http_server.cobspec.configuration;
 
 import http_server.cobspec.configuration.ConfigurationValidation;
 import org.junit.Test;

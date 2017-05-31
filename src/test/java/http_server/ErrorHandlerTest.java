@@ -1,6 +1,6 @@
-package http_server.handler;
+package http_server;
 
-import http_server.cobspec.handler.ErrorHandler;
+import http_server.ErrorHandler;
 import http_server.request.Request;
 import http_server.request.RequestBuilder;
 import http_server.request.RequestMethod;

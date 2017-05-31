@@ -1,4 +1,4 @@
-package http_server.configuration;
+package http_server.cobspec.configuration;
 
 public class ConfigurationCommandLine {
   private String defaultDirectory = System.getProperty("user.dir") + "/code";

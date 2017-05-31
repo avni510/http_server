@@ -1,15 +1,15 @@
-package http_server.middleware;
+package http_server.restful.middleware;
 
 import http_server.DataStore;
+import http_server.ErrorHandler;
 import http_server.Handler;
 import http_server.Middleware;
-import http_server.cobspec.handler.ErrorHandler;
-import http_server.restful.handler.users.UsersDeleteHandler;
-import http_server.restful.handler.users.UsersGetHandler;
-import http_server.restful.handler.users.UsersPutHandler;
 import http_server.request.Request;
 import http_server.request.RequestMethod;
 import http_server.response.Response;
+import http_server.restful.handler.users.UsersDeleteHandler;
+import http_server.restful.handler.users.UsersGetHandler;
+import http_server.restful.handler.users.UsersPutHandler;
 
 public class DataStoreMiddleware implements Middleware{
   private DataStore dataStore;

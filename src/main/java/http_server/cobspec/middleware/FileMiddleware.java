@@ -1,12 +1,12 @@
-package http_server.middleware;
+package http_server.cobspec.middleware;
 
-import http_server.handler.file_reader.FileReaderGetHandler;
-import http_server.handler.file_reader.FileReaderPatchHandler;
+import http_server.cobspec.handler.file_reader.FileReaderGetHandler;
+import http_server.cobspec.handler.file_reader.FileReaderPatchHandler;
 
-import http_server.handler.ErrorHandler;
+import http_server.ErrorHandler;
 
 import http_server.Middleware;
-import http_server.FileHelper;
+import http_server.cobspec.FileHelper;
 import http_server.Handler;
 
 import http_server.response.Response;

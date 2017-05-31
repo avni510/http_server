@@ -1,5 +1,6 @@
-package http_server;
+package http_server.cobspec;
 
+import http_server.*;
 import http_server.cobspec.configuration.ConfigurationCommandLine;
 import http_server.cobspec.configuration.ConfigurationRoutes;
 

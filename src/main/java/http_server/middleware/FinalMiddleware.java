@@ -7,7 +7,7 @@ import http_server.request.Request;
 
 import http_server.response.Response;
 
-import http_server.handler.ErrorHandler;
+import http_server.ErrorHandler;
 
 public class FinalMiddleware implements Middleware {
 

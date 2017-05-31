@@ -1,12 +1,13 @@
-package http_server.middleware;
+package http_server.restful.middleware;
 
 import http_server.DataStore;
 import http_server.Middleware;
+import http_server.middleware.FinalMiddleware;
 import http_server.request.Request;
 import http_server.request.RequestBuilder;
 import http_server.request.RequestMethod;
 import http_server.response.Response;
-import http_server.restful.middleware.DataStoreMiddleware;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;

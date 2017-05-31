@@ -1,6 +1,6 @@
-package http_server.handler.form;
+package http_server.cobspec.handler.form;
 
-import http_server.cobspec.handler.form.FormPutHandler;
+import http_server.cobspec.handler.form.FormPostHandler;
 import http_server.request.Request;
 import http_server.request.RequestBuilder;
 import http_server.request.RequestMethod;
@@ -15,22 +15,20 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
-public class FormPutHandlerTest {
+public class FormPostHandlerTest {
 
   @Test
-  public void aPutRequestIsHandled() throws IOException {
+  public void aPostRequestIsHandled() throws IOException {
     Request request = new RequestBuilder()
-        .setRequestMethod(RequestMethod.PUT)
+        .setRequestMethod(RequestMethod.POST)
         .setUri("/form")
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
-        .setBody("data=heathcliff")
+        .setBody("data=fatcat")
         .build();
-    DataStore dataStore = new DataStore();
+    FormPostHandler formPostHandler = new FormPostHandler(new DataStore());
 
-    FormPutHandler formPutHandler = new FormPutHandler(dataStore);
-
-    Response actualResponse = formPutHandler.generate(request);
+    Response actualResponse = formPostHandler.generate(request);
 
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
   }

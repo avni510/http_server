@@ -1,4 +1,4 @@
-package http_server.handler.users;
+package http_server.restful.handler.users;
 
 import http_server.DataStore;
 import http_server.Handler;

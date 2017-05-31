@@ -1,11 +1,11 @@
-package http_server.configuration;
+package http_server.restful.configuration;
 
 import http_server.DataStore;
 
 import http_server.Router;
 
-import http_server.handler.users.UsersGetHandler;
-import http_server.handler.users.UsersPostHandler;
+import http_server.restful.handler.users.UsersGetHandler;
+import http_server.restful.handler.users.UsersPostHandler;
 
 import http_server.request.RequestMethod;
 

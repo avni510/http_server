@@ -1,4 +1,4 @@
-package http_server.configuration;
+package http_server.cobspec.configuration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
