@@ -20,8 +20,8 @@ public class Main {
 
   public static void main(String[] args) throws Exception {
     DataStore dataStore = new DataStore();
-    ConfigurationRoutes configurationRoutesRestful = new ConfigurationRoutes(dataStore);
-    Router router = configurationRoutesRestful.buildRouter();
+    ConfigurationRoutes configurationRoutes = new ConfigurationRoutes(dataStore);
+    Router router = configurationRoutes.buildRouter();
 
     ServerSocket serverSocket = new ServerSocket(portNumber);
     Server server = new Server(serverSocket);
