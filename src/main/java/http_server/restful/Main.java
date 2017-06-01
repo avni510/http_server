@@ -22,7 +22,7 @@ public class Main {
   private static int portNumber = 4444;
 
   public static void main(String[] args) throws Exception {
-    DataStore<String, String> dataStore = new DataStore<>();
+    DataStore<Integer, String> dataStore = new DataStore<>();
     ConfigurationRoutes configurationRoutes = new ConfigurationRoutes(dataStore);
     Router router = configurationRoutes.buildRouter();
 
@@ -40,7 +40,7 @@ public class Main {
     httpServer.execute();
   }
 
-  private static RoutingMiddleware setupApp(Router router, DataStore<String, String> dataStore){
+  private static RoutingMiddleware setupApp(Router router, DataStore<Integer, String> dataStore){
     UsersGetRequestMiddleware usersGetRequestMiddleware = new UsersGetRequestMiddleware(dataStore);
     UsersPutRequestMiddleware usersPutRequestMiddleware = new UsersPutRequestMiddleware(dataStore, usersGetRequestMiddleware);
     UsersDeleteRequestMiddleware usersDeleteRequestMiddleware = new UsersDeleteRequestMiddleware(dataStore, usersPutRequestMiddleware);

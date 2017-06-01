@@ -61,7 +61,7 @@ public class UsersGetHandlerTest {
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
-    DataStore<String, String> dataStore = new DataStore<>();
+    DataStore<Integer, String> dataStore = new DataStore<>();
     UsersGetHandler userGetHandler = new UsersGetHandler(dataStore);
 
     Response actualResponse = userGetHandler.generate(request);
@@ -78,9 +78,9 @@ public class UsersGetHandlerTest {
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
-    DataStore<String, String> dataStore = new DataStore<>();
-    dataStore.storeEntry("1", "foo");
-    dataStore.storeEntry("2", "bar");
+    DataStore<Integer, String> dataStore = new DataStore<>();
+    dataStore.storeEntry(1, "foo");
+    dataStore.storeEntry(2, "bar");
     UsersGetHandler userGetHandler = new UsersGetHandler(dataStore);
 
     Response actualResponse = userGetHandler.generate(request);
@@ -97,8 +97,8 @@ public class UsersGetHandlerTest {
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
-    DataStore<String, String> dataStore = new DataStore<>();
-    dataStore.storeEntry("1", "foo");
+    DataStore<Integer, String> dataStore = new DataStore<>();
+    dataStore.storeEntry(1, "foo");
     UsersGetHandler userGetHandler = new UsersGetHandler(dataStore);
 
     Response actualResponse = userGetHandler.generate(request);
@@ -115,8 +115,8 @@ public class UsersGetHandlerTest {
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
-    DataStore<String, String> dataStore = new DataStore<>();
-    dataStore.storeEntry("1", "foo");
+    DataStore<Integer, String> dataStore = new DataStore<>();
+    dataStore.storeEntry(1, "foo");
     UsersGetHandler userGetHandler = new UsersGetHandler(dataStore);
 
     Response actualResponse = userGetHandler.generate(request);

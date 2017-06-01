@@ -11,10 +11,10 @@ import http_server.response.ResponseBuilder;
 import java.io.IOException;
 
 public class UsersPostHandler implements Handler{
-  private DataStore<String, String> dataStore;
+  private DataStore<Integer, String> dataStore;
   private String parameter = "username";
 
-  public UsersPostHandler(DataStore<String, String> dataStore){
+  public UsersPostHandler(DataStore<Integer, String> dataStore){
     this.dataStore = dataStore;
   }
 
@@ -29,7 +29,7 @@ public class UsersPostHandler implements Handler{
 
   private void storeEntry(String usernameValue){
     int lastEntryIndex = dataStore.count();
-    String usernameIndex = String.valueOf(lastEntryIndex + 1);
-    dataStore.storeEntry(usernameIndex, usernameValue);
+    Integer newIndex = lastEntryIndex + 1;
+    dataStore.storeEntry(newIndex, usernameValue);
   }
 }

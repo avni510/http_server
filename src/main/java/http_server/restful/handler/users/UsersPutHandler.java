@@ -11,10 +11,10 @@ import http_server.response.ResponseBuilder;
 import java.io.IOException;
 
 public class UsersPutHandler implements Handler{
-  DataStore<String, String> dataStore;
+  DataStore<Integer, String> dataStore;
   String parameter = "username";
 
-  public UsersPutHandler(DataStore<String, String> dataStore){
+  public UsersPutHandler(DataStore<Integer, String> dataStore){
     this.dataStore = dataStore;
   }
 
@@ -28,7 +28,7 @@ public class UsersPutHandler implements Handler{
   }
 
   private void storeEntry(Request request, String usernameValue){
-    String id = request.getIdInUri();
+    Integer id = request.getIdInUri();
     dataStore.storeEntry(id, usernameValue);
   }
 }

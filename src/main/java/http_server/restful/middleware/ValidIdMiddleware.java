@@ -11,9 +11,9 @@ import http_server.response.Response;
 
 public class ValidIdMiddleware implements Middleware{
   private Middleware app;
-  private DataStore<String, String> dataStore;
+  private DataStore<Integer, String> dataStore;
 
-  public ValidIdMiddleware(DataStore<String, String> datastore, Middleware app) {
+  public ValidIdMiddleware(DataStore<Integer, String> datastore, Middleware app) {
     this.dataStore = datastore;
     this.app = app;
   }
@@ -29,7 +29,7 @@ public class ValidIdMiddleware implements Middleware{
 
 
   private boolean dataStoreHasId(Request request){
-    String id = request.getIdInUri();
+    Integer id = request.getIdInUri();
     return dataStore.keyExists(id);
   }
 }

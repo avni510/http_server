@@ -62,11 +62,11 @@ public class Request {
     }
   }
 
-  public String getIdInUri() {
+  public Integer getIdInUri() {
     String[] uriParts = uri.split("/");
     for (String uriComponent : uriParts) {
       if (isValueInt(uriComponent)) {
-        return uriComponent;
+        return Integer.valueOf(uriComponent);
       }
     }
     return null;

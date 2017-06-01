@@ -11,9 +11,9 @@ import http_server.response.ResponseBuilder;
 import java.io.IOException;
 
 public class UsersDeleteHandler implements Handler {
-  private DataStore<String, String> dataStore;
+  private DataStore<Integer, String> dataStore;
 
-  public UsersDeleteHandler(DataStore<String, String> dataStore) {
+  public UsersDeleteHandler(DataStore<Integer, String> dataStore) {
     this.dataStore = dataStore;
   }
 
@@ -27,7 +27,7 @@ public class UsersDeleteHandler implements Handler {
   }
 
   private void deleteUsername(Request request) {
-    String id = request.getIdInUri();
+    Integer id = request.getIdInUri();
     dataStore.delete(id);
   }
 }

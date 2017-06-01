@@ -15,8 +15,8 @@ public class UsersPutRequestMiddlewareTest {
 
   @Test
   public void responseForPutRequestIsReturned() throws Exception {
-    DataStore<String, String> dataStore = new DataStore<>();
-    dataStore.storeEntry("1", "foo");
+    DataStore<Integer, String> dataStore = new DataStore<>();
+    dataStore.storeEntry(1, "foo");
     UsersGetRequestMiddleware app = new UsersGetRequestMiddleware(dataStore);
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.PUT)
@@ -30,13 +30,13 @@ public class UsersPutRequestMiddlewareTest {
     Response actualResponse = usersPutRequestMiddleware.call(request);
 
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
-    assertEquals(dataStore.getValue("1"), "bar");
+    assertEquals(dataStore.getValue(1), "bar");
   }
 
   @Test
   public void responseForGetRequestEditingUsernameIsReturned() throws Exception {
-    DataStore<String, String> dataStore = new DataStore<>();
-    dataStore.storeEntry("1", "foo");
+    DataStore<Integer, String> dataStore = new DataStore<>();
+    dataStore.storeEntry(1, "foo");
     UsersGetRequestMiddleware app = new UsersGetRequestMiddleware(dataStore);
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)

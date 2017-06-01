@@ -25,12 +25,12 @@ public class UsersPostHandlerTest {
         .setHeader("Host: localhost")
         .setBody("username=foo")
         .build();
-    DataStore<String, String> dataStore = new DataStore<>();
+    DataStore<Integer, String> dataStore = new DataStore<>();
     UsersPostHandler usersPostHandler = new UsersPostHandler(dataStore);
 
     Response actualResponse = usersPostHandler.generate(request);
 
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
-    assertEquals(dataStore.getValue("1"), "foo");
+    assertEquals(dataStore.getValue(1), "foo");
   }
 }

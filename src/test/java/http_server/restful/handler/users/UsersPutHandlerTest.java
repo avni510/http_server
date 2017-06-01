@@ -17,8 +17,8 @@ public class UsersPutHandlerTest {
 
   @Test
   public void handlesAPutRequest() throws IOException {
-    DataStore<String, String> dataStore = new DataStore<>();
-    dataStore.storeEntry("1", "foo");
+    DataStore<Integer, String> dataStore = new DataStore<>();
+    dataStore.storeEntry(1, "foo");
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.PUT)
         .setUri("/users/1")
@@ -32,6 +32,6 @@ public class UsersPutHandlerTest {
     Response actualResponse = usersPutHandler.generate(request);
 
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
-    assertEquals(dataStore.getValue("1"), "bar");
+    assertEquals(dataStore.getValue(1), "bar");
   }
 }

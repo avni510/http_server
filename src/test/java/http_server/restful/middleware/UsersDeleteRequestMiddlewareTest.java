@@ -12,20 +12,20 @@ import static org.junit.Assert.assertTrue;
 
 public class UsersDeleteRequestMiddlewareTest {
 
-  private DataStore<String, String> setupDataStore(){
-    DataStore<String, String> dataStore = new DataStore<>();
-    dataStore.storeEntry("1", "foo");
+  private DataStore<Integer, String> setupDataStore(){
+    DataStore<Integer, String> dataStore = new DataStore<>();
+    dataStore.storeEntry(1, "foo");
     return dataStore;
   }
 
-  private UsersPutRequestMiddleware setupPreviousMiddleware(DataStore<String, String> dataStore){
+  private UsersPutRequestMiddleware setupPreviousMiddleware(DataStore<Integer, String> dataStore){
     UsersGetRequestMiddleware usersGetRequestMiddleware = new UsersGetRequestMiddleware(dataStore);
     return new UsersPutRequestMiddleware(dataStore, usersGetRequestMiddleware);
   }
 
   @Test
   public void responseForDeleteRequestIsReturned() throws Exception {
-    DataStore<String, String> dataStore = setupDataStore();
+    DataStore<Integer, String> dataStore = setupDataStore();
     UsersPutRequestMiddleware app = setupPreviousMiddleware(dataStore);
     UsersDeleteRequestMiddleware usersDeleteRequestMiddleware = new UsersDeleteRequestMiddleware(dataStore, app);
     Request request = new RequestBuilder()
@@ -43,7 +43,7 @@ public class UsersDeleteRequestMiddlewareTest {
 
   @Test
   public void responseForPutRequestIsReturned() throws Exception {
-    DataStore<String, String> dataStore = setupDataStore();
+    DataStore<Integer, String> dataStore = setupDataStore();
     UsersPutRequestMiddleware app = setupPreviousMiddleware(dataStore);
     UsersDeleteRequestMiddleware usersDeleteRequestMiddleware = new UsersDeleteRequestMiddleware(dataStore, app);
     Request request = new RequestBuilder()
@@ -57,6 +57,6 @@ public class UsersDeleteRequestMiddlewareTest {
     Response actualResponse = usersDeleteRequestMiddleware.call(request);
 
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
-    assertEquals(dataStore.getValue("1"), "bar");
+    assertEquals(dataStore.getValue(1), "bar");
   }
 }

@@ -13,9 +13,9 @@ import http_server.restful.handler.users.UsersPutHandler;
 
 public class UsersPutRequestMiddleware implements Middleware {
   private Middleware app;
-  private DataStore<String, String> dataStore;
+  private DataStore<Integer, String> dataStore;
 
-  public UsersPutRequestMiddleware(DataStore<String, String> dataStore, Middleware app) {
+  public UsersPutRequestMiddleware(DataStore<Integer, String> dataStore, Middleware app) {
     this.dataStore = dataStore;
     this.app = app;
   }

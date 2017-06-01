@@ -137,9 +137,9 @@ public class RequestTest {
         .setHeader("Host: localhost")
         .build();
 
-    String actualResult = request.getIdInUri();
+    Integer actualResult = request.getIdInUri();
 
-    assertEquals("1", actualResult);
+    assertEquals((Integer) 1, actualResult);
   }
 
   @Test
@@ -151,9 +151,9 @@ public class RequestTest {
         .setHeader("Host: localhost")
         .build();
 
-    String actualResult = request.getIdInUri();
+    Integer actualResult = request.getIdInUri();
 
-    assertEquals("1", actualResult);
+    assertEquals((Integer) 1, actualResult);
   }
 
   @Test
@@ -165,7 +165,7 @@ public class RequestTest {
         .setHeader("Host: localhost")
         .build();
 
-    String actualResult = request.getIdInUri();
+    Integer actualResult = request.getIdInUri();
 
     assertEquals(null, actualResult);
   }

@@ -13,13 +13,13 @@ import static org.junit.Assert.assertEquals;
 
 public class ValidIdMiddlewareTest {
 
-  private DataStore<String, String> setupDataStore(){
-    DataStore<String, String> dataStore = new DataStore<>();
-    dataStore.storeEntry("1", "foo");
+  private DataStore<Integer, String> setupDataStore(){
+    DataStore<Integer, String> dataStore = new DataStore<>();
+    dataStore.storeEntry(1, "foo");
     return dataStore;
   }
 
-  private UsersDeleteRequestMiddleware setupPreviousMiddlewares(DataStore<String, String> dataStore){
+  private UsersDeleteRequestMiddleware setupPreviousMiddlewares(DataStore<Integer, String> dataStore){
     UsersGetRequestMiddleware usersGetRequestMiddleware = new UsersGetRequestMiddleware(dataStore);
     UsersPutRequestMiddleware usersPutRequestMiddleware = new UsersPutRequestMiddleware(dataStore, usersGetRequestMiddleware);
     return new UsersDeleteRequestMiddleware(dataStore, usersPutRequestMiddleware);
@@ -27,7 +27,7 @@ public class ValidIdMiddlewareTest {
 
   @Test
   public void notFoundErrorIsReturnedIfIdIsNotInDataStore() throws Exception {
-    DataStore<String, String> dataStore = setupDataStore();
+    DataStore<Integer, String> dataStore = setupDataStore();
     UsersDeleteRequestMiddleware app = setupPreviousMiddlewares(dataStore);
     ValidIdMiddleware validIdMiddleware = new ValidIdMiddleware(dataStore, app);
     Request request = new RequestBuilder()
@@ -44,7 +44,7 @@ public class ValidIdMiddlewareTest {
 
   @Test
   public void notFoundErrorIsReturnedIfRouteDoesNotContainId() throws Exception {
-    DataStore<String, String> dataStore = setupDataStore();
+    DataStore<Integer, String> dataStore = setupDataStore();
     UsersDeleteRequestMiddleware app = setupPreviousMiddlewares(dataStore);
     ValidIdMiddleware validIdMiddleware = new ValidIdMiddleware(dataStore, app);
     Request request = new RequestBuilder()
@@ -61,7 +61,7 @@ public class ValidIdMiddlewareTest {
 
   @Test
   public void responseForDeleteRequestIsReturned() throws Exception {
-    DataStore<String, String> dataStore = setupDataStore();
+    DataStore<Integer, String> dataStore = setupDataStore();
     UsersDeleteRequestMiddleware app = setupPreviousMiddlewares(dataStore);
     ValidIdMiddleware validIdMiddleware = new ValidIdMiddleware(dataStore, app);
     Request request = new RequestBuilder()

@@ -13,9 +13,9 @@ import http_server.restful.handler.users.UsersDeleteHandler;
 
 public class UsersDeleteRequestMiddleware implements Middleware{
   private Middleware app;
-  private DataStore<String, String> dataStore;
+  private DataStore<Integer, String> dataStore;
 
-  public UsersDeleteRequestMiddleware(DataStore<String, String> dataStore, Middleware app) {
+  public UsersDeleteRequestMiddleware(DataStore<Integer, String> dataStore, Middleware app) {
     this.dataStore = dataStore;
     this.app = app;
   }

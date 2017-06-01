@@ -10,9 +10,9 @@ import http_server.response.Response;
 import http_server.restful.handler.users.UsersGetHandler;
 
 public class UsersGetRequestMiddleware implements Middleware{
-  private DataStore<String, String> dataStore;
+  private DataStore<Integer, String> dataStore;
 
-  public UsersGetRequestMiddleware(DataStore<String, String> dataStore) {
+  public UsersGetRequestMiddleware(DataStore<Integer, String> dataStore) {
     this.dataStore = dataStore;
   }
   public Response call(Request request) throws Exception {

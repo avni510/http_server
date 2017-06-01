@@ -21,8 +21,8 @@ public class UsersDeleteHandlerTest {
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
-    DataStore<String, String> dataStore = new DataStore<>();
-    dataStore.storeEntry("1", "foo");
+    DataStore<Integer, String> dataStore = new DataStore<>();
+    dataStore.storeEntry(1, "foo");
     UsersDeleteHandler usersDeleteHandler = new UsersDeleteHandler(dataStore);
 
     Response actualResponse = usersDeleteHandler.generate(request);

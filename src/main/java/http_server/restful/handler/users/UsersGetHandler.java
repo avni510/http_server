@@ -13,9 +13,9 @@ import java.io.IOException;
 import java.util.Map;
 
 public class UsersGetHandler implements Handler{
-  private DataStore<String, String> dataStore;
+  private DataStore<Integer, String> dataStore;
 
-  public UsersGetHandler(DataStore<String, String> dataStore) {
+  public UsersGetHandler(DataStore<Integer, String> dataStore) {
     this.dataStore = dataStore;
   }
 
@@ -42,7 +42,7 @@ public class UsersGetHandler implements Handler{
   }
 
   private Response handleEdit(Request request) {
-    String id = request.getIdInUri();
+    Integer id = request.getIdInUri();
     return new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
         .setStatusCode(200)
@@ -52,7 +52,7 @@ public class UsersGetHandler implements Handler{
   }
 
   private Response handleShow(Request request) {
-    String id = request.getIdInUri();
+    Integer id = request.getIdInUri();
     String username = dataStore.getValue(id);
     return new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
@@ -83,18 +83,18 @@ public class UsersGetHandler implements Handler{
 
   private String getHtmlTableData(){
     StringBuilder htmlTableData = new StringBuilder();
-    Map<String, String> allDataValues = dataStore.getData();
-    for (Map.Entry<String, String> data : allDataValues.entrySet()) {
-      String id = data.getKey();
+    Map<Integer, String> allDataValues = dataStore.getData();
+    for (Map.Entry<Integer, String> data : allDataValues.entrySet()) {
+      Integer id = data.getKey();
       String username = data.getValue();
       htmlTableData.append(htmlTableDataTags(id, username));
     }
     return htmlTableData.toString();
   }
 
-  private String htmlTableDataTags(String id, String username){
+  private String htmlTableDataTags(Integer id, String username){
     return "<tr>" +
-              "<td>" + id + "</td>" +
+              "<td>" + String.valueOf(id) + "</td>" +
               "<td>" + username + "</td>" +
            "</tr>";
   }
@@ -107,8 +107,8 @@ public class UsersGetHandler implements Handler{
             "</form> <br>";
   }
 
-  private String createEditUserBody(String id){
-    return "<form action=\"/users/" + id + "\">" +
+  private String createEditUserBody(Integer id){
+    return "<form action=\"/users/" + String.valueOf(id) + "\">" +
               "Username: <br> " +
               "<input type=\"text\" name=\"username\">"+
               "<input type=\"submit\" value=\"Submit\">" +
