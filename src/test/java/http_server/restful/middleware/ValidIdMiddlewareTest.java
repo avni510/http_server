@@ -1,24 +1,36 @@
 package http_server.restful.middleware;
 
 import http_server.DataStore;
-import http_server.middleware.FinalMiddleware;
+
 import http_server.request.Request;
 import http_server.request.RequestBuilder;
 import http_server.request.RequestMethod;
+
 import http_server.response.Response;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class ValidIdMiddlewareTest {
 
-  @Test
-  public void notFoundErrorIsReturnedIfIdIsNotInDataStore() throws Exception {
-    FinalMiddleware finalMiddleware = new FinalMiddleware();
+  private DataStore setupDataStore(){
     DataStore dataStore = new DataStore();
     dataStore.storeEntry("1", "foo");
-    DataStoreMiddleware dataStoreMiddleware = new DataStoreMiddleware(dataStore, finalMiddleware);
-    ValidIdMiddleware validIdMiddleware = new ValidIdMiddleware(dataStore, dataStoreMiddleware);
+    return dataStore;
+  }
+
+  private UsersDeleteRequestMiddleware setupPreviousMiddlewares(DataStore dataStore){
+    UsersGetRequestMiddleware usersGetRequestMiddleware = new UsersGetRequestMiddleware(dataStore);
+    UsersPutRequestMiddleware usersPutRequestMiddleware = new UsersPutRequestMiddleware(dataStore, usersGetRequestMiddleware);
+    return new UsersDeleteRequestMiddleware(dataStore, usersPutRequestMiddleware);
+  }
+
+  @Test
+  public void notFoundErrorIsReturnedIfIdIsNotInDataStore() throws Exception {
+    DataStore dataStore = setupDataStore();
+    UsersDeleteRequestMiddleware app = setupPreviousMiddlewares(dataStore);
+    ValidIdMiddleware validIdMiddleware = new ValidIdMiddleware(dataStore, app);
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.DELETE)
         .setUri("/users/500")
@@ -33,11 +45,9 @@ public class ValidIdMiddlewareTest {
 
   @Test
   public void notFoundErrorIsReturnedIfRouteDoesNotContainId() throws Exception {
-    FinalMiddleware finalMiddleware = new FinalMiddleware();
-    DataStore dataStore = new DataStore();
-    dataStore.storeEntry("1", "foo");
-    DataStoreMiddleware dataStoreMiddleware = new DataStoreMiddleware(dataStore, finalMiddleware);
-    ValidIdMiddleware validIdMiddleware = new ValidIdMiddleware(dataStore, dataStoreMiddleware);
+    DataStore dataStore = setupDataStore();
+    UsersDeleteRequestMiddleware app = setupPreviousMiddlewares(dataStore);
+    ValidIdMiddleware validIdMiddleware = new ValidIdMiddleware(dataStore, app);
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.DELETE)
         .setUri("/users/foo")
@@ -52,11 +62,9 @@ public class ValidIdMiddlewareTest {
 
   @Test
   public void responseForDeleteRequestIsReturned() throws Exception {
-    FinalMiddleware finalMiddleware = new FinalMiddleware();
-    DataStore dataStore = new DataStore();
-    dataStore.storeEntry("1", "foo");
-    DataStoreMiddleware dataStoreMiddleware = new DataStoreMiddleware(dataStore, finalMiddleware);
-    ValidIdMiddleware validIdMiddleware = new ValidIdMiddleware(dataStore, dataStoreMiddleware);
+    DataStore dataStore = setupDataStore();
+    UsersDeleteRequestMiddleware app = setupPreviousMiddlewares(dataStore);
+    ValidIdMiddleware validIdMiddleware = new ValidIdMiddleware(dataStore, app);
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.DELETE)
         .setUri("/users/1")

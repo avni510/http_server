@@ -8,9 +8,12 @@ import http_server.ServerCancellationToken;
 import http_server.HttpServer;
 
 import http_server.restful.configuration.ConfigurationRoutes;
-import http_server.restful.middleware.DataStoreMiddleware;
 
-import http_server.middleware.FinalMiddleware;
+import http_server.restful.middleware.UsersDeleteRequestMiddleware;
+import http_server.restful.middleware.UsersPutRequestMiddleware;
+import http_server.restful.middleware.UsersGetRequestMiddleware;
+import http_server.restful.middleware.ValidIdMiddleware;
+
 import http_server.middleware.RoutingMiddleware;
 
 import java.net.ServerSocket;
@@ -38,8 +41,10 @@ public class Main {
   }
 
   private static RoutingMiddleware setupApp(Router router, DataStore dataStore){
-    FinalMiddleware finalMiddleware = new FinalMiddleware();
-    DataStoreMiddleware dataStoreMiddleware = new DataStoreMiddleware(dataStore, finalMiddleware);
-    return new RoutingMiddleware(router, dataStoreMiddleware);
+    UsersGetRequestMiddleware usersGetRequestMiddleware = new UsersGetRequestMiddleware(dataStore);
+    UsersPutRequestMiddleware usersPutRequestMiddleware = new UsersPutRequestMiddleware(dataStore, usersGetRequestMiddleware);
+    UsersDeleteRequestMiddleware usersDeleteRequestMiddleware = new UsersDeleteRequestMiddleware(dataStore, usersPutRequestMiddleware);
+    ValidIdMiddleware app = new ValidIdMiddleware(dataStore, usersDeleteRequestMiddleware);
+    return new RoutingMiddleware(router, app);
   }
 }
