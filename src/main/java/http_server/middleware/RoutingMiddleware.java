@@ -11,12 +11,12 @@ import http_server.response.Response;
 import http_server.ErrorHandler;
 
 public class RoutingMiddleware implements Middleware {
-  private Middleware nextMiddleware;
+  private Middleware app;
   private Router router;
 
-  public RoutingMiddleware(Router router, Middleware nextMiddleware) {
+  public RoutingMiddleware(Router router, Middleware app) {
     this.router = router;
-    this.nextMiddleware = nextMiddleware;
+    this.app = app;
   }
 
   public Response call(Request request) throws Exception {
@@ -26,7 +26,7 @@ public class RoutingMiddleware implements Middleware {
     } else if (router.uriExists(request.getUri())) {
       return methodNotAllowed(request);
     } else {
-      return nextMiddleware.call(request);
+      return app.call(request);
     }
   }
 

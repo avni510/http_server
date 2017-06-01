@@ -1,7 +1,6 @@
 package http_server.restful.middleware;
 
 import http_server.DataStore;
-
 import http_server.request.Request;
 import http_server.request.RequestBuilder;
 import http_server.request.RequestMethod;
@@ -14,13 +13,13 @@ import static org.junit.Assert.assertEquals;
 
 public class ValidIdMiddlewareTest {
 
-  private DataStore setupDataStore(){
-    DataStore dataStore = new DataStore();
+  private DataStore<String, String> setupDataStore(){
+    DataStore<String, String> dataStore = new DataStore<>();
     dataStore.storeEntry("1", "foo");
     return dataStore;
   }
 
-  private UsersDeleteRequestMiddleware setupPreviousMiddlewares(DataStore dataStore){
+  private UsersDeleteRequestMiddleware setupPreviousMiddlewares(DataStore<String, String> dataStore){
     UsersGetRequestMiddleware usersGetRequestMiddleware = new UsersGetRequestMiddleware(dataStore);
     UsersPutRequestMiddleware usersPutRequestMiddleware = new UsersPutRequestMiddleware(dataStore, usersGetRequestMiddleware);
     return new UsersDeleteRequestMiddleware(dataStore, usersPutRequestMiddleware);
@@ -28,7 +27,7 @@ public class ValidIdMiddlewareTest {
 
   @Test
   public void notFoundErrorIsReturnedIfIdIsNotInDataStore() throws Exception {
-    DataStore dataStore = setupDataStore();
+    DataStore<String, String> dataStore = setupDataStore();
     UsersDeleteRequestMiddleware app = setupPreviousMiddlewares(dataStore);
     ValidIdMiddleware validIdMiddleware = new ValidIdMiddleware(dataStore, app);
     Request request = new RequestBuilder()
@@ -45,7 +44,7 @@ public class ValidIdMiddlewareTest {
 
   @Test
   public void notFoundErrorIsReturnedIfRouteDoesNotContainId() throws Exception {
-    DataStore dataStore = setupDataStore();
+    DataStore<String, String> dataStore = setupDataStore();
     UsersDeleteRequestMiddleware app = setupPreviousMiddlewares(dataStore);
     ValidIdMiddleware validIdMiddleware = new ValidIdMiddleware(dataStore, app);
     Request request = new RequestBuilder()
@@ -62,7 +61,7 @@ public class ValidIdMiddlewareTest {
 
   @Test
   public void responseForDeleteRequestIsReturned() throws Exception {
-    DataStore dataStore = setupDataStore();
+    DataStore<String, String> dataStore = setupDataStore();
     UsersDeleteRequestMiddleware app = setupPreviousMiddlewares(dataStore);
     ValidIdMiddleware validIdMiddleware = new ValidIdMiddleware(dataStore, app);
     Request request = new RequestBuilder()

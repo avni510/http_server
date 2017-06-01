@@ -3,19 +3,19 @@ package http_server;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DataStore {
-  Map<String, String> data = new HashMap<>();
+public class DataStore<T1, T2> {
+  Map<T1, T2> data = new HashMap<>();
 
-  public void storeEntry(String key, String value) {
+  public void storeEntry(T1 key, T2 value) {
     data.put(key, value);
   }
 
-  public Map<String, String> getData(){
+  public Map<T1, T2> getData(){
     return data;
   }
 
-  public String getValue(String key){
-   return data.get(key);
+  public T2 getValue(T1 key) {
+    return data.get(key);
   }
 
   public void clear(){
@@ -30,11 +30,12 @@ public class DataStore {
     return data.size();
   }
 
-  public void delete(String key) {
+  public void delete(T1 key) {
     data.remove(key);
   }
 
-  public boolean keyExists(String key){
-   return data.containsKey(key);
+  public boolean keyExists(T1 key){
+    return data.containsKey(key);
   }
 }
+

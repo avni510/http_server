@@ -18,7 +18,7 @@ public class ConfigurationRoutesTest {
 
   @Test
   public void routesArePopulated() throws Exception {
-    DataStore dataStore = new DataStore();
+    DataStore<String, String> dataStore = new DataStore<>();
     ConfigurationRoutes configurationRoutes = new ConfigurationRoutes(dataStore);
 
     Router router = configurationRoutes.buildRouter();

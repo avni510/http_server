@@ -169,4 +169,21 @@ public class RequestTest {
 
     assertEquals(null, actualResult);
   }
+
+  @Test
+  public void allBodyParamsAreReturned(){
+    Request request = new RequestBuilder()
+        .setRequestMethod(RequestMethod.GET)
+        .setUri("/users")
+        .setHttpVersion("HTTP/1.1")
+        .setHeader("Host: localhost")
+        .setBody("_method=put&username=foo")
+        .build();
+
+    String actualMethodValue = request.getBodyParam("_method");
+    String actualUsernameValue = request.getBodyParam("username");
+
+    assertEquals("put", actualMethodValue);
+    assertEquals("foo", actualUsernameValue);
+  }
 }

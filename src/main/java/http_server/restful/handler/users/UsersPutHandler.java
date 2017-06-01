@@ -1,7 +1,6 @@
 package http_server.restful.handler.users;
 
 import http_server.DataStore;
-
 import http_server.Handler;
 
 import http_server.request.Request;
@@ -12,10 +11,10 @@ import http_server.response.ResponseBuilder;
 import java.io.IOException;
 
 public class UsersPutHandler implements Handler{
-  DataStore dataStore;
+  DataStore<String, String> dataStore;
   String parameter = "username";
 
-  public UsersPutHandler(DataStore dataStore){
+  public UsersPutHandler(DataStore<String, String> dataStore){
     this.dataStore = dataStore;
   }
 

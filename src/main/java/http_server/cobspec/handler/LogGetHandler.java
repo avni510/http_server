@@ -1,12 +1,12 @@
 package http_server.cobspec.handler;
 
+import http_server.DataStore;
 import http_server.request.Request;
 
 import http_server.response.Response;
 import http_server.response.ResponseBuilder;
 
 import http_server.Handler;
-import http_server.DataStore;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -15,11 +15,11 @@ import java.util.Base64;
 import java.util.Map;
 
 public class LogGetHandler implements Handler {
-  DataStore dataStore;
+  DataStore<String, String> dataStore;
   String username;
   String password;
 
-  public LogGetHandler(DataStore dataStore, String username, String password){
+  public LogGetHandler(DataStore<String, String> dataStore, String username, String password){
     this.dataStore = dataStore;
     this.username = username;
     this.password = password;

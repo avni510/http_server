@@ -1,7 +1,6 @@
 package http_server.restful.handler.users;
 
 import http_server.DataStore;
-
 import http_server.Handler;
 
 import http_server.request.Request;
@@ -14,9 +13,9 @@ import java.io.IOException;
 import java.util.Map;
 
 public class UsersGetHandler implements Handler{
-  private DataStore dataStore;
+  private DataStore<String, String> dataStore;
 
-  public UsersGetHandler(DataStore dataStore) {
+  public UsersGetHandler(DataStore<String, String> dataStore) {
     this.dataStore = dataStore;
   }
 
@@ -88,14 +87,16 @@ public class UsersGetHandler implements Handler{
     for (Map.Entry<String, String> data : allDataValues.entrySet()) {
       String id = data.getKey();
       String username = data.getValue();
-      htmlTableData.append(
-       "<tr>" +
-         "<td>" + id + "</td>" +
-         "<td>" + username + "</td>" +
-       "</tr>"
-      );
+      htmlTableData.append(htmlTableDataTags(id, username));
     }
     return htmlTableData.toString();
+  }
+
+  private String htmlTableDataTags(String id, String username){
+    return "<tr>" +
+              "<td>" + id + "</td>" +
+              "<td>" + username + "</td>" +
+           "</tr>";
   }
 
   private String createNewUserBody(){
@@ -107,8 +108,7 @@ public class UsersGetHandler implements Handler{
   }
 
   private String createEditUserBody(String id){
-    return "<form action=\"/users/" + id + "\" method=\"post\">" +
-            "<input type=\"hidden\" name=\"_method\" value=\"put\"/>" +
+    return "<form action=\"/users/" + id + "\">" +
               "Username: <br> " +
               "<input type=\"text\" name=\"username\">"+
               "<input type=\"submit\" value=\"Submit\">" +

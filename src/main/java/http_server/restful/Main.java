@@ -1,11 +1,11 @@
 package http_server.restful;
 
-import http_server.DataStore;
 import http_server.Router;
 import http_server.Server;
 import http_server.ServerExecutor;
 import http_server.ServerCancellationToken;
 import http_server.HttpServer;
+import http_server.DataStore;
 
 import http_server.restful.configuration.ConfigurationRoutes;
 
@@ -22,7 +22,7 @@ public class Main {
   private static int portNumber = 4444;
 
   public static void main(String[] args) throws Exception {
-    DataStore dataStore = new DataStore();
+    DataStore<String, String> dataStore = new DataStore<>();
     ConfigurationRoutes configurationRoutes = new ConfigurationRoutes(dataStore);
     Router router = configurationRoutes.buildRouter();
 
@@ -40,7 +40,7 @@ public class Main {
     httpServer.execute();
   }
 
-  private static RoutingMiddleware setupApp(Router router, DataStore dataStore){
+  private static RoutingMiddleware setupApp(Router router, DataStore<String, String> dataStore){
     UsersGetRequestMiddleware usersGetRequestMiddleware = new UsersGetRequestMiddleware(dataStore);
     UsersPutRequestMiddleware usersPutRequestMiddleware = new UsersPutRequestMiddleware(dataStore, usersGetRequestMiddleware);
     UsersDeleteRequestMiddleware usersDeleteRequestMiddleware = new UsersDeleteRequestMiddleware(dataStore, usersPutRequestMiddleware);

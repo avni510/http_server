@@ -1,6 +1,7 @@
 package http_server.middleware;
 
 import http_server.cobspec.middleware.FileMiddleware;
+import http_server.cobspec.middleware.FinalMiddleware;
 import http_server.response.Response;
 
 import http_server.Router;

@@ -2,8 +2,6 @@ package http_server.cobspec.middleware;
 
 import http_server.Middleware;
 
-import http_server.cobspec.middleware.FileMiddleware;
-import http_server.middleware.FinalMiddleware;
 import http_server.request.Request;
 import http_server.request.RequestBuilder;
 import http_server.request.RequestMethod;

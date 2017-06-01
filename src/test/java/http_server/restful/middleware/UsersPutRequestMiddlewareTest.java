@@ -1,7 +1,6 @@
 package http_server.restful.middleware;
 
 import http_server.DataStore;
-
 import http_server.request.Request;
 import http_server.request.RequestBuilder;
 import http_server.request.RequestMethod;
@@ -16,7 +15,7 @@ public class UsersPutRequestMiddlewareTest {
 
   @Test
   public void responseForPutRequestIsReturned() throws Exception {
-    DataStore dataStore = new DataStore();
+    DataStore<String, String> dataStore = new DataStore<>();
     dataStore.storeEntry("1", "foo");
     UsersGetRequestMiddleware app = new UsersGetRequestMiddleware(dataStore);
     Request request = new RequestBuilder()
@@ -36,7 +35,7 @@ public class UsersPutRequestMiddlewareTest {
 
   @Test
   public void responseForGetRequestEditingUsernameIsReturned() throws Exception {
-    DataStore dataStore = new DataStore();
+    DataStore<String, String> dataStore = new DataStore<>();
     dataStore.storeEntry("1", "foo");
     UsersGetRequestMiddleware app = new UsersGetRequestMiddleware(dataStore);
     Request request = new RequestBuilder()

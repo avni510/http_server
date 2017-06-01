@@ -11,9 +11,9 @@ import http_server.response.Response;
 
 public class ValidIdMiddleware implements Middleware{
   private Middleware app;
-  private DataStore dataStore;
+  private DataStore<String, String> dataStore;
 
-  public ValidIdMiddleware(DataStore datastore, Middleware app) {
+  public ValidIdMiddleware(DataStore<String, String> datastore, Middleware app) {
     this.dataStore = datastore;
     this.app = app;
   }

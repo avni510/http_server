@@ -1,8 +1,8 @@
 package http_server.cobspec.configuration;
 
+import http_server.DataStore;
 import http_server.request.RequestMethod;
 
-import http_server.DataStore;
 import http_server.Router;
 
 import http_server.cobspec.handler.HelloWorldGetHandler;
@@ -35,7 +35,7 @@ public class ConfigurationRoutes {
 
   public Router buildRouter() {
     Router router = new Router();
-    DataStore dataStore = new DataStore();
+    DataStore<String, String> dataStore = new DataStore<String, String>();
     router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler())
           .addRoute(RequestMethod.GET, "/", new DirectoryGetHandler(directoryPath))
           .addRoute(RequestMethod.HEAD, "/", new DirectoryHeadHandler())
@@ -71,7 +71,7 @@ public class ConfigurationRoutes {
   }
 
   private DataStore setLogs(){
-    DataStore dataStore = new DataStore();
+    DataStore<String, String> dataStore = new DataStore<String, String>();
     dataStore.storeEntry("GET", "/log HTTP/1.1");
     dataStore.storeEntry("PUT", "/these HTTP/1.1");
     dataStore.storeEntry("HEAD", "/requests HTTP/1.1");

@@ -13,7 +13,7 @@ public class UsersGetRequestMiddlewareTest {
 
   @Test
   public void responseForGetRequestEditingUsernameIsReturned() throws Exception {
-    DataStore dataStore = new DataStore();
+    DataStore<String, String> dataStore = new DataStore();
     dataStore.storeEntry("1", "foo");
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
@@ -30,7 +30,7 @@ public class UsersGetRequestMiddlewareTest {
 
   @Test
   public void responseForGetRequestShowingUsernameIsReturned() throws Exception {
-    DataStore dataStore = new DataStore();
+    DataStore<String, String> dataStore = new DataStore<>();
     dataStore.storeEntry("1", "foo");
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)

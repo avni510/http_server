@@ -2,14 +2,12 @@ package http_server.cobspec.handler.form;
 
 import http_server.Constants;
 
-import http_server.cobspec.handler.form.FormGetHandler;
+import http_server.DataStore;
 import http_server.request.Request;
 import http_server.request.RequestBuilder;
 import http_server.request.RequestMethod;
 
 import http_server.response.Response;
-
-import http_server.DataStore;
 
 import org.junit.Test;
 
@@ -37,7 +35,7 @@ public class FormGetHandlerTest {
         .setHeader("Host: localhost")
         .build();
 
-    FormGetHandler formGetHandler = new FormGetHandler(new DataStore());
+    FormGetHandler formGetHandler = new FormGetHandler(new DataStore<String, String>());
 
     Response actualResponse = formGetHandler.generate(request);
 
@@ -54,7 +52,7 @@ public class FormGetHandlerTest {
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
-    DataStore dataStore = new DataStore();
+    DataStore<String, String> dataStore = new DataStore<String, String>();
     dataStore.storeEntry("data", "fatcat");
 
     FormGetHandler formGetHandler = new FormGetHandler(dataStore);

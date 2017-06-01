@@ -5,14 +5,14 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class DataStoreTest {
 
   @Test
   public void dataIsStored(){
-    DataStore dataStore = new DataStore();
+    DataStore dataStore = new DataStore<String, String>();
 
     dataStore.storeEntry("data", "fatcat");
 
@@ -23,23 +23,16 @@ public class DataStoreTest {
 
   @Test
   public void valueIsReturned(){
-    DataStore dataStore = new DataStore();
+    DataStore dataStore = new DataStore<Integer, String>();
 
-    dataStore.storeEntry("data", "fatcat");
+    dataStore.storeEntry(1, "foo");
 
-    assertEquals("fatcat", dataStore.getValue("data"));
-  }
-
-  @Test
-  public void isEmpty(){
-    DataStore dataStore = new DataStore();
-
-    assertTrue(dataStore.isStoreEmpty());
+    assertEquals("foo", dataStore.getValue(1));
   }
 
   @Test
   public void clearData(){
-    DataStore dataStore = new DataStore();
+    DataStore dataStore = new DataStore<String, String>();
     dataStore.storeEntry("data", "fatcat");
 
     dataStore.clear();
@@ -49,8 +42,8 @@ public class DataStoreTest {
 
   @Test
   public void getCountOfAllEntriesInDataStore(){
-    DataStore dataStore = new DataStore();
-    dataStore.storeEntry("data", "fatcat");
+    DataStore dataStore = new DataStore<Integer, String>();
+    dataStore.storeEntry(1, "fatcat");
 
     Integer actualResult = dataStore.count();
 
@@ -59,7 +52,7 @@ public class DataStoreTest {
 
   @Test
   public void anEntryIsDeleted(){
-    DataStore dataStore = new DataStore();
+    DataStore dataStore = new DataStore<String, String>();
     dataStore.storeEntry("data", "fatcat");
 
     dataStore.delete("data");
@@ -69,10 +62,10 @@ public class DataStoreTest {
 
   @Test
   public void returnsTrueIfAValueExists(){
-    DataStore dataStore = new DataStore();
-    dataStore.storeEntry("data", "fatcat");
+    DataStore dataStore = new DataStore<Integer, String>();
+    dataStore.storeEntry(1, "foo");
 
-    boolean result = dataStore.keyExists("data");
+    boolean result = dataStore.keyExists(1);
 
     assertTrue(result);
   }

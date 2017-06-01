@@ -7,7 +7,7 @@ import http_server.request.RequestBuilder;
 import http_server.request.RequestMethod;
 
 import http_server.response.Response;
-import http_server.restful.handler.users.UsersPostHandler;
+
 import org.junit.Test;
 
 import java.io.IOException;
@@ -25,7 +25,7 @@ public class UsersPostHandlerTest {
         .setHeader("Host: localhost")
         .setBody("username=foo")
         .build();
-    DataStore dataStore = new DataStore();
+    DataStore<String, String> dataStore = new DataStore<>();
     UsersPostHandler usersPostHandler = new UsersPostHandler(dataStore);
 
     Response actualResponse = usersPostHandler.generate(request);

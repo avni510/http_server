@@ -18,11 +18,11 @@ import java.util.ArrayList;
 
 public class FileMiddleware implements Middleware {
   private String rootDirectoryPath;
-  private Middleware nextMiddleware;
+  private Middleware app;
 
-  public FileMiddleware(String rootDirectoryPath, Middleware nextMiddleware){
+  public FileMiddleware(String rootDirectoryPath, Middleware app){
     this.rootDirectoryPath = rootDirectoryPath;
-    this.nextMiddleware = nextMiddleware;
+    this.app = app;
   }
 
   public Response call(Request request) throws Exception {
@@ -34,7 +34,7 @@ public class FileMiddleware implements Middleware {
     } else if (fileExistsInDirectory(relativePaths, request)) {
       return methodNotAllowed(request);
     }
-    return nextMiddleware.call(request);
+    return app.call(request);
   }
 
   private boolean isValidRequest(ArrayList<String> relativePaths, Request request){

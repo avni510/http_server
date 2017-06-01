@@ -1,7 +1,6 @@
 package http_server.restful.configuration;
 
 import http_server.DataStore;
-
 import http_server.Router;
 
 import http_server.restful.handler.users.UsersGetHandler;
@@ -10,9 +9,9 @@ import http_server.restful.handler.users.UsersPostHandler;
 import http_server.request.RequestMethod;
 
 public class ConfigurationRoutes {
-  private DataStore dataStore;
+  private DataStore<String, String> dataStore;
 
-  public ConfigurationRoutes(DataStore dataStore) {
+  public ConfigurationRoutes(DataStore<String, String> dataStore) {
     this.dataStore = dataStore;
   }
 

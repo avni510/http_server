@@ -1,20 +1,20 @@
 package http_server.cobspec.handler.form;
 
+import http_server.DataStore;
 import http_server.response.Response;
 import http_server.response.ResponseBuilder;
 
 import http_server.Handler;
-import http_server.DataStore;
 
 import http_server.request.Request;
 
 import java.io.IOException;
 
 public class FormGetHandler implements Handler {
-  private DataStore dataStore;
+  private DataStore<String, String> dataStore;
   private String parameter = "data";
 
-  public FormGetHandler(DataStore dataStore) {
+  public FormGetHandler(DataStore<String, String> dataStore) {
     this.dataStore = dataStore;
   }
 

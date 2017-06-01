@@ -12,20 +12,20 @@ import static org.junit.Assert.assertTrue;
 
 public class UsersDeleteRequestMiddlewareTest {
 
-  private DataStore setupDataStore(){
-    DataStore dataStore = new DataStore();
+  private DataStore<String, String> setupDataStore(){
+    DataStore<String, String> dataStore = new DataStore<>();
     dataStore.storeEntry("1", "foo");
     return dataStore;
   }
 
-  private UsersPutRequestMiddleware setupPreviousMiddleware(DataStore dataStore){
+  private UsersPutRequestMiddleware setupPreviousMiddleware(DataStore<String, String> dataStore){
     UsersGetRequestMiddleware usersGetRequestMiddleware = new UsersGetRequestMiddleware(dataStore);
     return new UsersPutRequestMiddleware(dataStore, usersGetRequestMiddleware);
   }
 
   @Test
   public void responseForDeleteRequestIsReturned() throws Exception {
-    DataStore dataStore = setupDataStore();
+    DataStore<String, String> dataStore = setupDataStore();
     UsersPutRequestMiddleware app = setupPreviousMiddleware(dataStore);
     UsersDeleteRequestMiddleware usersDeleteRequestMiddleware = new UsersDeleteRequestMiddleware(dataStore, app);
     Request request = new RequestBuilder()
@@ -43,7 +43,7 @@ public class UsersDeleteRequestMiddlewareTest {
 
   @Test
   public void responseForPutRequestIsReturned() throws Exception {
-    DataStore dataStore = setupDataStore();
+    DataStore<String, String> dataStore = setupDataStore();
     UsersPutRequestMiddleware app = setupPreviousMiddleware(dataStore);
     UsersDeleteRequestMiddleware usersDeleteRequestMiddleware = new UsersDeleteRequestMiddleware(dataStore, app);
     Request request = new RequestBuilder()

@@ -1,4 +1,4 @@
-package http_server.middleware;
+package http_server.cobspec.middleware;
 
 import http_server.Handler;
 import http_server.Middleware;

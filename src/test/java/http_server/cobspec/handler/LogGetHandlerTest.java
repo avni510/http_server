@@ -2,14 +2,12 @@ package http_server.cobspec.handler;
 
 import http_server.Constants;
 
-import http_server.cobspec.handler.LogGetHandler;
+import http_server.DataStore;
 import http_server.response.Response;
 
 import http_server.request.Request;
 import http_server.request.RequestBuilder;
 import http_server.request.RequestMethod;
-
-import http_server.DataStore;
 
 import org.junit.Test;
 
@@ -21,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 public class LogGetHandlerTest {
 
   private DataStore setUpLogs() {
-    DataStore dataStore = new DataStore();
+    DataStore dataStore = new DataStore<String, String>();
     dataStore.storeEntry("HEAD", "/requests HTTP/1.1");
     dataStore.storeEntry("GET", "/log HTTP/1.1");
     dataStore.storeEntry("PUT", "/these HTTP/1.1");

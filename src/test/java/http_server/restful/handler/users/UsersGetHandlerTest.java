@@ -1,7 +1,6 @@
 package http_server.restful.handler.users;
 
 import http_server.DataStore;
-
 import http_server.request.Request;
 import http_server.request.RequestBuilder;
 import http_server.request.RequestMethod;
@@ -26,8 +25,7 @@ public class UsersGetHandlerTest {
   }
 
   private String htmlEditUser(){
-    return "<form action=\"/users/" + "1" + "\" method=\"post\">" +
-        "<input type=\"hidden\" name=\"_method\" value=\"put\"/>" +
+    return "<form action=\"/users/" + "1" + "\">" +
           "Username: <br> " +
           "<input type=\"text\" name=\"username\">" +
           "<input type=\"submit\" value=\"Submit\">" +
@@ -63,7 +61,7 @@ public class UsersGetHandlerTest {
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
-    DataStore dataStore = new DataStore();
+    DataStore<String, String> dataStore = new DataStore<>();
     UsersGetHandler userGetHandler = new UsersGetHandler(dataStore);
 
     Response actualResponse = userGetHandler.generate(request);
@@ -80,7 +78,7 @@ public class UsersGetHandlerTest {
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
-    DataStore dataStore = new DataStore();
+    DataStore<String, String> dataStore = new DataStore<>();
     dataStore.storeEntry("1", "foo");
     dataStore.storeEntry("2", "bar");
     UsersGetHandler userGetHandler = new UsersGetHandler(dataStore);
@@ -99,7 +97,7 @@ public class UsersGetHandlerTest {
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
-    DataStore dataStore = new DataStore();
+    DataStore<String, String> dataStore = new DataStore<>();
     dataStore.storeEntry("1", "foo");
     UsersGetHandler userGetHandler = new UsersGetHandler(dataStore);
 
@@ -117,7 +115,7 @@ public class UsersGetHandlerTest {
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
-    DataStore dataStore = new DataStore();
+    DataStore<String, String> dataStore = new DataStore<>();
     dataStore.storeEntry("1", "foo");
     UsersGetHandler userGetHandler = new UsersGetHandler(dataStore);
 

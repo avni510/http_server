@@ -5,7 +5,6 @@ import http_server.request.Request;
 import http_server.request.RequestBuilder;
 import http_server.request.RequestMethod;
 import http_server.response.Response;
-import http_server.restful.handler.users.UsersDeleteHandler;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -22,7 +21,7 @@ public class UsersDeleteHandlerTest {
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
-    DataStore dataStore = new DataStore();
+    DataStore<String, String> dataStore = new DataStore<>();
     dataStore.storeEntry("1", "foo");
     UsersDeleteHandler usersDeleteHandler = new UsersDeleteHandler(dataStore);
 
