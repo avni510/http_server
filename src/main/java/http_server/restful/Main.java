@@ -1,19 +1,26 @@
 package http_server.restful;
 
-import http_server.*;
-import http_server.restful.configuration.ConfigurationRoutesRestful;
+import http_server.DataStore;
+import http_server.Router;
+import http_server.Server;
+import http_server.ServerExecutor;
+import http_server.ServerCancellationToken;
+import http_server.HttpServer;
+
+import http_server.restful.configuration.ConfigurationRoutes;
 import http_server.restful.middleware.DataStoreMiddleware;
+
 import http_server.middleware.FinalMiddleware;
 import http_server.middleware.RoutingMiddleware;
 
 import java.net.ServerSocket;
 
-public class MainRestful {
+public class Main {
   private static int portNumber = 4444;
 
   public static void main(String[] args) throws Exception {
     DataStore dataStore = new DataStore();
-    ConfigurationRoutesRestful configurationRoutesRestful = new ConfigurationRoutesRestful(dataStore);
+    ConfigurationRoutes configurationRoutesRestful = new ConfigurationRoutes(dataStore);
     Router router = configurationRoutesRestful.buildRouter();
 
     ServerSocket serverSocket = new ServerSocket(portNumber);

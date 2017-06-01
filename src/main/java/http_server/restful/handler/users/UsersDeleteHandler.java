@@ -28,9 +28,7 @@ public class UsersDeleteHandler implements Handler {
   }
 
   private void deleteUsername(Request request) {
-    String uri = request.getUri();
-    String[] uriParts = uri.split("/");
-    String id = uriParts[uriParts.length - 1];
+    String id = request.getIdInUri();
     dataStore.delete(id);
   }
 }

@@ -1,8 +1,11 @@
 package http_server.restful.handler.users;
 
 import http_server.DataStore;
+
 import http_server.Handler;
+
 import http_server.request.Request;
+
 import http_server.response.Response;
 import http_server.response.ResponseBuilder;
 
@@ -26,9 +29,7 @@ public class UsersPutHandler implements Handler{
   }
 
   private void storeEntry(Request request, String usernameValue){
-    String uri = request.getUri();
-    String[] uriParts = uri.split("/");
-    String id = uriParts[uriParts.length - 1];
+    String id = request.getIdInUri();
     dataStore.storeEntry(id, usernameValue);
   }
 }

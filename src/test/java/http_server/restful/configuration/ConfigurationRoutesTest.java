@@ -3,22 +3,25 @@ package http_server.restful.configuration;
 import http_server.DataStore;
 import http_server.Handler;
 import http_server.Router;
+
 import http_server.request.Request;
 import http_server.request.RequestBuilder;
 import http_server.request.RequestMethod;
+
 import http_server.response.Response;
+
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-public class ConfigurationRoutesRestfulTest {
+public class ConfigurationRoutesTest {
 
   @Test
   public void routesArePopulated() throws Exception {
     DataStore dataStore = new DataStore();
-    ConfigurationRoutesRestful configurationRoutesRestful = new ConfigurationRoutesRestful(dataStore);
+    ConfigurationRoutes configurationRoutes = new ConfigurationRoutes(dataStore);
 
-    Router router = configurationRoutesRestful.buildRouter();
+    Router router = configurationRoutes.buildRouter();
 
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)

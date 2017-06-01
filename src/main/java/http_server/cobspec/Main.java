@@ -10,7 +10,7 @@ import http_server.middleware.RoutingMiddleware;
 
 import java.net.ServerSocket;
 
-public class MainCobspec {
+public class Main {
 
   public static void main(String[] args) throws Exception {
     ConfigurationCommandLine configurationCommandLine = configCommandLine(args);

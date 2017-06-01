@@ -20,12 +20,13 @@ public class UsersGetHandler implements Handler{
     this.dataStore = dataStore;
   }
 
+
   public Response generate(Request request) throws IOException {
     if(request.getUri().contains("new")) {
       return handleNew();
     } else if(request.getUri().contains("edit")) {
       return handleEdit(request);
-    } else if(isLastElementInUriId(request)) {
+    } else if(uriHasId(request)) {
       return handleShow(request);
     } else {
       return handleIndex();
@@ -42,9 +43,7 @@ public class UsersGetHandler implements Handler{
   }
 
   private Response handleEdit(Request request) {
-    String[] uriParts = splitUri(request);
-    String id = uriParts[uriParts.length - 2];
-//    String username = dataStore.getValue(id);
+    String id = request.getIdInUri();
     return new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
         .setStatusCode(200)
@@ -54,8 +53,7 @@ public class UsersGetHandler implements Handler{
   }
 
   private Response handleShow(Request request) {
-    String[] uriParts = splitUri(request);
-    String id = uriParts[uriParts.length - 1];
+    String id = request.getIdInUri();
     String username = dataStore.getValue(id);
     return new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
@@ -82,11 +80,6 @@ public class UsersGetHandler implements Handler{
              "</tr>" +
              getHtmlTableData() +
            "</table>";
-  }
-
-  private String[] splitUri(Request request) {
-    String uri = request.getUri();
-    return uri.split("/");
   }
 
   private String getHtmlTableData(){
@@ -126,14 +119,7 @@ public class UsersGetHandler implements Handler{
     return "<p>" + username + "</p>";
   }
 
-  private boolean isLastElementInUriId(Request request) {
-    String[] uriParts = splitUri(request);
-    String possibleId = uriParts[uriParts.length - 1];
-    try {
-      Integer.parseInt(possibleId);
-    } catch (Exception e) {
-      return false;
-    }
-    return true;
+  private boolean uriHasId(Request request) {
+    return request.getIdInUri() == null ? false : true;
   }
 }

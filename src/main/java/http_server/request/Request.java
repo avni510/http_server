@@ -62,6 +62,25 @@ public class Request {
     }
   }
 
+  public String getIdInUri() {
+    String[] uriParts = uri.split("/");
+    for (String uriComponent : uriParts) {
+      if (isValueInt(uriComponent)) {
+        return uriComponent;
+      }
+    }
+    return null;
+  }
+
+  private boolean isValueInt(String value) {
+    try {
+      Integer.parseInt(value);
+    } catch (Exception e) {
+      return false;
+    }
+    return true;
+  }
+
   private Map<String, String> transformBody(String body){
     Map<String, String> bodyRepresentation = new HashMap();
     if (body != null) {

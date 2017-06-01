@@ -127,4 +127,46 @@ public class RequestTest {
 
     assertEquals(null, actualResult);
   }
+
+  @Test
+  public void idInAUriIsReturned(){
+    Request request = new RequestBuilder()
+        .setRequestMethod(RequestMethod.GET)
+        .setUri("/users/1")
+        .setHttpVersion("HTTP/1.1")
+        .setHeader("Host: localhost")
+        .build();
+
+    String actualResult = request.getIdInUri();
+
+    assertEquals("1", actualResult);
+  }
+
+  @Test
+  public void idInAUriIsReturnedForEditRequest(){
+    Request request = new RequestBuilder()
+        .setRequestMethod(RequestMethod.GET)
+        .setUri("/users/1/edit")
+        .setHttpVersion("HTTP/1.1")
+        .setHeader("Host: localhost")
+        .build();
+
+    String actualResult = request.getIdInUri();
+
+    assertEquals("1", actualResult);
+  }
+
+  @Test
+  public void nullIsReturnedForAUriWithNoId(){
+    Request request = new RequestBuilder()
+        .setRequestMethod(RequestMethod.GET)
+        .setUri("/users")
+        .setHttpVersion("HTTP/1.1")
+        .setHeader("Host: localhost")
+        .build();
+
+    String actualResult = request.getIdInUri();
+
+    assertEquals(null, actualResult);
+  }
 }

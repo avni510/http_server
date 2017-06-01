@@ -21,9 +21,9 @@ public class DataStoreMiddleware implements Middleware{
   }
 
   public Response call(Request request) throws Exception {
-    Handler handler = null;
+    Handler handler;
     if (request.getRequestMethod().equals(RequestMethod.PUT)) {
-      if(idExists(request.getUri())) {
+      if(dataStoreHasId(request)) {
         handler = new UsersPutHandler(dataStore);
         return handler.generate(request);
       }
@@ -32,7 +32,7 @@ public class DataStoreMiddleware implements Middleware{
         return handler.generate(request);
       }
     } else if(request.getRequestMethod().equals(RequestMethod.DELETE)) {
-      if(idExists(request.getUri())) {
+      if(dataStoreHasId(request)) {
         handler = new UsersDeleteHandler(dataStore);
         return handler.generate(request);
       }
@@ -41,7 +41,7 @@ public class DataStoreMiddleware implements Middleware{
         return handler.generate(request);
       }
     } else if(request.getRequestMethod().equals(RequestMethod.GET)) {
-      if(idExists(request.getUri())) {
+      if(dataStoreHasId(request)) {
         handler = new UsersGetHandler(dataStore);
         return handler.generate(request);
       } else {
@@ -52,22 +52,8 @@ public class DataStoreMiddleware implements Middleware{
     return null;
   }
 
-  private boolean idExists(String uri){
-    if (uri.contains("edit")) {
-      String id = getIdForEdit(uri);
-      return dataStore.keyExists(id);
-    }
-    String id = getId(uri);
+  private boolean dataStoreHasId(Request request){
+    String id = request.getIdInUri();
     return dataStore.keyExists(id);
-  }
-
-  private String getIdForEdit(String uri){
-    String[] uriParts = uri.split("/");
-    return uriParts[uriParts.length - 2];
-  }
-
-  private String getId(String uri){
-    String[] uriParts = uri.split("/");
-    return uriParts[uriParts.length - 1];
   }
 }

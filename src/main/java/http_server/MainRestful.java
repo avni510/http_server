@@ -1,6 +1,6 @@
 package http_server;
 
-import http_server.restful.configuration.ConfigurationRoutesRestful;
+import http_server.restful.configuration.ConfigurationRoutes;
 import http_server.middleware.FinalMiddleware;
 import http_server.middleware.RoutingMiddleware;
 import http_server.restful.middleware.DataStoreMiddleware;
@@ -12,7 +12,7 @@ public class MainRestful {
 
   public static void main(String[] args) throws Exception {
     DataStore dataStore = new DataStore();
-    ConfigurationRoutesRestful configurationRoutesRestful = new ConfigurationRoutesRestful(dataStore);
+    ConfigurationRoutes configurationRoutesRestful = new ConfigurationRoutes(dataStore);
     Router router = configurationRoutesRestful.buildRouter();
 
     ServerSocket serverSocket = new ServerSocket(portNumber);

@@ -9,10 +9,10 @@ import http_server.restful.handler.users.UsersPostHandler;
 
 import http_server.request.RequestMethod;
 
-public class ConfigurationRoutesRestful {
+public class ConfigurationRoutes {
   private DataStore dataStore;
 
-  public ConfigurationRoutesRestful(DataStore dataStore) {
+  public ConfigurationRoutes(DataStore dataStore) {
     this.dataStore = dataStore;
   }
 
