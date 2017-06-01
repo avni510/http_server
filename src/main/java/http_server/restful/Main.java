@@ -1,11 +1,11 @@
 package http_server.restful;
 
-import http_server.Router;
-import http_server.Server;
-import http_server.ServerExecutor;
-import http_server.ServerCancellationToken;
-import http_server.HttpServer;
-import http_server.DataStore;
+import http_server.core.Router;
+import http_server.core.Server;
+import http_server.core.ServerExecutor;
+import http_server.core.ServerCancellationToken;
+import http_server.core.HttpServer;
+import http_server.core.DataStore;
 
 import http_server.restful.configuration.ConfigurationRoutes;
 
@@ -14,7 +14,7 @@ import http_server.restful.middleware.UsersPutRequestMiddleware;
 import http_server.restful.middleware.UsersGetRequestMiddleware;
 import http_server.restful.middleware.ValidIdMiddleware;
 
-import http_server.middleware.RoutingMiddleware;
+import http_server.core.middleware.RoutingMiddleware;
 
 import java.net.ServerSocket;
 

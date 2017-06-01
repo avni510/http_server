@@ -1,12 +1,12 @@
 package http_server.cobspec;
 
-import http_server.*;
 import http_server.cobspec.configuration.ConfigurationCommandLine;
 import http_server.cobspec.configuration.ConfigurationRoutes;
 
 import http_server.cobspec.middleware.FinalMiddleware;
 import http_server.cobspec.middleware.FileMiddleware;
-import http_server.middleware.RoutingMiddleware;
+import http_server.core.*;
+import http_server.core.middleware.RoutingMiddleware;
 
 import java.net.ServerSocket;
 

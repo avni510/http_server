@@ -3,16 +3,16 @@ package http_server.cobspec.middleware;
 import http_server.cobspec.handler.file_reader.FileReaderGetHandler;
 import http_server.cobspec.handler.file_reader.FileReaderPatchHandler;
 
-import http_server.ErrorHandler;
+import http_server.core.ErrorHandler;
 
-import http_server.Middleware;
+import http_server.core.Middleware;
 import http_server.cobspec.FileHelper;
-import http_server.Handler;
+import http_server.core.Handler;
 
-import http_server.response.Response;
+import http_server.core.response.Response;
 
-import http_server.request.Request;
-import http_server.request.RequestMethod;
+import http_server.core.request.Request;
+import http_server.core.request.RequestMethod;
 
 import java.util.ArrayList;
 

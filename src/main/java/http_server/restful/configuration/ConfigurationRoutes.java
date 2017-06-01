@@ -1,12 +1,12 @@
 package http_server.restful.configuration;
 
-import http_server.DataStore;
-import http_server.Router;
+import http_server.core.DataStore;
+import http_server.core.Router;
 
 import http_server.restful.handler.users.UsersGetHandler;
 import http_server.restful.handler.users.UsersPostHandler;
 
-import http_server.request.RequestMethod;
+import http_server.core.request.RequestMethod;
 
 public class ConfigurationRoutes {
   private DataStore<Integer, String> dataStore;

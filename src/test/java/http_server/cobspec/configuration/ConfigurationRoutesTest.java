@@ -1,14 +1,13 @@
 package http_server.cobspec.configuration;
 
-import http_server.Handler;
-import http_server.Router;
+import http_server.core.Handler;
+import http_server.core.Router;
 
-import http_server.cobspec.configuration.ConfigurationRoutes;
-import http_server.request.Request;
-import http_server.request.RequestBuilder;
-import http_server.request.RequestMethod;
+import http_server.core.request.Request;
+import http_server.core.request.RequestBuilder;
+import http_server.core.request.RequestMethod;
 
-import http_server.response.Response;
+import http_server.core.response.Response;
 
 import org.junit.Test;
 

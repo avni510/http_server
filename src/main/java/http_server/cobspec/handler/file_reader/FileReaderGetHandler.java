@@ -1,13 +1,13 @@
 package http_server.cobspec.handler.file_reader;
 
-import http_server.response.Response;
-import http_server.response.ResponseBuilder;
+import http_server.core.response.Response;
+import http_server.core.response.ResponseBuilder;
 
-import http_server.Tuple;
-import http_server.Handler;
+import http_server.core.Tuple;
+import http_server.core.Handler;
 import http_server.cobspec.FileHelper;
 
-import http_server.request.Request;
+import http_server.core.request.Request;
 
 import java.io.IOException;
 

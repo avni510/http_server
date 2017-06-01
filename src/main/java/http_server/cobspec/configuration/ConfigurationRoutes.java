@@ -1,9 +1,9 @@
 package http_server.cobspec.configuration;
 
-import http_server.DataStore;
-import http_server.request.RequestMethod;
+import http_server.core.DataStore;
+import http_server.core.request.RequestMethod;
 
-import http_server.Router;
+import http_server.core.Router;
 
 import http_server.cobspec.handler.HelloWorldGetHandler;
 
