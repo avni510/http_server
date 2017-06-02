@@ -1,0 +1,18 @@
+apply plugin: 'java'
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.22'
+    compile project(':core')
+
+    testCompile 'junit:junit:4.12'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'cobspec.Main'
+    }
+}
+
+repositories {
+    jcenter()
+}

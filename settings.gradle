@@ -16,3 +16,5 @@ include 'services:webservice'
 */
 
 rootProject.name = 'http_server'
+
+include 'cobspec', 'core', 'restful'
