@@ -15,42 +15,13 @@ import static org.junit.Assert.assertEquals;
 
 public class UsersGetHandlerTest {
 
-  private String htmlCreateNewUser(){
-    return
-        "<form action=\"/users\" method=\"post\">" +
-           "Username: <br> " +
-           "<input type=\"text\" name=\"username\">" +
-           "<input type=\"submit\" value=\"Submit\">" +
-         "</form> <br>";
-  }
-
-  private String htmlEditUser(){
-    return "<form action=\"/users/" + "1" + "\">" +
-          "Username: <br> " +
-          "<input type=\"text\" name=\"username\">" +
-          "<input type=\"submit\" value=\"Submit\">" +
-        "</form> <br>";
-  }
-
   private String htmlUsernamesTable(){
-   return "<table>" +
-            "<tr>" +
-              "<th>id</th>" +
-              "<th>username</th>" +
-            "</tr>" +
-            "<tr>" +
-              "<td>1</td>" +
-              "<td>foo</td>" +
-            "</tr>" +
-            "<tr>" +
-               "<td>2</td>" +
-               "<td>bar</td>" +
-            "</tr>" +
-          "</table>";
+    return "{ \"id\": " + "1" + " { \"username\": " + "foo" + "} }" +
+           "{ \"id\": " + "2" + " { \"username\": " + "bar" + "} }";
   }
 
   private String htmlShowUser(){
-   return "<p>foo</p>";
+    return "{ \"username\": " + "foo" + "}";
   }
 
   @Test
@@ -67,7 +38,6 @@ public class UsersGetHandlerTest {
     Response actualResponse = userGetHandler.generate(request);
 
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
-    assertEquals(htmlCreateNewUser(), new String(actualResponse.getBody()));
   }
 
   @Test
@@ -104,7 +74,6 @@ public class UsersGetHandlerTest {
     Response actualResponse = userGetHandler.generate(request);
 
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
-    assertEquals(htmlEditUser(), new String(actualResponse.getBody()));
   }
 
   @Test

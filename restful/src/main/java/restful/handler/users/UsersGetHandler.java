@@ -24,7 +24,7 @@ public class UsersGetHandler implements Handler{
     if(request.getUri().contains("new")) {
       return handleNew();
     } else if(request.getUri().contains("edit")) {
-      return handleEdit(request);
+      return handleEdit();
     } else if(uriHasId(request)) {
       return handleShow(request);
     } else {
@@ -36,18 +36,13 @@ public class UsersGetHandler implements Handler{
     return new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
         .setStatusCode(200)
-        .setHeader("Content-Type", "text/html")
-        .setBody(createNewUserBody())
         .build();
   }
 
-  private Response handleEdit(Request request) {
-    Integer id = request.getIdInUri();
+  private Response handleEdit() {
     return new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
         .setStatusCode(200)
-        .setHeader("Content-Type", "text/html")
-        .setBody(createEditUserBody(id))
         .build();
   }
 
@@ -57,8 +52,8 @@ public class UsersGetHandler implements Handler{
     return new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
         .setStatusCode(200)
-        .setHeader("Content-Type", "text/html")
-        .setBody(htmlToDisplayUsername(username))
+        .setHeader("Content-Type", "text/plain")
+        .setBody(usernameDisplay(username))
         .build();
   }
 
@@ -66,57 +61,28 @@ public class UsersGetHandler implements Handler{
     return new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
         .setStatusCode(200)
-        .setHeader("Content-Type", "text/html")
-        .setBody(getHtmlUsernamesTable())
+        .setHeader("Content-Type", "text/plain")
+        .setBody(allUsernamesDisplay())
         .build();
   }
 
-  private String getHtmlUsernamesTable(){
-    return "<table>" +
-             "<tr>" +
-               "<th>id</th>" +
-               "<th>username</th>" +
-             "</tr>" +
-             getHtmlTableData() +
-           "</table>";
-  }
-
-  private String getHtmlTableData(){
+  private String allUsernamesDisplay(){
     StringBuilder htmlTableData = new StringBuilder();
     Map<Integer, String> allDataValues = dataStore.getData();
     for (Map.Entry<Integer, String> data : allDataValues.entrySet()) {
       Integer id = data.getKey();
       String username = data.getValue();
-      htmlTableData.append(htmlTableDataTags(id, username));
+      htmlTableData.append(jsonIdAndUsername(id, username));
     }
     return htmlTableData.toString();
   }
 
-  private String htmlTableDataTags(Integer id, String username){
-    return "<tr>" +
-              "<td>" + String.valueOf(id) + "</td>" +
-              "<td>" + username + "</td>" +
-           "</tr>";
+  private String jsonIdAndUsername(Integer id, String username){
+    return "{ \"id\": " + String.valueOf(id) + " { \"username\": " + username + "} }";
   }
 
-  private String createNewUserBody(){
-    return "<form action=\"/users\" method=\"post\">" +
-              "Username: <br> " +
-              "<input type=\"text\" name=\"username\">" +
-              "<input type=\"submit\" value=\"Submit\">" +
-            "</form> <br>";
-  }
-
-  private String createEditUserBody(Integer id){
-    return "<form action=\"/users/" + String.valueOf(id) + "\">" +
-              "Username: <br> " +
-              "<input type=\"text\" name=\"username\">"+
-              "<input type=\"submit\" value=\"Submit\">" +
-            "</form> <br>";
-  }
-
-  private String htmlToDisplayUsername(String username){
-    return "<p>" + username + "</p>";
+  private String usernameDisplay(String username){
+    return "{ \"username\": " + username + "}";
   }
 
   private boolean uriHasId(Request request) {
