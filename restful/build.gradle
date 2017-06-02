@@ -1,0 +1,28 @@
+apply plugin: 'gradle-one-jar'
+apply plugin: 'java'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.github.rholder:gradle-one-jar:1.0.4'
+    }
+}
+
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.22'
+    compile project(':core')
+    testCompile 'junit:junit:4.12'
+}
+
+
+repositories {
+    jcenter()
+}
+
+task restful(type: OneJar) {
+    mainClass = 'restful.Main'
+}
+
