@@ -24,21 +24,21 @@ $ https://github.com/avni510/http_server.git
 $ cd http_server
 ```
 
-Build the JAR with gradle wrapper
+Build and Run the Cobspec Server
+--------------
+Build the JAR
 ```
-$ ./gradlew build
+$ gradle cobspec
 ```
 
-Run the Server
---------------
 Start the server with default port number 4444 and directory "/code"
 ```
-$ java -jar build/libs/http_server.jar
+$ java -jar cobspec/build/libs/cobspec-standalone.jar
 ```
 
 To specify port number and directory
 ```
-$ java -jar build/libs/http_server.jar -p <port number> -d <directory path>
+$ java -jar cobspec/build/libs/cobspec-standalone.jar -p <port number> -d <directory path>
 ```
 Valid port numbers are between 0 and 65535
 
@@ -46,8 +46,34 @@ Navigate in your browser to `http://localhost:<port number>`
 
 `CTRL+C` to quit the server
 
+Build and Run the Restful Server
+--------------
+Build the JAR
+```
+$ gradle restful
+```
+
+```
+$ java -jar restful/build/libs/restful-standalone.jar
+```
+
+Navigate in your browser to `http://localhost:4444`
+
+`CTRL+C` to quit the server
+
 Run the Tests
 -------------
+To run all tests
 ```
 $ ./gradlew test
+```
+
+To run cobspec tests
+```
+$ ./gradlew cobspec:test
+```
+
+To run restful tests
+```
+$ ./gradlew restful:test
 ```

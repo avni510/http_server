@@ -22,6 +22,7 @@ repositories {
     jcenter()
 }
 
-task cobspec(type: OneJar) {
-    mainClass = 'cobspec.Main'
+task restful(type: OneJar) {
+    mainClass = 'restful.Main'
 }
+
