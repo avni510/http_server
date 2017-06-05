@@ -24,7 +24,7 @@ $ https://github.com/avni510/http_server.git
 $ cd http_server
 ```
 
-Build and Run the Cobspec Server
+Build and Run the Cobspec App
 --------------
 Build the JAR
 ```
@@ -46,7 +46,7 @@ Navigate in your browser to `http://localhost:<port number>`
 
 `CTRL+C` to quit the server
 
-Build and Run the Restful Server
+Build and Run the Restful App
 --------------
 Build the JAR
 ```
@@ -56,6 +56,8 @@ $ gradle restful
 ```
 $ java -jar restful/build/libs/restful-standalone.jar
 ```
+
+All restful routes related to "/users" are valid
 
 Navigate in your browser to `http://localhost:4444`
 
