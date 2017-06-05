@@ -2,19 +2,15 @@ package core;
 
 import core.handler.BaseHandler;
 
-import core.request.Request;
-import core.request.RequestBuilder;
 import core.request.RequestMethod;
-
-import core.response.Response;
 
 import org.junit.Test;
 
-import java.util.Map;
+import static org.hamcrest.CoreMatchers.instanceOf;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class RouterTest {
 
@@ -24,17 +20,8 @@ public class RouterTest {
 
     router.addRoute(RequestMethod.GET, "/hello_world", new BaseHandler());
 
-    Map<Tuple<Enum<RequestMethod>, String>, Handler> allRoutes = router.getRoutes();
-    Handler handler = allRoutes.get(new Tuple<>(RequestMethod.GET, "/hello_world"));
-    Request request = new RequestBuilder()
-        .setRequestMethod(RequestMethod.GET)
-        .setUri("/hello_world")
-        .setHttpVersion("HTTP/1.1")
-        .setHeader("Host: localhost")
-        .build();
-    Response actualResponse = handler.generate(request);
-    assertEquals("200 OK", actualResponse.getStatusCodeMessage());
-    assertEquals("hello world", new String (actualResponse.getBody()));
+    Handler handler = router.retrieveHandler(RequestMethod.GET, "/hello_world");
+    assertThat(handler, instanceOf(BaseHandler.class));
   }
 
   @Test
@@ -44,15 +31,7 @@ public class RouterTest {
 
     Handler handler = router.retrieveHandler(RequestMethod.GET, "/hello_world");
 
-    Request request = new RequestBuilder()
-        .setRequestMethod(RequestMethod.GET)
-        .setUri("/hello_world")
-        .setHttpVersion("HTTP/1.1")
-        .setHeader("Host: localhost")
-        .build();
-    Response actualResponse = handler.generate(request);
-    assertEquals("200 OK", actualResponse.getStatusCodeMessage());
-    assertEquals("hello world", new String (actualResponse.getBody()));
+    assertThat(handler, instanceOf(BaseHandler.class));
   }
 
   @Test
