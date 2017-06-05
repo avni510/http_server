@@ -3,7 +3,7 @@ package restful.configuration;
 import core.DataStore;
 import core.Router;
 
-import core.handler.HelloWorldGetHandler;
+import core.handler.BaseHandler;
 import restful.handler.users.UsersGetHandler;
 import restful.handler.users.UsersPostHandler;
 
@@ -21,7 +21,7 @@ public class ConfigurationRoutes {
     router.addRoute(RequestMethod.GET, "/users", new UsersGetHandler(dataStore))
           .addRoute(RequestMethod.GET, "/users/new", new UsersGetHandler(dataStore))
           .addRoute(RequestMethod.POST, "/users", new UsersPostHandler(dataStore))
-          .addRoute(RequestMethod.GET, "/", new HelloWorldGetHandler());
+          .addRoute(RequestMethod.GET, "/", new BaseHandler());
     return router;
   }
 }

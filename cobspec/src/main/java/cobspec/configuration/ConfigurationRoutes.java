@@ -5,7 +5,7 @@ import core.request.RequestMethod;
 
 import core.Router;
 
-import core.handler.HelloWorldGetHandler;
+import core.handler.BaseHandler;
 
 import cobspec.handler.TeapotGetHandler;
 import cobspec.handler.RedirectGetHandler;
@@ -36,7 +36,7 @@ public class ConfigurationRoutes {
   public Router buildRouter() {
     Router router = new Router();
     DataStore<String, String> dataStore = new DataStore<String, String>();
-    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler())
+    router.addRoute(RequestMethod.GET, "/hello_world", new BaseHandler())
           .addRoute(RequestMethod.GET, "/", new DirectoryGetHandler(directoryPath))
           .addRoute(RequestMethod.HEAD, "/", new DirectoryHeadHandler())
           .addRoute(RequestMethod.GET, "/form", new FormGetHandler(dataStore))

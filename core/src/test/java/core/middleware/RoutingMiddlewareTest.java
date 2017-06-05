@@ -1,6 +1,5 @@
 package core.middleware;
 
-import core.middleware.FinalMiddleware;
 import core.response.Response;
 
 import core.Router;
@@ -9,7 +8,7 @@ import core.request.RequestMethod;
 import core.request.Request;
 import core.request.RequestBuilder;
 
-import core.handler.HelloWorldGetHandler;
+import core.handler.BaseHandler;
 
 import org.junit.Test;
 
@@ -28,7 +27,7 @@ public class RoutingMiddlewareTest {
   @Test
   public void responseIsGenerated() throws Exception {
     Router router = new Router();
-    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler());
+    router.addRoute(RequestMethod.GET, "/hello_world", new BaseHandler());
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/hello_world")
@@ -46,7 +45,7 @@ public class RoutingMiddlewareTest {
   @Test
   public void methodNotAllowedErrorGenerated() throws Exception {
     Router router = new Router();
-    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler());
+    router.addRoute(RequestMethod.GET, "/hello_world", new BaseHandler());
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.POST)
         .setUri("/hello_world")
@@ -63,7 +62,7 @@ public class RoutingMiddlewareTest {
   @Test
   public void theNextMiddlewareIsCalled() throws Exception {
     Router router = new Router();
-    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler());
+    router.addRoute(RequestMethod.GET, "/hello_world", new BaseHandler());
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/result.txt")

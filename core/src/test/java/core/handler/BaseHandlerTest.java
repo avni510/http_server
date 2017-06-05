@@ -1,6 +1,5 @@
 package core.handler;
 
-import core.handler.HelloWorldGetHandler;
 import core.response.Response;
 
 import core.request.Request;
@@ -13,7 +12,7 @@ import java.io.UnsupportedEncodingException;
 
 import static org.junit.Assert.assertEquals;
 
-public class HelloWorldGetHandlerTest {
+public class BaseHandlerTest {
 
   @Test
   public void testResponseIsReturned() throws UnsupportedEncodingException {
@@ -23,9 +22,9 @@ public class HelloWorldGetHandlerTest {
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
-    HelloWorldGetHandler helloWorldGetHandler = new HelloWorldGetHandler();
+    BaseHandler baseHandler = new BaseHandler();
 
-    Response actualResponse = helloWorldGetHandler.generate(request);
+    Response actualResponse = baseHandler.generate(request);
 
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
     assertEquals("hello world", new String (actualResponse.getBody()));

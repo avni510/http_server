@@ -1,6 +1,6 @@
 package core;
 
-import core.handler.HelloWorldGetHandler;
+import core.handler.BaseHandler;
 
 import core.mocks.MockServerExecutor;
 import core.mocks.MockServer;
@@ -35,7 +35,7 @@ public class HttpServerTest {
   }
 
   private void setupRouter(){
-    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler());
+    router.addRoute(RequestMethod.GET, "/hello_world", new BaseHandler());
   }
 
   @Before

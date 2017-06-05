@@ -1,6 +1,6 @@
 package core;
 
-import core.handler.HelloWorldGetHandler;
+import core.handler.BaseHandler;
 
 import core.request.Request;
 import core.request.RequestBuilder;
@@ -22,7 +22,7 @@ public class RouterTest {
   public void routeIsAdded() throws Exception{
     Router router = new Router();
 
-    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler());
+    router.addRoute(RequestMethod.GET, "/hello_world", new BaseHandler());
 
     Map<Tuple<Enum<RequestMethod>, String>, Handler> allRoutes = router.getRoutes();
     Handler handler = allRoutes.get(new Tuple<>(RequestMethod.GET, "/hello_world"));
@@ -40,7 +40,7 @@ public class RouterTest {
   @Test
   public void routeIsRetrieved() throws Exception{
     Router router = new Router();
-    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler());
+    router.addRoute(RequestMethod.GET, "/hello_world", new BaseHandler());
 
     Handler handler = router.retrieveHandler(RequestMethod.GET, "/hello_world");
 
@@ -58,7 +58,7 @@ public class RouterTest {
   @Test
   public void returnsTrueIfAUriIsInARouter(){
     Router router = new Router();
-    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler());
+    router.addRoute(RequestMethod.GET, "/hello_world", new BaseHandler());
 
     boolean actualResult = router.uriExists("/hello_world");
 
@@ -68,7 +68,7 @@ public class RouterTest {
   @Test
   public void returnsFalseIfAUriIsNotInARouter(){
     Router router = new Router();
-    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler());
+    router.addRoute(RequestMethod.GET, "/hello_world", new BaseHandler());
 
     boolean actualResult = router.uriExists("/nonexistent_uri");
 

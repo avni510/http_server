@@ -9,7 +9,7 @@ import core.response.ResponseBuilder;
 
 import java.io.UnsupportedEncodingException;
 
-public class HelloWorldGetHandler implements Handler {
+public class BaseHandler implements Handler {
 
   public Response generate(Request request) throws UnsupportedEncodingException {
     return new ResponseBuilder()

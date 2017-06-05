@@ -2,7 +2,7 @@ package core;
 
 import static org.junit.Assert.assertEquals;
 
-import core.handler.HelloWorldGetHandler;
+import core.handler.BaseHandler;
 
 import core.middleware.FinalMiddleware;
 import core.middleware.RoutingMiddleware;
@@ -29,7 +29,7 @@ public class ServerProcessorTest {
   }
 
   private void setupRouter(Router router){
-    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler());
+    router.addRoute(RequestMethod.GET, "/hello_world", new BaseHandler());
   }
 
   private RoutingMiddleware setupMiddlewares(Router router){
