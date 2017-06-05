@@ -17,7 +17,8 @@ public class UsersPutRequestMiddlewareTest {
   public void responseForPutRequestIsReturned() throws Exception {
     DataStore<Integer, String> dataStore = new DataStore<>();
     dataStore.storeEntry(1, "foo");
-    UsersGetRequestMiddleware app = new UsersGetRequestMiddleware(dataStore);
+    UsersShowMiddleware usersShowMiddleware = new UsersShowMiddleware(dataStore);
+    UsersEditMiddleware app = new UsersEditMiddleware(usersShowMiddleware);
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.PUT)
         .setUri("/users/1")
@@ -37,7 +38,8 @@ public class UsersPutRequestMiddlewareTest {
   public void responseForGetRequestEditingUsernameIsReturned() throws Exception {
     DataStore<Integer, String> dataStore = new DataStore<>();
     dataStore.storeEntry(1, "foo");
-    UsersGetRequestMiddleware app = new UsersGetRequestMiddleware(dataStore);
+    UsersShowMiddleware usersShowMiddleware = new UsersShowMiddleware(dataStore);
+    UsersEditMiddleware app = new UsersEditMiddleware(usersShowMiddleware);
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/users/1/edit")

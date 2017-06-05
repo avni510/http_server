@@ -1,20 +1,18 @@
 package restful;
 
 import core.Router;
+import core.DataStore;
+
 import core.server.Server;
 import core.server.ServerExecutor;
 import core.server.ServerCancellationToken;
 import core.server.HttpServer;
-import core.DataStore;
+
+import core.middleware.RoutingMiddleware;
 
 import restful.configuration.ConfigurationRoutes;
 
-import restful.middleware.UsersDeleteRequestMiddleware;
-import restful.middleware.UsersPutRequestMiddleware;
-import restful.middleware.UsersGetRequestMiddleware;
-import restful.middleware.ValidIdMiddleware;
-
-import core.middleware.RoutingMiddleware;
+import restful.middleware.*;
 
 import java.net.ServerSocket;
 
@@ -41,8 +39,9 @@ public class Main {
   }
 
   private static RoutingMiddleware setupApp(Router router, DataStore<Integer, String> dataStore){
-    UsersGetRequestMiddleware usersGetRequestMiddleware = new UsersGetRequestMiddleware(dataStore);
-    UsersPutRequestMiddleware usersPutRequestMiddleware = new UsersPutRequestMiddleware(dataStore, usersGetRequestMiddleware);
+    UsersShowMiddleware usersShowMiddleware = new UsersShowMiddleware(dataStore);
+    UsersEditMiddleware usersEditMiddleware = new UsersEditMiddleware(usersShowMiddleware);
+    UsersPutRequestMiddleware usersPutRequestMiddleware = new UsersPutRequestMiddleware(dataStore, usersEditMiddleware);
     UsersDeleteRequestMiddleware usersDeleteRequestMiddleware = new UsersDeleteRequestMiddleware(dataStore, usersPutRequestMiddleware);
     ValidIdMiddleware app = new ValidIdMiddleware(dataStore, usersDeleteRequestMiddleware);
     return new RoutingMiddleware(router, app);

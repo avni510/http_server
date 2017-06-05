@@ -1,11 +1,14 @@
 package restful.configuration;
 
 import core.DataStore;
+
 import core.Router;
 
 import core.handler.BaseHandler;
-import restful.handler.users.UsersGetHandler;
+
+import restful.handler.users.UsersIndexHandler;
 import restful.handler.users.UsersPostHandler;
+import restful.handler.users.UsersSuccessHandler;
 
 import core.request.RequestMethod;
 
@@ -18,8 +21,8 @@ public class ConfigurationRoutes {
 
   public Router buildRouter() {
     Router router = new Router();
-    router.addRoute(RequestMethod.GET, "/users", new UsersGetHandler(dataStore))
-          .addRoute(RequestMethod.GET, "/users/new", new UsersGetHandler(dataStore))
+    router.addRoute(RequestMethod.GET, "/users", new UsersIndexHandler(dataStore))
+          .addRoute(RequestMethod.GET, "/users/new", new UsersSuccessHandler())
           .addRoute(RequestMethod.POST, "/users", new UsersPostHandler(dataStore))
           .addRoute(RequestMethod.GET, "/", new BaseHandler());
     return router;

@@ -19,8 +19,9 @@ public class UsersDeleteRequestMiddlewareTest {
   }
 
   private UsersPutRequestMiddleware setupPreviousMiddleware(DataStore<Integer, String> dataStore){
-    UsersGetRequestMiddleware usersGetRequestMiddleware = new UsersGetRequestMiddleware(dataStore);
-    return new UsersPutRequestMiddleware(dataStore, usersGetRequestMiddleware);
+    UsersShowMiddleware usersShowMiddleware = new UsersShowMiddleware(dataStore);
+    UsersEditMiddleware usersEditMiddleware = new UsersEditMiddleware(usersShowMiddleware);
+    return new UsersPutRequestMiddleware(dataStore, usersEditMiddleware);
   }
 
   @Test

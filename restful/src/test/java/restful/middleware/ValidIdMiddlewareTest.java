@@ -20,8 +20,9 @@ public class ValidIdMiddlewareTest {
   }
 
   private UsersDeleteRequestMiddleware setupPreviousMiddlewares(DataStore<Integer, String> dataStore){
-    UsersGetRequestMiddleware usersGetRequestMiddleware = new UsersGetRequestMiddleware(dataStore);
-    UsersPutRequestMiddleware usersPutRequestMiddleware = new UsersPutRequestMiddleware(dataStore, usersGetRequestMiddleware);
+    UsersShowMiddleware usersShowMiddleware = new UsersShowMiddleware(dataStore);
+    UsersEditMiddleware usersEditMiddleware = new UsersEditMiddleware(usersShowMiddleware);
+    UsersPutRequestMiddleware usersPutRequestMiddleware = new UsersPutRequestMiddleware(dataStore, usersEditMiddleware);
     return new UsersDeleteRequestMiddleware(dataStore, usersPutRequestMiddleware);
   }
 

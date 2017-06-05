@@ -9,38 +9,40 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class UsersGetRequestMiddlewareTest {
+public class UsersEditMiddlewareTest {
 
   @Test
   public void responseForGetRequestEditingUsernameIsReturned() throws Exception {
-    DataStore<Integer, String> dataStore = new DataStore();
+    DataStore<Integer, String> dataStore = new DataStore<>();
     dataStore.storeEntry(1, "foo");
+    UsersShowMiddleware usersShowMiddleware = new UsersShowMiddleware(dataStore);
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/users/1/edit")
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
-    UsersGetRequestMiddleware usersGetRequestMiddleware = new UsersGetRequestMiddleware(dataStore);
+    UsersEditMiddleware usersEditMiddleware = new UsersEditMiddleware(usersShowMiddleware);
 
-    Response actualResponse = usersGetRequestMiddleware.call(request);
+    Response actualResponse = usersEditMiddleware.call(request);
 
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
   }
 
   @Test
-  public void responseForGetRequestShowingUsernameIsReturned() throws Exception {
+  public void responseShowingUsernameIsReturned() throws Exception {
     DataStore<Integer, String> dataStore = new DataStore<>();
     dataStore.storeEntry(1, "foo");
+    UsersShowMiddleware usersShowMiddleware = new UsersShowMiddleware(dataStore);
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/users/1")
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
-    UsersGetRequestMiddleware usersGetRequestMiddleware = new UsersGetRequestMiddleware(dataStore);
+    UsersEditMiddleware usersEditMiddleware = new UsersEditMiddleware(usersShowMiddleware);
 
-    Response actualResponse = usersGetRequestMiddleware.call(request);
+    Response actualResponse = usersEditMiddleware.call(request);
 
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
   }
