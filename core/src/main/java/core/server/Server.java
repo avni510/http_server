@@ -1,4 +1,7 @@
-package core;
+package core.server;
+
+import core.Connection;
+import core.ConnectionManager;
 
 import java.io.IOException;
 

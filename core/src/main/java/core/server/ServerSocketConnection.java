@@ -1,5 +1,7 @@
-package core;
+package core.server;
 
+
+import core.Connection;
 
 import java.io.IOException;
 import java.io.InputStream;

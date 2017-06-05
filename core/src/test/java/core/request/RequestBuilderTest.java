@@ -1,7 +1,5 @@
 package core.request;
 
-import core.Header;
-
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

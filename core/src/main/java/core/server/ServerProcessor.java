@@ -1,5 +1,8 @@
-package core;
+package core.server;
 
+import core.Connection;
+import core.Middleware;
+import core.handler.ErrorHandler;
 import core.response.Response;
 
 import java.io.IOException;

@@ -1,7 +1,10 @@
-package core;
+package core.server;
 
 import static org.junit.Assert.assertEquals;
 
+import core.Constants;
+import core.Middleware;
+import core.Router;
 import core.handler.BaseHandler;
 
 import core.middleware.FinalMiddleware;
@@ -12,6 +15,7 @@ import core.mocks.MockSocket;
 
 import core.request.RequestMethod;
 
+import core.server.ServerProcessor;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;

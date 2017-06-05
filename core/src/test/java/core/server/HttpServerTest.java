@@ -1,5 +1,8 @@
-package core;
+package core.server;
 
+import core.CancellationToken;
+import core.Constants;
+import core.Router;
 import core.handler.BaseHandler;
 
 import core.mocks.MockServerExecutor;
@@ -10,6 +13,7 @@ import core.mocks.MockServerCancellationToken;
 
 import core.request.RequestMethod;
 
+import core.server.HttpServer;
 import org.junit.Before;
 import org.junit.Test;
 

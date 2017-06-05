@@ -1,7 +1,6 @@
 package core.request;
 
 import core.Constants;
-import core.Header;
 
 import org.junit.Test;
 

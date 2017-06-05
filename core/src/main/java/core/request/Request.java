@@ -1,7 +1,5 @@
 package core.request;
 
-import core.Header;
-
 import java.util.HashMap;
 import java.util.Map;
 

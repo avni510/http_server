@@ -1,4 +1,9 @@
-package core;
+package core.server;
+
+import core.CancellationToken;
+import core.Connection;
+import core.ConnectionManager;
+import core.ServerExecutorService;
 
 import java.io.IOException;
 

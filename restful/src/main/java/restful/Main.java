@@ -1,10 +1,10 @@
 package restful;
 
 import core.Router;
-import core.Server;
-import core.ServerExecutor;
-import core.ServerCancellationToken;
-import core.HttpServer;
+import core.server.Server;
+import core.server.ServerExecutor;
+import core.server.ServerCancellationToken;
+import core.server.HttpServer;
 import core.DataStore;
 
 import restful.configuration.ConfigurationRoutes;

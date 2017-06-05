@@ -1,5 +1,7 @@
-package core;
+package core.request;
 
+import core.Constants;
+import core.request.Header;
 import org.junit.Test;
 
 import java.util.HashMap;

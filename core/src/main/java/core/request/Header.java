@@ -1,4 +1,6 @@
-package core;
+package core.request;
+
+import core.Constants;
 
 import java.util.ArrayList;
 import java.util.HashMap;

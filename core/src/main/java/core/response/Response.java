@@ -1,7 +1,7 @@
 package core.response;
 
 import core.Constants;
-import core.Header;
+import core.request.Header;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

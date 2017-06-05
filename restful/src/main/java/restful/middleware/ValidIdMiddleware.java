@@ -1,7 +1,7 @@
 package restful.middleware;
 
 import core.DataStore;
-import core.ErrorHandler;
+import core.handler.ErrorHandler;
 import core.Handler;
 import core.Middleware;
 

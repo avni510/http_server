@@ -1,6 +1,6 @@
 package core.response;
 
-import core.Header;
+import core.request.Header;
 
 import java.util.HashMap;
 import java.util.Map;

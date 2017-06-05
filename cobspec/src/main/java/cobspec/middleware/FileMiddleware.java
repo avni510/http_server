@@ -3,7 +3,7 @@ package cobspec.middleware;
 import cobspec.handler.file_reader.FileReaderGetHandler;
 import cobspec.handler.file_reader.FileReaderPatchHandler;
 
-import core.ErrorHandler;
+import core.handler.ErrorHandler;
 
 import core.Middleware;
 import cobspec.FileHelper;

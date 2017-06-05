@@ -1,5 +1,6 @@
-package core;
+package core.handler;
 
+import core.Handler;
 import core.request.Request;
 
 import core.response.Response;

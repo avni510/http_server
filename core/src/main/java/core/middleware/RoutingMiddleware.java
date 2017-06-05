@@ -8,7 +8,7 @@ import core.request.Request;
 
 import core.response.Response;
 
-import core.ErrorHandler;
+import core.handler.ErrorHandler;
 
 public class RoutingMiddleware implements Middleware {
   private Middleware app;

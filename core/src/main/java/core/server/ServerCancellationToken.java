@@ -1,6 +1,8 @@
-package core;
+package core.server;
 
-public class ServerCancellationToken implements CancellationToken{
+import core.CancellationToken;
+
+public class ServerCancellationToken implements CancellationToken {
   private boolean listening;
 
   public boolean isListening() {
