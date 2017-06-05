@@ -32,11 +32,12 @@ public class UsersGetHandler implements Handler{
       return handleNew();
     } else if(request.getUri().contains("edit")) {
       return handleEdit();
-    } else if(uriHasId(request)) {
+    } else if(uriHasId(request) && !request.getUri().contains("edit")) {
       return handleShow(request);
-    } else {
+    } else if(request.getUri().equals("/users")){
       return handleIndex();
     }
+    return null;
   }
 
   private Response handleNew() {
