@@ -16,12 +16,12 @@ import static org.junit.Assert.assertEquals;
 public class UsersGetHandlerTest {
 
   private String htmlUsernamesTable(){
-    return "{ \"id\": " + "1" + " { \"username\": " + "foo" + "} }" +
-           "{ \"id\": " + "2" + " { \"username\": " + "bar" + "} }";
+    return "{\"users\":[{\"id\":\"1\",\"username\":\"foo\"}," +
+           "{\"id\":\"2\",\"username\":\"bar\"}]}";
   }
 
   private String htmlShowUser(){
-    return "{ \"username\": " + "foo" + "}";
+    return "foo";
   }
 
   @Test

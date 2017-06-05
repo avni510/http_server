@@ -9,6 +9,13 @@ import core.response.Response;
 import core.response.ResponseBuilder;
 
 import java.io.IOException;
+import java.io.StringWriter;
+
+import javax.json.JsonWriter;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.Json;
+import javax.json.JsonObject;
 
 import java.util.Map;
 
@@ -53,7 +60,7 @@ public class UsersGetHandler implements Handler{
         .setHttpVersion("HTTP/1.1")
         .setStatusCode(200)
         .setHeader("Content-Type", "text/plain")
-        .setBody(usernameDisplay(username))
+        .setBody(username)
         .build();
   }
 
@@ -67,22 +74,23 @@ public class UsersGetHandler implements Handler{
   }
 
   private String allUsernamesDisplay(){
-    StringBuilder htmlTableData = new StringBuilder();
     Map<Integer, String> allDataValues = dataStore.getData();
+    StringWriter stringWriter = new StringWriter();
+    JsonWriter jsonWriter = Json.createWriter(stringWriter);
+    JsonObject jsonObject = Json.createObjectBuilder().add("users", populateUsers(allDataValues)).build();
+    jsonWriter.writeObject(jsonObject);
+    jsonWriter.close();
+    return stringWriter.toString();
+  }
+
+  private JsonArray populateUsers(Map<Integer, String> allDataValues){
+    JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
     for (Map.Entry<Integer, String> data : allDataValues.entrySet()) {
-      Integer id = data.getKey();
+      String id = String.valueOf(data.getKey());
       String username = data.getValue();
-      htmlTableData.append(jsonIdAndUsername(id, username));
+      jsonArrayBuilder.add(Json.createObjectBuilder().add("id", id).add("username", username));
     }
-    return htmlTableData.toString();
-  }
-
-  private String jsonIdAndUsername(Integer id, String username){
-    return "{ \"id\": " + String.valueOf(id) + " { \"username\": " + username + "} }";
-  }
-
-  private String usernameDisplay(String username){
-    return "{ \"username\": " + username + "}";
+    return jsonArrayBuilder.build();
   }
 
   private boolean uriHasId(Request request) {
