@@ -1,6 +1,5 @@
 package core;
 
-import core.ErrorHandler;
 import core.request.Request;
 import core.request.RequestBuilder;
 import core.request.RequestMethod;

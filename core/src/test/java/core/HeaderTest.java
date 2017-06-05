@@ -1,7 +1,5 @@
 package core;
 
-import core.Constants;
-import core.Header;
 import org.junit.Test;
 
 import java.util.HashMap;

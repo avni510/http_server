@@ -1,6 +1,5 @@
 package core;
 
-import core.Tuple;
 import core.request.RequestMethod;
 
 import org.junit.Test;

@@ -1,6 +1,5 @@
 package core;
 
-import core.ServerSocketConnection;
 import org.junit.Before;
 import org.junit.Test;
 
