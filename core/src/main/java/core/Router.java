@@ -15,11 +15,15 @@ public class Router {
 
   public Handler retrieveHandler(Enum<RequestMethod> requestMethod, String uri){
     if (uri.contains("?")) {
-      String[] uriParts = uri.split("\\?");
-      String uriWithoutQuestionMark = uriParts[0];
-      return routes.get(new Tuple<>(requestMethod, uriWithoutQuestionMark));
+      String uriWithoutQueryParams = getUriWithoutQueryParams(uri);
+      return routes.get(new Tuple<>(requestMethod, uriWithoutQueryParams));
     } else {
-      return routes.get(new Tuple<>(requestMethod, uri));
+      Handler handler = routes.get(new Tuple<>(requestMethod, uri));
+      if(handler == null) {
+        String dynamicUri = getDynamicUri(uri);
+        handler = routes.get(new Tuple<>(requestMethod, dynamicUri));
+      }
+      return handler;
     }
   }
 
@@ -33,4 +37,23 @@ public class Router {
     }
     return found;
   }
+
+  private String getUriWithoutQueryParams(String uri) {
+    String[] uriParts = uri.split("\\?");
+    return uriParts[0];
+  }
+
+  private String getDynamicUri(String uri){
+    if(uri.contains("edit")) {
+      return getDynamicUriForEdit(uri);
+    }
+    return uri.substring(0, uri.length() - 1) + ":id";
+  }
+
+  private String getDynamicUriForEdit(String uri){
+    String[] uriParts = uri.split("/");
+    uriParts[uriParts.length - 2] = ":id";
+    return String.join("/", uriParts);
+  }
+
 }

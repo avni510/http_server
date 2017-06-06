@@ -1,7 +1,7 @@
 package cobspec.configuration;
 
 public class ConfigurationCommandLine {
-  private String defaultDirectory = System.getProperty("user.dir") + "/code";
+  private String defaultDirectory = System.getProperty("user.dir") + "/cobspec/code";
   private Integer defaultPort = 4444;
   private Integer portNumber;
   private String  directoryPath;
