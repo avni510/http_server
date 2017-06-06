@@ -1,6 +1,7 @@
 package restful.middleware;
 
 import core.DataStore;
+import core.Handler;
 import core.Middleware;
 
 import core.request.Request;
@@ -16,8 +17,7 @@ public class UsersShowMiddleware implements Middleware {
     this.dataStore = dataStore;
   }
 
-  public Response call(Request request) throws Exception {
-    UsersShowHandler usersShowHandler = new UsersShowHandler(dataStore);
-    return usersShowHandler.generate(request);
+  public Handler call(Request request) throws Exception {
+    return new UsersShowHandler(dataStore);
   }
 }

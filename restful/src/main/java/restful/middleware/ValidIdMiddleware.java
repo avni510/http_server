@@ -18,10 +18,9 @@ public class ValidIdMiddleware implements Middleware{
     this.app = app;
   }
 
-  public Response call(Request request) throws Exception {
+  public Handler call(Request request) throws Exception {
     if (!dataStoreHasId(request)) {
-      Handler handler = new ErrorHandler(404);
-      return handler.generate(request);
+      return new ErrorHandler(404);
     } else {
       return app.call(request);
     }

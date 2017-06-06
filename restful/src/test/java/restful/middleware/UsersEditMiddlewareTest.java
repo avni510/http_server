@@ -1,10 +1,14 @@
 package restful.middleware;
 
 import core.DataStore;
+import core.Handler;
+
 import core.request.Request;
 import core.request.RequestBuilder;
 import core.request.RequestMethod;
+
 import core.response.Response;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -24,8 +28,9 @@ public class UsersEditMiddlewareTest {
         .build();
     UsersEditMiddleware usersEditMiddleware = new UsersEditMiddleware(usersShowMiddleware);
 
-    Response actualResponse = usersEditMiddleware.call(request);
+    Handler handler = usersEditMiddleware.call(request);
 
+    Response actualResponse = handler.generate(request);
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
   }
 
@@ -42,8 +47,9 @@ public class UsersEditMiddlewareTest {
         .build();
     UsersEditMiddleware usersEditMiddleware = new UsersEditMiddleware(usersShowMiddleware);
 
-    Response actualResponse = usersEditMiddleware.call(request);
+    Handler handler = usersEditMiddleware.call(request);
 
+    Response actualResponse = handler.generate(request);
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
   }
 }

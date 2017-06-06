@@ -20,10 +20,9 @@ public class UsersPutRequestMiddleware implements Middleware {
     this.app = app;
   }
 
-  public Response call(Request request) throws Exception {
+  public Handler call(Request request) throws Exception {
     if (request.getRequestMethod().equals(RequestMethod.PUT)) {
-      Handler handler = new UsersPutHandler(dataStore);
-      return handler.generate(request);
+      return new UsersPutHandler(dataStore);
     } else {
       return app.call(request);
     }

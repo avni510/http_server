@@ -46,7 +46,7 @@ Navigate in your browser to `http://localhost:<port number>`
 
 `CTRL+C` to quit the server
 
-Build and Run the Restful App
+Build and Run the RESTful App
 --------------
 Build the JAR
 ```
@@ -57,7 +57,7 @@ $ gradle restful
 $ java -jar restful/build/libs/restful-standalone.jar
 ```
 
-All restful routes related to "/users" are valid
+All RESTful routes related to "/users" are valid
 
 Navigate in your browser to `http://localhost:4444`
 

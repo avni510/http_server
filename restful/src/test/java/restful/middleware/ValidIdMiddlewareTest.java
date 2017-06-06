@@ -1,6 +1,7 @@
 package restful.middleware;
 
 import core.DataStore;
+import core.Handler;
 import core.request.Request;
 import core.request.RequestBuilder;
 import core.request.RequestMethod;
@@ -38,8 +39,9 @@ public class ValidIdMiddlewareTest {
         .setHeader("Host: localhost")
         .build();
 
-    Response actualResponse = validIdMiddleware.call(request);
+    Handler handler = validIdMiddleware.call(request);
 
+    Response actualResponse = handler.generate(request);
     assertEquals("404 Not Found", actualResponse.getStatusCodeMessage());
   }
 
@@ -55,8 +57,9 @@ public class ValidIdMiddlewareTest {
         .setHeader("Host: localhost")
         .build();
 
-    Response actualResponse = validIdMiddleware.call(request);
+    Handler handler = validIdMiddleware.call(request);
 
+    Response actualResponse = handler.generate(request);
     assertEquals("404 Not Found", actualResponse.getStatusCodeMessage());
   }
 
@@ -72,8 +75,9 @@ public class ValidIdMiddlewareTest {
         .setHeader("Host: localhost")
         .build();
 
-    Response actualResponse = validIdMiddleware.call(request);
+    Handler handler = validIdMiddleware.call(request);
 
+    Response actualResponse = handler.generate(request);
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
   }
 }

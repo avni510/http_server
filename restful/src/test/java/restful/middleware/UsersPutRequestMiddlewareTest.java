@@ -1,6 +1,7 @@
 package restful.middleware;
 
 import core.DataStore;
+import core.Handler;
 import core.request.Request;
 import core.request.RequestBuilder;
 import core.request.RequestMethod;
@@ -28,8 +29,9 @@ public class UsersPutRequestMiddlewareTest {
         .build();
     UsersPutRequestMiddleware usersPutRequestMiddleware = new UsersPutRequestMiddleware(dataStore, app);
 
-    Response actualResponse = usersPutRequestMiddleware.call(request);
+    Handler handler = usersPutRequestMiddleware.call(request);
 
+    Response actualResponse = handler.generate(request);
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
     assertEquals(dataStore.getValue(1), "bar");
   }
@@ -48,8 +50,9 @@ public class UsersPutRequestMiddlewareTest {
         .build();
     UsersPutRequestMiddleware usersPutRequestMiddleware = new UsersPutRequestMiddleware(dataStore, app);
 
-    Response actualResponse = usersPutRequestMiddleware.call(request);
+    Handler handler = usersPutRequestMiddleware.call(request);
 
+    Response actualResponse = handler.generate(request);
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
   }
 }

@@ -1,5 +1,6 @@
 package core.middleware;
 
+import core.Handler;
 import core.response.Response;
 
 import core.Router;
@@ -15,7 +16,6 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class RoutingMiddlewareTest {
-//  String rootDirectoryPath = System.getProperty("user.dir") + "/code";
   private RoutingMiddleware routingMiddleware;
   private FinalMiddleware finalMiddleware;
 
@@ -36,8 +36,9 @@ public class RoutingMiddlewareTest {
         .build();
     setupPreviousMiddlewares(router);
 
-    Response actualResponse = routingMiddleware.call(request);
+    Handler handler = routingMiddleware.call(request);
 
+    Response actualResponse = handler.generate(request);
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
     assertEquals("hello world", new String (actualResponse.getBody()));
   }
@@ -54,8 +55,9 @@ public class RoutingMiddlewareTest {
         .build();
     setupPreviousMiddlewares(router);
 
-    Response actualResponse = routingMiddleware.call(request);
+    Handler handler = routingMiddleware.call(request);
 
+    Response actualResponse = handler.generate(request);
     assertEquals("405 Method Not Allowed", actualResponse.getStatusCodeMessage());
   }
 
@@ -71,8 +73,9 @@ public class RoutingMiddlewareTest {
         .build();
     setupPreviousMiddlewares(router);
 
-    Response actualResponse = routingMiddleware.call(request);
+    Handler handler = routingMiddleware.call(request);
 
+    Response actualResponse = handler.generate(request);
     assertEquals("404 Not Found", actualResponse.getStatusCodeMessage());
   }
 }

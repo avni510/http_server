@@ -1,6 +1,7 @@
 package restful.middleware;
 
 import core.DataStore;
+import core.Handler;
 import core.request.Request;
 import core.request.RequestBuilder;
 import core.request.RequestMethod;
@@ -36,8 +37,9 @@ public class UsersDeleteRequestMiddlewareTest {
         .setHeader("Host: localhost")
         .build();
 
-    Response actualResponse = usersDeleteRequestMiddleware.call(request);
+    Handler handler = usersDeleteRequestMiddleware.call(request);
 
+    Response actualResponse = handler.generate(request);
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
     assertTrue(dataStore.isStoreEmpty());
   }
@@ -55,8 +57,9 @@ public class UsersDeleteRequestMiddlewareTest {
         .setBody("username=bar")
         .build();
 
-    Response actualResponse = usersDeleteRequestMiddleware.call(request);
+    Handler handler = usersDeleteRequestMiddleware.call(request);
 
+    Response actualResponse = handler.generate(request);
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
     assertEquals(dataStore.getValue(1), "bar");
   }

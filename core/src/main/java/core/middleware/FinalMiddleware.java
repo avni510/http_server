@@ -11,8 +11,7 @@ import core.handler.ErrorHandler;
 
 public class FinalMiddleware implements Middleware {
 
-  public Response call(Request request) throws Exception {
-    Handler errorHandler = new ErrorHandler(404);
-    return errorHandler.generate(request);
+  public Handler call(Request request) throws Exception {
+    return new ErrorHandler(404);
   }
 }

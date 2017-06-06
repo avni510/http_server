@@ -2,6 +2,7 @@ package restful.middleware;
 
 import core.DataStore;
 
+import core.Handler;
 import core.request.RequestBuilder;
 import core.request.RequestMethod;
 import core.request.Request;
@@ -26,8 +27,9 @@ public class UsersShowMiddlewareTest {
         .build();
     UsersShowMiddleware usersShowMiddleware = new UsersShowMiddleware(dataStore);
 
-    Response actualResponse = usersShowMiddleware.call(request);
+    Handler handler = usersShowMiddleware.call(request);
 
+    Response actualResponse = handler.generate(request);
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
     assertEquals("foo", new String(actualResponse.getBody()));
   }

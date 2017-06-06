@@ -1,6 +1,7 @@
 package core.server;
 
 import core.Connection;
+import core.Handler;
 import core.Middleware;
 import core.handler.ErrorHandler;
 import core.response.Response;
@@ -45,7 +46,8 @@ public class ServerProcessor implements Runnable {
       ErrorHandler errorHandler = new ErrorHandler(400);
       return errorHandler.generate(request);
     }
-    return app.call(request);
+    Handler handler = app.call(request);
+    return handler.generate(request);
   }
 
   private void write(Connection clientConnection, Response response) throws Exception{

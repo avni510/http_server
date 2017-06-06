@@ -6,8 +6,6 @@ import core.Router;
 
 import core.request.Request;
 
-import core.response.Response;
-
 import core.handler.ErrorHandler;
 
 public class RoutingMiddleware implements Middleware {
@@ -19,19 +17,14 @@ public class RoutingMiddleware implements Middleware {
     this.app = app;
   }
 
-  public Response call(Request request) throws Exception {
+  public Handler call(Request request) throws Exception {
     Handler handler = router.retrieveHandler(request.getRequestMethod(), request.getUri());
     if (handler != null) {
-      return handler.generate(request);
+      return handler;
     } else if (router.uriExists(request.getUri())) {
-      return methodNotAllowed(request);
+      return new ErrorHandler(405);
     } else {
       return app.call(request);
     }
-  }
-
-  private Response methodNotAllowed(Request request) throws Exception {
-    Handler errorHandler = new ErrorHandler(405);
-    return errorHandler.generate(request);
   }
 }

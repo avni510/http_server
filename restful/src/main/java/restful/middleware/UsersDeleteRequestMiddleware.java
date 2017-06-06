@@ -20,10 +20,9 @@ public class UsersDeleteRequestMiddleware implements Middleware{
     this.app = app;
   }
 
-  public Response call(Request request) throws Exception {
+  public Handler call(Request request) throws Exception {
     if(request.getRequestMethod().equals(RequestMethod.DELETE)) {
-      Handler handler = new UsersDeleteHandler(dataStore);
-      return handler.generate(request);
+      return new UsersDeleteHandler(dataStore);
     } else {
       return app.call(request);
     }

@@ -15,10 +15,9 @@ public class UsersEditMiddleware implements Middleware{
     this.app = app;
   }
 
-  public Response call(Request request) throws Exception {
+  public Handler call(Request request) throws Exception {
     if(request.getUri().contains("edit")) {
-      Handler handler = new UsersSuccessHandler();
-      return handler.generate(request);
+      return new UsersSuccessHandler();
     } else {
       return app.call(request);
     }

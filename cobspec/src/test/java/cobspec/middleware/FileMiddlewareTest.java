@@ -1,5 +1,6 @@
 package cobspec.middleware;
 
+import core.Handler;
 import core.Middleware;
 
 import core.middleware.FinalMiddleware;
@@ -27,8 +28,9 @@ public class FileMiddlewareTest {
         .build();
     FileMiddleware fileMiddleware = new FileMiddleware(rootDirectoryPath, nextMiddleware);
 
-    Response actualResponse = fileMiddleware.call(request);
+    Handler handler = fileMiddleware.call(request);
 
+    Response actualResponse = handler.generate(request);
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
     assertEquals("module TimeLogger\nend\n", new String(actualResponse.getBody()));
   }
@@ -45,8 +47,9 @@ public class FileMiddlewareTest {
         .build();
     FileMiddleware fileMiddleware = new FileMiddleware(rootDirectoryPath, nextMiddleware);
 
-    Response actualResponse = fileMiddleware.call(request);
+    Handler handler = fileMiddleware.call(request);
 
+    Response actualResponse = handler.generate(request);
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
     assertEquals("x = 1\ny = 2\n", new String(actualResponse.getBody()));
   }
@@ -63,8 +66,9 @@ public class FileMiddlewareTest {
         .build();
     FileMiddleware fileMiddleware = new FileMiddleware(rootDirectoryPath, nextMiddleware);
 
-    Response actualResponse = fileMiddleware.call(request);
+    Handler handler = fileMiddleware.call(request);
 
+    Response actualResponse = handler.generate(request);
     assertEquals("405 Method Not Allowed", actualResponse.getStatusCodeMessage());
   }
 
@@ -80,8 +84,9 @@ public class FileMiddlewareTest {
         .build();
     FileMiddleware fileMiddleware = new FileMiddleware(rootDirectoryPath, nextMiddleware);
 
-    Response actualResponse = fileMiddleware.call(request);
+    Handler handler = fileMiddleware.call(request);
 
+    Response actualResponse = handler.generate(request);
     assertEquals("404 Not Found", actualResponse.getStatusCodeMessage());
   }
 }
