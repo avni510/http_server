@@ -1,6 +1,7 @@
 package restful.handler.users;
 
 import core.DataStore;
+
 import core.request.Request;
 import core.request.RequestBuilder;
 import core.request.RequestMethod;
@@ -33,5 +34,24 @@ public class UsersPutHandlerTest {
 
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
     assertEquals(dataStore.getValue(1), "bar");
+  }
+
+  @Test
+  public void idInUriDoesNotExistInDataStore() throws IOException {
+    DataStore<Integer, String> dataStore = new DataStore<>();
+    dataStore.storeEntry(1, "foo");
+    Request request = new RequestBuilder()
+        .setRequestMethod(RequestMethod.PUT)
+        .setUri("/users/500")
+        .setHttpVersion("HTTP/1.1")
+        .setHeader("Host: localhost")
+        .setBody("username=bar")
+        .build();
+
+    UsersPutHandler usersPutHandler = new UsersPutHandler(dataStore);
+
+    Response actualResponse = usersPutHandler.generate(request);
+
+    assertEquals("404 Not Found", actualResponse.getStatusCodeMessage());
   }
 }

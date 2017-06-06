@@ -1,13 +1,12 @@
 package restful.middleware;
 
 import core.DataStore;
-import core.handler.ErrorHandler;
 import core.Handler;
 import core.Middleware;
 
 import core.request.Request;
 
-import core.response.Response;
+import core.handler.ErrorHandler;
 
 public class ValidIdMiddleware implements Middleware{
   private Middleware app;
@@ -25,7 +24,6 @@ public class ValidIdMiddleware implements Middleware{
       return app.call(request);
     }
   }
-
 
   private boolean dataStoreHasId(Request request){
     Integer id = request.getIdInUri();

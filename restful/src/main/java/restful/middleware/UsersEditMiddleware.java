@@ -4,9 +4,8 @@ import core.Handler;
 import core.Middleware;
 
 import core.request.Request;
-import core.response.Response;
 
-import restful.handler.users.UsersSuccessHandler;
+import restful.handler.users.UsersNewHandler;
 
 public class UsersEditMiddleware implements Middleware{
   private Middleware app;
@@ -17,7 +16,7 @@ public class UsersEditMiddleware implements Middleware{
 
   public Handler call(Request request) throws Exception {
     if(request.getUri().contains("edit")) {
-      return new UsersSuccessHandler();
+      return new UsersNewHandler();
     } else {
       return app.call(request);
     }

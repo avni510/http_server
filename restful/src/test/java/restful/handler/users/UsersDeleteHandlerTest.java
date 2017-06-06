@@ -1,10 +1,13 @@
 package restful.handler.users;
 
 import core.DataStore;
+
 import core.request.Request;
 import core.request.RequestBuilder;
 import core.request.RequestMethod;
+
 import core.response.Response;
+
 import org.junit.Test;
 
 import java.io.IOException;
@@ -29,5 +32,39 @@ public class UsersDeleteHandlerTest {
 
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
     assertEquals(dataStore.count(), 0);
+  }
+
+  @Test
+  public void idInUriDoesNotExistInDataStore() throws IOException {
+    Request request = new RequestBuilder()
+        .setRequestMethod(RequestMethod.DELETE)
+        .setUri("/users/500")
+        .setHttpVersion("HTTP/1.1")
+        .setHeader("Host: localhost")
+        .build();
+    DataStore<Integer, String> dataStore = new DataStore<>();
+    dataStore.storeEntry(1, "foo");
+    UsersDeleteHandler usersDeleteHandler = new UsersDeleteHandler(dataStore);
+
+    Response actualResponse = usersDeleteHandler.generate(request);
+
+    assertEquals("404 Not Found", actualResponse.getStatusCodeMessage());
+  }
+
+  @Test
+  public void noIdExistsInUri() throws IOException {
+    Request request = new RequestBuilder()
+        .setRequestMethod(RequestMethod.DELETE)
+        .setUri("/users/bar")
+        .setHttpVersion("HTTP/1.1")
+        .setHeader("Host: localhost")
+        .build();
+    DataStore<Integer, String> dataStore = new DataStore<>();
+    dataStore.storeEntry(1, "foo");
+    UsersDeleteHandler usersDeleteHandler = new UsersDeleteHandler(dataStore);
+
+    Response actualResponse = usersDeleteHandler.generate(request);
+
+    assertEquals("404 Not Found", actualResponse.getStatusCodeMessage());
   }
 }

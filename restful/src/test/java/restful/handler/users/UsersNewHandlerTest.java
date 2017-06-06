@@ -10,7 +10,7 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
-public class UsersSuccessHandlerTest {
+public class UsersNewHandlerTest {
 
   @Test
   public void aSuccessMessageIsReturned() throws IOException {
@@ -20,9 +20,9 @@ public class UsersSuccessHandlerTest {
               .setHttpVersion("HTTP/1.1")
               .setHeader("Host: localhost")
               .build();
-      UsersSuccessHandler usersSuccessHandler = new UsersSuccessHandler();
+      UsersNewHandler usersNewHandler = new UsersNewHandler();
 
-      Response actualResponse = usersSuccessHandler.generate(request);
+      Response actualResponse = usersNewHandler.generate(request);
 
       assertEquals("200 OK", actualResponse.getStatusCodeMessage());
   }

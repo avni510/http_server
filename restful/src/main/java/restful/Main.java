@@ -3,6 +3,7 @@ package restful;
 import core.Router;
 import core.DataStore;
 
+import core.middleware.FinalMiddleware;
 import core.server.Server;
 import core.server.ServerExecutor;
 import core.server.ServerCancellationToken;
@@ -27,7 +28,8 @@ public class Main {
     ServerSocket serverSocket = new ServerSocket(portNumber);
     Server server = new Server(serverSocket);
 
-    RoutingMiddleware app = setupApp(router, dataStore);
+    FinalMiddleware finalMiddleware = new FinalMiddleware();
+    RoutingMiddleware app = new RoutingMiddleware(router, finalMiddleware);
 
     ServerExecutor serverExecutor = new ServerExecutor(app);
 
@@ -36,14 +38,5 @@ public class Main {
 
     HttpServer httpServer = new HttpServer(server, serverExecutor, serverCancellationToken);
     httpServer.execute();
-  }
-
-  private static RoutingMiddleware setupApp(Router router, DataStore<Integer, String> dataStore){
-    UsersShowMiddleware usersShowMiddleware = new UsersShowMiddleware(dataStore);
-    UsersEditMiddleware usersEditMiddleware = new UsersEditMiddleware(usersShowMiddleware);
-    UsersPutRequestMiddleware usersPutRequestMiddleware = new UsersPutRequestMiddleware(dataStore, usersEditMiddleware);
-    UsersDeleteRequestMiddleware usersDeleteRequestMiddleware = new UsersDeleteRequestMiddleware(dataStore, usersPutRequestMiddleware);
-    ValidIdMiddleware app = new ValidIdMiddleware(dataStore, usersDeleteRequestMiddleware);
-    return new RoutingMiddleware(router, app);
   }
 }

@@ -55,5 +55,4 @@ public class Router {
     uriParts[uriParts.length - 2] = ":id";
     return String.join("/", uriParts);
   }
-
 }

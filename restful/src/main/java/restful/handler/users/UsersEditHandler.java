@@ -12,19 +12,16 @@ import core.response.ResponseBuilder;
 
 import java.io.IOException;
 
-public class UsersPutHandler implements Handler{
-  DataStore<Integer, String> dataStore;
-  String parameter = "username";
+public class UsersEditHandler implements Handler{
+  private DataStore dataStore;
 
-  public UsersPutHandler(DataStore<Integer, String> dataStore){
+  public UsersEditHandler(DataStore dataStore) {
     this.dataStore = dataStore;
   }
 
   public Response generate(Request request) throws IOException {
     Integer id = request.getIdInUri();
-    if (dataStore.keyExists(id)) {
-      String usernameValue = request.getBodyParam(parameter);
-      dataStore.storeEntry(id, usernameValue);
+    if(dataStore.keyExists(id)) {
       return new ResponseBuilder()
           .setHttpVersion("HTTP/1.1")
           .setStatusCode(200)
