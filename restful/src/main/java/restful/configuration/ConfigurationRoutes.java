@@ -6,16 +6,16 @@ import core.Router;
 
 import core.handler.BaseHandler;
 
-import restful.handler.users.UsersEditHandler;
+import restful.handler.users.EditUsersHandler;
 
 import core.request.RequestMethod;
 
-import restful.handler.users.UsersIndexHandler;
-import restful.handler.users.UsersNewHandler;
-import restful.handler.users.UsersShowHandler;
-import restful.handler.users.UsersPostHandler;
-import restful.handler.users.UsersPutHandler;
-import restful.handler.users.UsersDeleteHandler;
+import restful.handler.users.IndexUsersHandler;
+import restful.handler.users.NewUsersHandler;
+import restful.handler.users.ShowUsersHandler;
+import restful.handler.users.CreateUsersHandler;
+import restful.handler.users.UpdateUsersHandler;
+import restful.handler.users.DeleteUsersHandler;
 
 public class ConfigurationRoutes {
   private DataStore<Integer, String> dataStore;
@@ -27,13 +27,13 @@ public class ConfigurationRoutes {
   public Router buildRouter() {
     Router router = new Router();
     router.addRoute(RequestMethod.GET, "/", new BaseHandler())
-          .addRoute(RequestMethod.GET, "/users", new UsersIndexHandler(dataStore))
-          .addRoute(RequestMethod.GET, "/users/new", new UsersNewHandler())
-          .addRoute(RequestMethod.POST, "/users", new UsersPostHandler(dataStore))
-          .addRoute(RequestMethod.GET, "/users/:id", new UsersShowHandler(dataStore))
-          .addRoute(RequestMethod.GET, "/users/:id/edit", new UsersEditHandler(dataStore))
-          .addRoute(RequestMethod.PUT, "/users/:id", new UsersPutHandler(dataStore))
-          .addRoute(RequestMethod.DELETE, "/users/:id", new UsersDeleteHandler(dataStore));
+          .addRoute(RequestMethod.GET, "/users", new IndexUsersHandler(dataStore))
+          .addRoute(RequestMethod.GET, "/users/new", new NewUsersHandler())
+          .addRoute(RequestMethod.POST, "/users", new CreateUsersHandler(dataStore))
+          .addRoute(RequestMethod.GET, "/users/:id", new ShowUsersHandler(dataStore))
+          .addRoute(RequestMethod.GET, "/users/:id/edit", new EditUsersHandler(dataStore))
+          .addRoute(RequestMethod.PUT, "/users/:id", new UpdateUsersHandler(dataStore))
+          .addRoute(RequestMethod.DELETE, "/users/:id", new DeleteUsersHandler(dataStore));
     return router;
   }
 }

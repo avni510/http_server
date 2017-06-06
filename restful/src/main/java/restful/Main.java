@@ -4,6 +4,7 @@ import core.Router;
 import core.DataStore;
 
 import core.middleware.FinalMiddleware;
+
 import core.server.Server;
 import core.server.ServerExecutor;
 import core.server.ServerCancellationToken;
@@ -12,8 +13,6 @@ import core.server.HttpServer;
 import core.middleware.RoutingMiddleware;
 
 import restful.configuration.ConfigurationRoutes;
-
-import restful.middleware.*;
 
 import java.net.ServerSocket;
 
