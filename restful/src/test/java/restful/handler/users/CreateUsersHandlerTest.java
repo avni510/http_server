@@ -21,8 +21,7 @@ public class CreateUsersHandlerTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.POST)
         .setUri("/users/create")
-        .setHttpVersion("HTTP/1.1")
-        .setHeader("Host: localhost")
+                .setHeader("Host: localhost")
         .setBody("username=foo")
         .build();
     DataStore<Integer, String> dataStore = new DataStore<>();

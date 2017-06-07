@@ -3,6 +3,7 @@ package core.server;
 import core.CancellationToken;
 import core.Constants;
 import core.Router;
+
 import core.handler.BaseHandler;
 
 import core.mocks.MockServerExecutor;
@@ -13,7 +14,6 @@ import core.mocks.MockServerCancellationToken;
 
 import core.request.RequestMethod;
 
-import core.server.HttpServer;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,14 +38,14 @@ public class HttpServerTest {
     return new MockSocket(byteArrayInputStream, byteArrayOutputStream);
   }
 
-  private void setupRouter(){
+  private void setupRouter() {
     router.addRoute(RequestMethod.GET, "/hello_world", new BaseHandler());
   }
 
   @Before
   public void setUp() throws Exception {
     String request = "GET /hello_world HTTP/1.1" + Constants.CLRF + "Host: localhost" +
-                      Constants.CLRF + Constants.CLRF;
+        Constants.CLRF + Constants.CLRF;
     Socket socket = createMockSocket(request);
     this.serverSocketConnection = new MockServerSocketConnection(socket);
     serverSocketConnection.setStoredInputData(request);

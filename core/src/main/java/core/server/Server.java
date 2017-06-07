@@ -11,7 +11,7 @@ import java.net.Socket;
 public class Server implements ConnectionManager {
   private ServerSocket serverSocket;
 
-  public Server (ServerSocket serverSocket){
+  public Server(ServerSocket serverSocket) {
     this.serverSocket = serverSocket;
   }
 

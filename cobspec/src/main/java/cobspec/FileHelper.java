@@ -21,13 +21,12 @@ import java.util.Map;
 import java.net.FileNameMap;
 import java.net.URLConnection;
 
-
 public class FileHelper {
 
   public Map<String, String> getNameAndRelativePath(String rootDirectoryPath) {
     Map<String, String> fileInformation = new HashMap();
     File[] filesInDirectory = getFiles(rootDirectoryPath);
-    for (File file: filesInDirectory) {
+    for (File file : filesInDirectory) {
       String fileAbsolutePath = file.getPath();
       String relativePath = getRelativePath(fileAbsolutePath, rootDirectoryPath);
       fileInformation.put(file.getName(), relativePath);
@@ -38,7 +37,7 @@ public class FileHelper {
   public ArrayList<String> getRelativeFilePaths(String rootDirectoryPath) {
     ArrayList<String> allRelativePaths = new ArrayList<>();
     File[] filesInDirectory = getFiles(rootDirectoryPath);
-    for (File file: filesInDirectory) {
+    for (File file : filesInDirectory) {
       String fileAbsolutePath = file.getPath();
       String relativePath = getRelativePath(fileAbsolutePath, rootDirectoryPath);
       allRelativePaths.add(relativePath);
@@ -70,7 +69,7 @@ public class FileHelper {
     return null;
   }
 
-  public void write(String content, String filePath){
+  public void write(String content, String filePath) {
     try {
       FileWriter fileWriter = new FileWriter(filePath);
       BufferedWriter buffered = new BufferedWriter(fileWriter);
@@ -93,7 +92,7 @@ public class FileHelper {
     return fileSize.intValue();
   }
 
-  public String getMimeType(String filePath){
+  public String getMimeType(String filePath) {
     FileNameMap fileNameMap = URLConnection.getFileNameMap();
     return fileNameMap.getContentTypeFor(filePath);
   }
@@ -103,7 +102,7 @@ public class FileHelper {
     return rootFile.listFiles();
   }
 
-  private String getRelativePath(String filePath, String rootPath){
+  private String getRelativePath(String filePath, String rootPath) {
     return filePath.replace(rootPath, "");
   }
 }

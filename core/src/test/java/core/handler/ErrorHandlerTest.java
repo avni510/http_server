@@ -1,7 +1,7 @@
 package core.handler;
 
 import core.HttpCodes;
-import core.handler.ErrorHandler;
+
 import core.request.Request;
 import core.request.RequestBuilder;
 import core.request.RequestMethod;
@@ -19,7 +19,6 @@ public class ErrorHandlerTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/code/invalid.txt")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
     ErrorHandler errorHandler = new ErrorHandler(HttpCodes.NOT_FOUND);

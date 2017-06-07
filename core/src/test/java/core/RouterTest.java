@@ -1,8 +1,8 @@
 package core;
 
 import core.handler.BaseHandler;
-
 import core.handler.ErrorHandler;
+
 import core.request.RequestMethod;
 
 import org.junit.Test;
@@ -14,7 +14,7 @@ import static org.junit.Assert.assertFalse;
 public class RouterTest {
 
   @Test
-  public void routeIsRetrieved() throws Exception{
+  public void routeIsRetrieved() throws Exception {
     Router router = new Router();
     BaseHandler baseHandler = new BaseHandler();
     ErrorHandler errorHandler = new ErrorHandler(HttpCodes.NOT_FOUND);
@@ -27,7 +27,7 @@ public class RouterTest {
   }
 
   @Test
-  public void routeWithQueryParamsIsHandled() throws Exception{
+  public void routeWithQueryParamsIsHandled() throws Exception {
     Router router = new Router();
     BaseHandler baseHandler = new BaseHandler();
     ErrorHandler errorHandler = new ErrorHandler(HttpCodes.NOT_FOUND);
@@ -40,7 +40,7 @@ public class RouterTest {
   }
 
   @Test
-  public void dynamicRouteIsHandled() throws Exception{
+  public void dynamicRouteIsHandled() throws Exception {
     Router router = new Router();
     BaseHandler baseHandler = new BaseHandler();
     ErrorHandler errorHandler = new ErrorHandler(HttpCodes.NOT_FOUND);
@@ -53,7 +53,7 @@ public class RouterTest {
   }
 
   @Test
-  public void dynamicRouteForEditIsHandled() throws Exception{
+  public void dynamicRouteForEditIsHandled() throws Exception {
     Router router = new Router();
     BaseHandler baseHandler = new BaseHandler();
     ErrorHandler errorHandler = new ErrorHandler(HttpCodes.NOT_FOUND);
@@ -66,7 +66,7 @@ public class RouterTest {
   }
 
   @Test
-  public void nullIsReturnedIfThereAreNoMatchingRoutes() throws Exception{
+  public void nullIsReturnedIfThereAreNoMatchingRoutes() throws Exception {
     Router router = new Router();
 
     Handler handler = router.retrieveHandler(RequestMethod.GET, "/invalid");
@@ -75,7 +75,7 @@ public class RouterTest {
   }
 
   @Test
-  public void returnsTrueIfAUriIsInARouter(){
+  public void returnsTrueIfAUriIsInARouter() {
     Router router = new Router();
     router.addRoute(RequestMethod.GET, "/hello_world", new BaseHandler());
 
@@ -85,7 +85,7 @@ public class RouterTest {
   }
 
   @Test
-  public void returnsFalseIfAUriIsNotInARouter(){
+  public void returnsFalseIfAUriIsNotInARouter() {
     Router router = new Router();
     router.addRoute(RequestMethod.GET, "/hello_world", new BaseHandler());
 

@@ -21,7 +21,6 @@ public class FormDeleteHandler implements Handler {
   public Response generate(Request request) throws IOException {
     deleteAllData();
     return new ResponseBuilder()
-        .setHttpVersion("HTTP/1.1")
         .setStatusCode(HttpCodes.OK)
         .build();
   }

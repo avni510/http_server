@@ -9,10 +9,10 @@ import core.request.Request;
 import core.request.RequestBuilder;
 import core.request.RequestMethod;
 
-import org.junit.Test;
-
 import java.io.IOException;
 import java.util.Base64;
+
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -33,7 +33,6 @@ public class LogGetHandlerTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/log")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
     LogGetHandler logGetHandler = new LogGetHandler(setUpLogs(), username, password);
@@ -42,7 +41,7 @@ public class LogGetHandlerTest {
 
     assertEquals("401 Unauthorized", actualResponse.getStatusCodeMessage());
     assertEquals("WWW-Authenticate: Basic realm=\"Access to Avni's Server\"" + Constants.CLRF,
-                          actualResponse.getHeaders());
+        actualResponse.getHeaders());
   }
 
   @Test
@@ -54,7 +53,6 @@ public class LogGetHandlerTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/log")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Authorization: Basic " + encoded)
         .build();
     LogGetHandler logGetHandler = new LogGetHandler(setUpLogs(), username, password);
@@ -63,6 +61,6 @@ public class LogGetHandlerTest {
 
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
     assertEquals("HEAD /requests HTTP/1.1 GET /log HTTP/1.1 PUT /these HTTP/1.1 ",
-                          new String(actualResponse.getBody()));
+        new String(actualResponse.getBody()));
   }
 }

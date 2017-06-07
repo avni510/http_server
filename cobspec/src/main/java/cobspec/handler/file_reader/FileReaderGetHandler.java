@@ -37,7 +37,6 @@ public class FileReaderGetHandler implements Handler {
   private Response handleRequestWithRange(String rangeHeader) {
     Tuple<Integer, Integer> byteRange = getRangeValues(rangeHeader);
     return new ResponseBuilder()
-        .setHttpVersion("HTTP/1.1")
         .setStatusCode(HttpCodes.PARTIAL_CONTENT)
         .setHeader("Content-Type", "text/plain")
         .setHeader("Content-Range", "bytes " + byteRange.getFirstElement() + "-" + byteRange.getSecondElement())
@@ -47,7 +46,6 @@ public class FileReaderGetHandler implements Handler {
 
   private Response handleRequestWithNoRange() {
     return new ResponseBuilder()
-        .setHttpVersion("HTTP/1.1")
         .setStatusCode(HttpCodes.OK)
         .setHeader("Content-Type", fileHelper.getMimeType(filePath))
         .setHeader("Content-Length", String.valueOf(fileHelper.getLength(filePath)))

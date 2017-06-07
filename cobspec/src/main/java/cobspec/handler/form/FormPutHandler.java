@@ -2,11 +2,10 @@ package cobspec.handler.form;
 
 import core.DataStore;
 import core.HttpCodes;
+import core.Handler;
 
 import core.response.Response;
 import core.response.ResponseBuilder;
-
-import core.Handler;
 
 import core.request.Request;
 
@@ -24,7 +23,6 @@ public class FormPutHandler implements Handler {
     String dataValue = getDataValue(request);
     storeData(dataValue);
     return new ResponseBuilder()
-        .setHttpVersion("HTTP/1.1")
         .setStatusCode(HttpCodes.OK)
         .build();
   }

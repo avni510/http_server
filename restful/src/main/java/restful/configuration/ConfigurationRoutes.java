@@ -1,16 +1,14 @@
 package restful.configuration;
 
 import core.DataStore;
-
 import core.Router;
 
 import core.handler.BaseHandler;
 
-import restful.handler.users.EditUsersHandler;
-
 import core.request.RequestMethod;
 
 import restful.handler.users.IndexUsersHandler;
+import restful.handler.users.EditUsersHandler;
 import restful.handler.users.NewUsersHandler;
 import restful.handler.users.ShowUsersHandler;
 import restful.handler.users.CreateUsersHandler;

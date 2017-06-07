@@ -3,15 +3,10 @@ package core.response;
 import core.request.Header;
 
 public class ResponseBuilder {
-  private String httpVersion;
+  private String httpVersion = "HTTP/1.1";
   private String statusCodeMessage;
   private byte[] body = null;
   private Header header = new Header();
-
-  public ResponseBuilder setHttpVersion(String httpVersion) {
-    this.httpVersion = httpVersion;
-    return this;
-  }
 
   public ResponseBuilder setStatusCode(String statusCode) {
     this.statusCodeMessage = statusCode;
@@ -37,7 +32,7 @@ public class ResponseBuilder {
     return new Response(httpVersion, statusCodeMessage, header, body);
   }
 
-  private byte[] transformIntoBytes(String body){
+  private byte[] transformIntoBytes(String body) {
     return body.getBytes();
   }
 }

@@ -35,14 +35,12 @@ public class FileReaderPatchHandler implements Handler {
     String patchedContents = request.getEntireBody();
     fileHelper.write(patchedContents, filePath);
     return new ResponseBuilder()
-        .setHttpVersion("HTTP/1.1")
         .setStatusCode(HttpCodes.NO_CONTENT)
         .build();
   }
 
   private Response handleFileHashValuesDoNotMatch() {
     return new ResponseBuilder()
-        .setHttpVersion("HTTP/1.1")
         .setStatusCode(HttpCodes.BAD_REQUEST)
         .build();
   }

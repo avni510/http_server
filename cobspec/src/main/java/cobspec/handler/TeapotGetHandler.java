@@ -23,7 +23,6 @@ public class TeapotGetHandler implements Handler {
 
   private Response handleCoffeeRequest() {
     return new ResponseBuilder()
-        .setHttpVersion("HTTP/1.1")
         .setStatusCode(HttpCodes.TEAPOT)
         .setHeader("Content-Type", "text/plain")
         .setBody("I'm a teapot")
@@ -32,7 +31,6 @@ public class TeapotGetHandler implements Handler {
 
   private Response handleTeaRequest() {
     return new ResponseBuilder()
-        .setHttpVersion("HTTP/1.1")
         .setStatusCode(HttpCodes.OK)
         .build();
   }

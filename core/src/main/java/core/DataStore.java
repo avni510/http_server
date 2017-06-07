@@ -10,7 +10,7 @@ public class DataStore<T1, T2> {
     data.put(key, value);
   }
 
-  public Map<T1, T2> getData(){
+  public Map<T1, T2> getData() {
     return data;
   }
 
@@ -18,15 +18,15 @@ public class DataStore<T1, T2> {
     return data.get(key);
   }
 
-  public void clear(){
+  public void clear() {
     data = new HashMap<>();
   }
 
-  public boolean isStoreEmpty(){
+  public boolean isStoreEmpty() {
     return data.isEmpty();
   }
 
-  public int count(){
+  public int count() {
     return data.size();
   }
 
@@ -34,7 +34,7 @@ public class DataStore<T1, T2> {
     data.remove(key);
   }
 
-  public boolean keyExists(T1 key){
+  public boolean keyExists(T1 key) {
     return data.containsKey(key);
   }
 }

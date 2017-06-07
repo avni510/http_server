@@ -2,9 +2,9 @@ package core.request;
 
 import core.Constants;
 
-import org.junit.Test;
-
 import java.util.Map;
+
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -12,11 +12,10 @@ import static org.junit.Assert.assertTrue;
 public class RequestTest {
 
   @Test
-  public void requestMethodIsReturned(){
+  public void requestMethodIsReturned() {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .setBody("data=fatcat")
         .build();
@@ -25,11 +24,10 @@ public class RequestTest {
   }
 
   @Test
-  public void uriIsReturned(){
+  public void uriIsReturned() {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .setBody("data=fatcat")
         .build();
@@ -38,11 +36,10 @@ public class RequestTest {
   }
 
   @Test
-  public void httpVersionIsReturned(){
+  public void httpVersionIsReturned() {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .setBody("data=fatcat")
         .build();
@@ -51,11 +48,10 @@ public class RequestTest {
   }
 
   @Test
-  public void headerIsReturned(){
+  public void headerIsReturned() {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost" + Constants.CLRF + "Content-Type: text/plain")
         .setBody("hello world")
         .build();
@@ -70,11 +66,10 @@ public class RequestTest {
   }
 
   @Test
-  public void bodyIsReturned(){
+  public void bodyIsReturned() {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .setBody("data=fatcat")
         .build();
@@ -85,11 +80,10 @@ public class RequestTest {
   }
 
   @Test
-  public void bodyParameterIsReturn(){
+  public void bodyParameterIsReturn() {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .setBody("data=fatcat")
         .build();
@@ -100,11 +94,10 @@ public class RequestTest {
   }
 
   @Test
-  public void requestIsReturnedWithNoBody(){
+  public void requestIsReturnedWithNoBody() {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
 
@@ -114,11 +107,10 @@ public class RequestTest {
   }
 
   @Test
-  public void noParametersAreReturnedIfNoBodyExists(){
+  public void noParametersAreReturnedIfNoBodyExists() {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
 
@@ -128,11 +120,10 @@ public class RequestTest {
   }
 
   @Test
-  public void idInAUriIsReturned(){
+  public void idInAUriIsReturned() {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/users/1")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
 
@@ -142,11 +133,10 @@ public class RequestTest {
   }
 
   @Test
-  public void idInAUriIsReturnedForEditRequest(){
+  public void idInAUriIsReturnedForEditRequest() {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/users/1/edit")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
 
@@ -156,11 +146,10 @@ public class RequestTest {
   }
 
   @Test
-  public void nullIsReturnedForAUriWithNoId(){
+  public void nullIsReturnedForAUriWithNoId() {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/users")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
 
@@ -170,11 +159,10 @@ public class RequestTest {
   }
 
   @Test
-  public void allBodyParamsAreReturned(){
+  public void allBodyParamsAreReturned() {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/users")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .setBody("_method=put&username=foo")
         .build();

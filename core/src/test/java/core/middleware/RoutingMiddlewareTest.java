@@ -1,9 +1,9 @@
 package core.middleware;
 
 import core.Handler;
-import core.response.Response;
-
 import core.Router;
+
+import core.response.Response;
 
 import core.request.RequestMethod;
 import core.request.Request;
@@ -19,7 +19,7 @@ public class RoutingMiddlewareTest {
   private RoutingMiddleware routingMiddleware;
   private FinalMiddleware finalMiddleware;
 
-  private void setupPreviousMiddlewares(Router router){
+  private void setupPreviousMiddlewares(Router router) {
     finalMiddleware = new FinalMiddleware();
     routingMiddleware = new RoutingMiddleware(router, finalMiddleware);
   }
@@ -31,7 +31,6 @@ public class RoutingMiddlewareTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/hello_world")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
     setupPreviousMiddlewares(router);
@@ -40,7 +39,7 @@ public class RoutingMiddlewareTest {
 
     Response actualResponse = handler.generate(request);
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
-    assertEquals("hello world", new String (actualResponse.getBody()));
+    assertEquals("hello world", new String(actualResponse.getBody()));
   }
 
   @Test
@@ -50,7 +49,6 @@ public class RoutingMiddlewareTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.POST)
         .setUri("/hello_world")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
     setupPreviousMiddlewares(router);
@@ -68,7 +66,6 @@ public class RoutingMiddlewareTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/result.txt")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost\r\n")
         .build();
     setupPreviousMiddlewares(router);

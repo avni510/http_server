@@ -1,6 +1,5 @@
 package core.server;
 
-import core.server.ServerCancellationToken;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;

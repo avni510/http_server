@@ -26,8 +26,7 @@ public class ConfigurationRoutesTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/users")
-        .setHttpVersion("HTTP/1.1")
-        .setHeader("Host: localhost")
+                .setHeader("Host: localhost")
         .build();
     Handler handler = router.retrieveHandler(request.getRequestMethod(), request.getUri());
     Response actualResponse = handler.generate(request);

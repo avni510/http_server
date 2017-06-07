@@ -6,9 +6,9 @@ import core.request.Request;
 import core.request.RequestBuilder;
 import core.request.RequestMethod;
 
-import org.junit.Test;
-
 import java.io.IOException;
+
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -19,7 +19,6 @@ public class TeapotGetHandlerTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/coffee")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
     TeapotGetHandler teapotGetHandler = new TeapotGetHandler();
@@ -27,7 +26,7 @@ public class TeapotGetHandlerTest {
     Response actualResponse = teapotGetHandler.generate(request);
 
     assertEquals("418 I'm a teapot", actualResponse.getStatusCodeMessage());
-    assertEquals("I'm a teapot", new String (actualResponse.getBody()));
+    assertEquals("I'm a teapot", new String(actualResponse.getBody()));
   }
 
   @Test
@@ -35,7 +34,6 @@ public class TeapotGetHandlerTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/tea")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
     TeapotGetHandler teapotGetHandler = new TeapotGetHandler();

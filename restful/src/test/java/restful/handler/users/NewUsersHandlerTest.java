@@ -6,9 +6,9 @@ import core.request.RequestMethod;
 
 import core.response.Response;
 
-import org.junit.Test;
-
 import java.io.IOException;
+
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -19,8 +19,7 @@ public class NewUsersHandlerTest {
       Request request = new RequestBuilder()
               .setRequestMethod(RequestMethod.GET)
               .setUri("/users/new")
-              .setHttpVersion("HTTP/1.1")
-              .setHeader("Host: localhost")
+                            .setHeader("Host: localhost")
               .build();
       NewUsersHandler newUsersHandler = new NewUsersHandler();
 

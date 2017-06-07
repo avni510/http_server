@@ -24,7 +24,6 @@ public class CookieGetHandler implements Handler {
 
   private Response handleCookieRequest() {
     return new ResponseBuilder()
-        .setHttpVersion("HTTP/1.1")
         .setStatusCode(HttpCodes.OK)
         .setHeader("Content-Type", "text/plain")
         .setBody("mmmm chocolate")
@@ -33,7 +32,6 @@ public class CookieGetHandler implements Handler {
 
   private Response handleSetCookie() {
     return new ResponseBuilder()
-        .setHttpVersion("HTTP/1.1")
         .setStatusCode(HttpCodes.OK)
         .setHeader("Content-Type", "text/plain")
         .setHeader("Set-Cookie", cookie)

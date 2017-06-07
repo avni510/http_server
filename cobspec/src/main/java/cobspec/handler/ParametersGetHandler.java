@@ -16,7 +16,6 @@ public class ParametersGetHandler implements Handler {
 
   public Response generate(Request request) throws IOException {
     return new ResponseBuilder()
-        .setHttpVersion("HTTP/1.1")
         .setStatusCode(HttpCodes.OK)
         .setHeader("Content-Type", "text/plain")
         .setBody(decodeUri(request.getUri()))

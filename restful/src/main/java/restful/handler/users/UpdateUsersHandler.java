@@ -27,8 +27,7 @@ public class UpdateUsersHandler implements Handler {
       String usernameValue = request.getBodyParam(parameter);
       dataStore.storeEntry(id, usernameValue);
       return new ResponseBuilder()
-          .setHttpVersion("HTTP/1.1")
-          .setStatusCode(HttpCodes.OK)
+                    .setStatusCode(HttpCodes.OK)
           .build();
     } else {
       Handler handler = new ErrorHandler(HttpCodes.NOT_FOUND);

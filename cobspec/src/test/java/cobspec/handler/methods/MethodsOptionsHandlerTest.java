@@ -21,12 +21,11 @@ public class MethodsOptionsHandlerTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.OPTIONS)
         .setUri("/method_options")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
     RequestMethod[] requestMethodsOnResource = new RequestMethod[]{RequestMethod.GET, RequestMethod.POST,
-                                                                   RequestMethod.PUT, RequestMethod.OPTIONS,
-                                                                   RequestMethod.HEAD};
+        RequestMethod.PUT, RequestMethod.OPTIONS,
+        RequestMethod.HEAD};
     MethodsOptionsHandler methodsOptionsHandler = new MethodsOptionsHandler(requestMethodsOnResource);
 
     Response actualResult = methodsOptionsHandler.generate(request);

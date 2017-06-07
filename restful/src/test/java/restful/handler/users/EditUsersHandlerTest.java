@@ -1,6 +1,7 @@
 package restful.handler.users;
 
 import core.DataStore;
+
 import core.request.Request;
 import core.request.RequestBuilder;
 import core.request.RequestMethod;
@@ -20,8 +21,7 @@ public class EditUsersHandlerTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/users/1/edit")
-        .setHttpVersion("HTTP/1.1")
-        .setHeader("Host: localhost")
+                .setHeader("Host: localhost")
         .build();
     DataStore<Integer, String> dataStore = new DataStore<>();
     dataStore.storeEntry(1, "foo");
@@ -37,8 +37,7 @@ public class EditUsersHandlerTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/users/500/edit")
-        .setHttpVersion("HTTP/1.1")
-        .setHeader("Host: localhost")
+                .setHeader("Host: localhost")
         .build();
     DataStore<Integer, String> dataStore = new DataStore<>();
     dataStore.storeEntry(1, "foo");

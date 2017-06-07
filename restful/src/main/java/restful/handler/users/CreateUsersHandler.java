@@ -23,8 +23,7 @@ public class CreateUsersHandler implements Handler {
     String usernameValue = request.getBodyParam(parameter);
     storeEntry(usernameValue);
     return new ResponseBuilder()
-        .setHttpVersion("HTTP/1.1")
-        .setStatusCode(HttpCodes.OK)
+                .setStatusCode(HttpCodes.OK)
         .build();
   }
 

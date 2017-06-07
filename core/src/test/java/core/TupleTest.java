@@ -2,14 +2,14 @@ package core;
 
 import core.request.RequestMethod;
 
-import org.junit.Test;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+
+import org.junit.Test;
 
 public class TupleTest {
 
@@ -85,11 +85,10 @@ public class TupleTest {
   public void equalTuplesProduceTheSameHashCode() throws Exception {
     Tuple<Enum<RequestMethod>, String> tuple1 = new Tuple<>(RequestMethod.GET, "/");
     Tuple<Enum<RequestMethod>, String> tuple2 = new Tuple<>(RequestMethod.GET, "/");
-    
+
     if (tuple1.equals(tuple2)) {
       assertTrue(tuple1.hashCode() == tuple2.hashCode());
-    }
-    else {
+    } else {
       System.out.println("tuples are not equal");
     }
   }

@@ -1,6 +1,5 @@
 package core.server;
 
-
 import core.Connection;
 
 import java.io.IOException;

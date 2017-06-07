@@ -8,9 +8,9 @@ import core.request.RequestMethod;
 
 import core.response.Response;
 
-import org.junit.Test;
-
 import java.io.IOException;
+
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -23,8 +23,7 @@ public class UpdateUsersHandlerTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.PUT)
         .setUri("/users/1")
-        .setHttpVersion("HTTP/1.1")
-        .setHeader("Host: localhost")
+                .setHeader("Host: localhost")
         .setBody("username=bar")
         .build();
 
@@ -43,8 +42,7 @@ public class UpdateUsersHandlerTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.PUT)
         .setUri("/users/500")
-        .setHttpVersion("HTTP/1.1")
-        .setHeader("Host: localhost")
+                .setHeader("Host: localhost")
         .setBody("username=bar")
         .build();
 

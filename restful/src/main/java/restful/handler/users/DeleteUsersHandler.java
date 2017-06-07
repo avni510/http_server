@@ -26,7 +26,6 @@ public class DeleteUsersHandler implements Handler {
     if (dataStore.keyExists(id)) {
       deleteUsername(request);
       return new ResponseBuilder()
-          .setHttpVersion("HTTP/1.1")
           .setStatusCode(HttpCodes.OK)
           .build();
     } else {

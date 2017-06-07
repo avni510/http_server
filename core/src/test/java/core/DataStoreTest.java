@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 public class DataStoreTest {
 
   @Test
-  public void dataIsStored(){
+  public void dataIsStored() {
     DataStore dataStore = new DataStore<String, String>();
 
     dataStore.storeEntry("data", "fatcat");
@@ -22,7 +22,7 @@ public class DataStoreTest {
   }
 
   @Test
-  public void valueIsReturned(){
+  public void valueIsReturned() {
     DataStore dataStore = new DataStore<Integer, String>();
 
     dataStore.storeEntry(1, "foo");
@@ -31,7 +31,7 @@ public class DataStoreTest {
   }
 
   @Test
-  public void clearData(){
+  public void clearData() {
     DataStore dataStore = new DataStore<String, String>();
     dataStore.storeEntry("data", "fatcat");
 
@@ -41,7 +41,7 @@ public class DataStoreTest {
   }
 
   @Test
-  public void getCountOfAllEntriesInDataStore(){
+  public void getCountOfAllEntriesInDataStore() {
     DataStore dataStore = new DataStore<Integer, String>();
     dataStore.storeEntry(1, "fatcat");
 
@@ -51,7 +51,7 @@ public class DataStoreTest {
   }
 
   @Test
-  public void anEntryIsDeleted(){
+  public void anEntryIsDeleted() {
     DataStore dataStore = new DataStore<String, String>();
     dataStore.storeEntry("data", "fatcat");
 
@@ -61,7 +61,7 @@ public class DataStoreTest {
   }
 
   @Test
-  public void returnsTrueIfAValueExists(){
+  public void returnsTrueIfAValueExists() {
     DataStore dataStore = new DataStore<Integer, String>();
     dataStore.storeEntry(1, "foo");
 

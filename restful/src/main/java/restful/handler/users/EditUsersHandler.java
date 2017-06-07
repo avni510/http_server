@@ -24,8 +24,7 @@ public class EditUsersHandler implements Handler {
     Integer id = request.getIdInUri();
     if (dataStore.keyExists(id)) {
       return new ResponseBuilder()
-          .setHttpVersion("HTTP/1.1")
-          .setStatusCode(HttpCodes.OK)
+                    .setStatusCode(HttpCodes.OK)
           .build();
     } else {
       Handler handler = new ErrorHandler(HttpCodes.NOT_FOUND);

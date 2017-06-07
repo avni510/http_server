@@ -2,11 +2,10 @@ package cobspec.handler.form;
 
 import core.DataStore;
 import core.HttpCodes;
+import core.Handler;
 
 import core.response.Response;
 import core.response.ResponseBuilder;
-
-import core.Handler;
 
 import core.request.Request;
 
@@ -23,7 +22,6 @@ public class FormGetHandler implements Handler {
   public Response generate(Request request) throws IOException {
     String dataValue = getDataValue();
     Response response = new ResponseBuilder()
-        .setHttpVersion("HTTP/1.1")
         .setStatusCode(HttpCodes.OK)
         .setHeader("Content-Type", "text/html")
         .setBody(getBody(dataValue))

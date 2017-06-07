@@ -1,9 +1,9 @@
 package cobspec.configuration;
 
 import core.DataStore;
-import core.request.RequestMethod;
-
 import core.Router;
+
+import core.request.RequestMethod;
 
 import core.handler.BaseHandler;
 

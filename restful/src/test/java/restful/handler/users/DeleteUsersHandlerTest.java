@@ -21,8 +21,7 @@ public class DeleteUsersHandlerTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.DELETE)
         .setUri("/users/1")
-        .setHttpVersion("HTTP/1.1")
-        .setHeader("Host: localhost")
+                .setHeader("Host: localhost")
         .build();
     DataStore<Integer, String> dataStore = new DataStore<>();
     dataStore.storeEntry(1, "foo");
@@ -39,8 +38,7 @@ public class DeleteUsersHandlerTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.DELETE)
         .setUri("/users/500")
-        .setHttpVersion("HTTP/1.1")
-        .setHeader("Host: localhost")
+                .setHeader("Host: localhost")
         .build();
     DataStore<Integer, String> dataStore = new DataStore<>();
     dataStore.storeEntry(1, "foo");
@@ -56,8 +54,7 @@ public class DeleteUsersHandlerTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.DELETE)
         .setUri("/users/bar")
-        .setHttpVersion("HTTP/1.1")
-        .setHeader("Host: localhost")
+                .setHeader("Host: localhost")
         .build();
     DataStore<Integer, String> dataStore = new DataStore<>();
     dataStore.storeEntry(1, "foo");

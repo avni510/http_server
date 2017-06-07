@@ -1,6 +1,5 @@
 package cobspec.configuration;
 
-import cobspec.configuration.ConfigurationValidation;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
@@ -10,7 +9,7 @@ public class ConfigurationValidationTest {
   private Integer defaultPort = 4444;
 
   @Test
-  public void wrongFlagsWithFourArguments(){
+  public void wrongFlagsWithFourArguments() {
     ConfigurationValidation configurationValidation = new ConfigurationValidation(defaultPort);
     String[] commandLineArgs = {"port", "5000", "directory", "/foo"};
 
@@ -20,7 +19,7 @@ public class ConfigurationValidationTest {
   }
 
   @Test
-  public void wrongFlagsWithTwoArguments(){
+  public void wrongFlagsWithTwoArguments() {
     ConfigurationValidation configurationValidation = new ConfigurationValidation(defaultPort);
     String[] commandLineArgs = {"port", "5000"};
 
@@ -30,7 +29,7 @@ public class ConfigurationValidationTest {
   }
 
   @Test
-  public void validFlagsWithTwoArguments(){
+  public void validFlagsWithTwoArguments() {
     ConfigurationValidation configurationValidation = new ConfigurationValidation(defaultPort);
     String[] commandLineArgs = {"-p", "5000"};
 
@@ -40,7 +39,7 @@ public class ConfigurationValidationTest {
   }
 
   @Test
-  public void invalidArguments(){
+  public void invalidArguments() {
     ConfigurationValidation configurationValidation = new ConfigurationValidation(defaultPort);
     String[] commandLineArgs = {"5000"};
 
@@ -50,7 +49,7 @@ public class ConfigurationValidationTest {
   }
 
   @Test
-  public void argumentsWithOutFlags(){
+  public void argumentsWithOutFlags() {
     ConfigurationValidation configurationValidation = new ConfigurationValidation(defaultPort);
     String[] commandLineArgs = {"5000", "/new_directory"};
 
@@ -60,7 +59,7 @@ public class ConfigurationValidationTest {
   }
 
   @Test
-  public void tooLargePortNumber(){
+  public void tooLargePortNumber() {
     ConfigurationValidation configurationValidation = new ConfigurationValidation(defaultPort);
     String[] commandLineArgs = {"-p", "65536"};
 
@@ -70,7 +69,7 @@ public class ConfigurationValidationTest {
   }
 
   @Test
-  public void tooSmallLargePortNumber(){
+  public void tooSmallLargePortNumber() {
     ConfigurationValidation configurationValidation = new ConfigurationValidation(defaultPort);
     String[] commandLineArgs = {"-p", "-1"};
 
@@ -80,7 +79,7 @@ public class ConfigurationValidationTest {
   }
 
   @Test
-  public void noPortNumberSupplied(){
+  public void noPortNumberSupplied() {
     ConfigurationValidation configurationValidation = new ConfigurationValidation(defaultPort);
     String[] commandLineArgs = {"-d", "/new_directory"};
 
@@ -90,7 +89,7 @@ public class ConfigurationValidationTest {
   }
 
   @Test
-  public void sameFlagIsSupplied(){
+  public void sameFlagIsSupplied() {
     ConfigurationValidation configurationValidation = new ConfigurationValidation(defaultPort);
     String[] commandLineArgs = {"-p", "5000", "-p", "/new_directory"};
 
@@ -100,7 +99,7 @@ public class ConfigurationValidationTest {
   }
 
   @Test
-  public void flagsAreOutOfOrder(){
+  public void flagsAreOutOfOrder() {
     ConfigurationValidation configurationValidation = new ConfigurationValidation(defaultPort);
     String[] commandLineArgs = {"5000", "-p", "/new_directory", "-d"};
 
@@ -110,7 +109,7 @@ public class ConfigurationValidationTest {
   }
 
   @Test
-  public void noArguments(){
+  public void noArguments() {
     ConfigurationValidation configurationValidation = new ConfigurationValidation(defaultPort);
     String[] commandLineArgs = {};
 

@@ -18,7 +18,7 @@ public class ServerProcessor implements Runnable {
   private Connection clientConnection;
   private Middleware app;
 
-  public ServerProcessor(Connection clientConnection, Middleware app){
+  public ServerProcessor(Connection clientConnection, Middleware app) {
     this.clientConnection = clientConnection;
     this.app = app;
   }
@@ -35,7 +35,7 @@ public class ServerProcessor implements Runnable {
   }
 
   private BufferedReader read(Connection clientConnection) throws IOException {
-   return new BufferedReader(new InputStreamReader(clientConnection.in()));
+    return new BufferedReader(new InputStreamReader(clientConnection.in()));
   }
 
   private Response getHttpResponse(BufferedReader inputStream) throws Exception {
@@ -51,7 +51,7 @@ public class ServerProcessor implements Runnable {
     return handler.generate(request);
   }
 
-  private void write(Connection clientConnection, Response response) throws Exception{
+  private void write(Connection clientConnection, Response response) throws Exception {
     clientConnection.out().write(response.getHttpResponseBytes());
   }
 }

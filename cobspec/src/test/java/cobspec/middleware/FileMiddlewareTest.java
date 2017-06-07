@@ -4,6 +4,7 @@ import core.Handler;
 import core.Middleware;
 
 import core.middleware.FinalMiddleware;
+
 import core.request.Request;
 import core.request.RequestBuilder;
 import core.request.RequestMethod;
@@ -17,13 +18,12 @@ import static org.junit.Assert.assertEquals;
 public class FileMiddlewareTest {
 
   @Test
-  public void responseForFileIsReturned() throws Exception{
+  public void responseForFileIsReturned() throws Exception {
     String rootDirectoryPath = System.getProperty("user.dir") + "/code";
     Middleware nextMiddleware = new FinalMiddleware();
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/result.txt")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
     FileMiddleware fileMiddleware = new FileMiddleware(rootDirectoryPath, nextMiddleware);
@@ -42,7 +42,6 @@ public class FileMiddlewareTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/validation.txt")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
     FileMiddleware fileMiddleware = new FileMiddleware(rootDirectoryPath, nextMiddleware);
@@ -61,7 +60,6 @@ public class FileMiddlewareTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.PUT)
         .setUri("/validation.txt")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
     FileMiddleware fileMiddleware = new FileMiddleware(rootDirectoryPath, nextMiddleware);
@@ -79,7 +77,6 @@ public class FileMiddlewareTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/nonexistent_route")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
     FileMiddleware fileMiddleware = new FileMiddleware(rootDirectoryPath, nextMiddleware);

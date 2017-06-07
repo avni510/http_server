@@ -15,33 +15,32 @@ import core.mocks.MockSocket;
 
 import core.request.RequestMethod;
 
-import core.server.ServerProcessor;
-import org.junit.Test;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+
+import org.junit.Test;
 
 import java.net.Socket;
 
 public class ServerProcessorTest {
   private MockServerSocketConnection serverSocketConnection;
 
-  private Socket createMockSocket(String request){
+  private Socket createMockSocket(String request) {
     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(request.getBytes());
     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
     return new MockSocket(byteArrayInputStream, byteArrayOutputStream);
   }
 
-  private void setupRouter(Router router){
+  private void setupRouter(Router router) {
     router.addRoute(RequestMethod.GET, "/hello_world", new BaseHandler());
   }
 
-  private RoutingMiddleware setupMiddlewares(Router router){
+  private RoutingMiddleware setupMiddlewares(Router router) {
     FinalMiddleware finalMiddleware = new FinalMiddleware();
     return new RoutingMiddleware(router, finalMiddleware);
   }
 
-  private ServerProcessor setup(String request){
+  private ServerProcessor setup(String request) {
     Socket socket = createMockSocket(request);
     serverSocketConnection = new MockServerSocketConnection(socket);
     serverSocketConnection.setStoredInputData(request);
@@ -59,13 +58,13 @@ public class ServerProcessorTest {
     serverProcessor.run();
 
     String response = "HTTP/1.1 200 OK" + Constants.CLRF + "Content-Type: text/plain" +
-                      Constants.CLRF + Constants.CLRF + "hello world";
+        Constants.CLRF + Constants.CLRF + "hello world";
     assertEquals(response, serverSocketConnection.getStoredOutputData());
   }
 
   @Test
   public void responseIsWrittenOutForInvalidRequest() throws Exception {
-    String request = "/ HTTP/1.1" + Constants.CLRF + "Host: localhost" + Constants.CLRF + Constants.CLRF;
+    String request = "/" + Constants.CLRF + "Host: localhost" + Constants.CLRF + Constants.CLRF;
     ServerProcessor serverProcessor = setup(request);
 
     serverProcessor.run();

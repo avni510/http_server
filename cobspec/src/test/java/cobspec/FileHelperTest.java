@@ -1,8 +1,5 @@
 package cobspec;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import java.io.IOException;
 
 import java.nio.file.Files;
@@ -15,6 +12,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Arrays;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -26,11 +26,11 @@ public class FileHelperTest {
     rootFilePath = System.getProperty("user.dir") + "/code";
   }
 
-  private void addNameAndRelativePath(Map<String, String> paths, String fileName ) {
+  private void addNameAndRelativePath(Map<String, String> paths, String fileName) {
     paths.put(fileName, "/" + fileName);
   }
 
-  private Map<String, String> populateNamesAndRelativePaths(){
+  private Map<String, String> populateNamesAndRelativePaths() {
     Map<String, String> paths = new HashMap();
     addNameAndRelativePath(paths, "log_time_entry.txt");
     addNameAndRelativePath(paths, "result.txt");
@@ -39,7 +39,7 @@ public class FileHelperTest {
     return paths;
   }
 
-  private ArrayList<String> populateRelativePaths(){
+  private ArrayList<String> populateRelativePaths() {
     ArrayList<String> relativePaths = new ArrayList<>();
     relativePaths.add("/log_time_entry.txt");
     relativePaths.add("/result.txt");
@@ -71,7 +71,7 @@ public class FileHelperTest {
   }
 
   @Test
-  public void fileBytesAreReturned(){
+  public void fileBytesAreReturned() {
     FileHelper fileHelper = new FileHelper();
     String filePath = rootFilePath + "/result.txt";
 
@@ -88,7 +88,7 @@ public class FileHelperTest {
   }
 
   @Test
-  public void fileHashValueIsReturned(){
+  public void fileHashValueIsReturned() {
     FileHelper fileHelper = new FileHelper();
 
     String filePath = rootFilePath + "/result.txt";
@@ -98,13 +98,13 @@ public class FileHelperTest {
     assertEquals(expectedResult, actualResult);
   }
 
-  private void resetFileToOriginalContents(String filePath, String originalFileContent){
+  private void resetFileToOriginalContents(String filePath, String originalFileContent) {
     FileHelper fileHelper = new FileHelper();
     fileHelper.write(originalFileContent, filePath);
   }
 
   @Test
-  public void aFileIsWrittenTo(){
+  public void aFileIsWrittenTo() {
     FileHelper fileHelper = new FileHelper();
     String filePath = rootFilePath + "/result.txt";
     String originalFileContent = new String(fileHelper.readBytes(filePath));
@@ -118,7 +118,7 @@ public class FileHelperTest {
   }
 
   @Test
-  public void partialFileContentsAreReturned(){
+  public void partialFileContentsAreReturned() {
     FileHelper fileHelper = new FileHelper();
 
     String filePath = rootFilePath + "/result.txt";
@@ -130,7 +130,7 @@ public class FileHelperTest {
   }
 
   @Test
-  public void fileLengthIsReturned(){
+  public void fileLengthIsReturned() {
     FileHelper fileHelper = new FileHelper();
 
     String filePath = rootFilePath + "/result.txt";
@@ -140,7 +140,7 @@ public class FileHelperTest {
   }
 
   @Test
-  public void mimeTypeForPlainTextIsReturned(){
+  public void mimeTypeForPlainTextIsReturned() {
     FileHelper fileHelper = new FileHelper();
 
     String filePath = rootFilePath + "/result.txt";
@@ -150,7 +150,7 @@ public class FileHelperTest {
   }
 
   @Test
-  public void mimeTypeForPngIsReturned(){
+  public void mimeTypeForPngIsReturned() {
     FileHelper fileHelper = new FileHelper();
 
     String filePath = rootFilePath + "/image.png";

@@ -1,12 +1,15 @@
 package cobspec;
 
+import core.Router;
+
+import core.middleware.FinalMiddleware;
+import core.middleware.RoutingMiddleware;
+
 import cobspec.configuration.ConfigurationCommandLine;
 import cobspec.configuration.ConfigurationRoutes;
 
-import core.middleware.FinalMiddleware;
 import cobspec.middleware.FileMiddleware;
-import core.*;
-import core.middleware.RoutingMiddleware;
+
 import core.server.HttpServer;
 import core.server.Server;
 import core.server.ServerCancellationToken;
@@ -37,18 +40,18 @@ public class Main {
     httpServer.execute();
   }
 
-  private static ConfigurationCommandLine configCommandLine(String[] args){
+  private static ConfigurationCommandLine configCommandLine(String[] args) {
     ConfigurationCommandLine configurationCommandLine = new ConfigurationCommandLine();
     configurationCommandLine.parse(args);
     return configurationCommandLine;
   }
 
-  private static Router configRoutes(String directoryPath){
+  private static Router configRoutes(String directoryPath) {
     ConfigurationRoutes configurationRoutes = new ConfigurationRoutes(directoryPath);
     return configurationRoutes.buildRouter();
   }
 
-  private static RoutingMiddleware setupApp(Router router, String directoryPath){
+  private static RoutingMiddleware setupApp(Router router, String directoryPath) {
     FinalMiddleware finalMiddleware = new FinalMiddleware();
     FileMiddleware fileMiddleware = new FileMiddleware(directoryPath, finalMiddleware);
     return new RoutingMiddleware(router, fileMiddleware);

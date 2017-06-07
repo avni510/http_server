@@ -9,7 +9,7 @@ public class ServerCancellationToken implements CancellationToken {
     return listening;
   }
 
-  public void cancel(){
+  public void cancel() {
     listening = false;
   }
 

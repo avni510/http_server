@@ -1,10 +1,5 @@
 package cobspec.middleware;
 
-import cobspec.FileHelper;
-
-import cobspec.handler.file_reader.FileReaderGetHandler;
-import cobspec.handler.file_reader.FileReaderPatchHandler;
-
 import core.HttpCodes;
 import core.Middleware;
 import core.Handler;
@@ -13,6 +8,11 @@ import core.handler.ErrorHandler;
 
 import core.request.Request;
 import core.request.RequestMethod;
+
+import cobspec.FileHelper;
+
+import cobspec.handler.file_reader.FileReaderGetHandler;
+import cobspec.handler.file_reader.FileReaderPatchHandler;
 
 import java.util.ArrayList;
 

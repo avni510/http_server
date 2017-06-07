@@ -1,6 +1,7 @@
 package core.response;
 
 import core.Constants;
+
 import core.request.Header;
 
 import java.io.ByteArrayOutputStream;
@@ -19,7 +20,7 @@ public class Response {
     this.body = body;
   }
 
-  public byte[] getHttpResponseBytes(){
+  public byte[] getHttpResponseBytes() {
     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
     byte[] responseLineAndHeader = getResponseLineAndHeader().getBytes();
     try {
@@ -41,15 +42,15 @@ public class Response {
     return httpVersion + " " + statusCodeMessage + Constants.CLRF + headerMessage + Constants.CLRF;
   }
 
-  public String getStatusCodeMessage(){
+  public String getStatusCodeMessage() {
     return this.statusCodeMessage;
   }
 
-  public String getHeaders(){
+  public String getHeaders() {
     return header.convertHeadersToString();
   }
 
-  public byte[] getBody(){
+  public byte[] getBody() {
     return this.body;
   }
 }

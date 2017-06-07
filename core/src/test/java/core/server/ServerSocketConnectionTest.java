@@ -1,15 +1,14 @@
 package core.server;
 
-import core.server.ServerSocketConnection;
-import org.junit.Before;
-import org.junit.Test;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.net.Socket;
+
+import org.junit.Before;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -40,18 +39,18 @@ public class ServerSocketConnectionTest {
     private InputStream inputStream;
     private OutputStream outputStream;
 
-    public MockSocket (InputStream inputstream, OutputStream outputStream) {
+    public MockSocket(InputStream inputstream, OutputStream outputStream) {
       this.inputStream = inputstream;
       this.outputStream = outputStream;
     }
 
     @Override
-    public InputStream getInputStream(){
+    public InputStream getInputStream() {
       return inputStream;
     }
 
     @Override
-    public OutputStream getOutputStream(){
+    public OutputStream getOutputStream() {
       return outputStream;
     }
   }

@@ -26,8 +26,7 @@ public class ShowUsersHandler implements Handler {
     if (dataStore.keyExists(id)) {
       String username = dataStore.getValue(id);
       return new ResponseBuilder()
-          .setHttpVersion("HTTP/1.1")
-          .setStatusCode(HttpCodes.OK)
+                    .setStatusCode(HttpCodes.OK)
           .setHeader("Content-Type", "text/plain")
           .setBody(username)
           .build();

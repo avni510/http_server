@@ -9,7 +9,7 @@ import java.util.Map;
 public class Header {
   private Map<String, String> headerStore = new HashMap<>();
 
-  public void add(String key, String value){
+  public void add(String key, String value) {
     headerStore.put(key, value);
   }
 
@@ -18,11 +18,11 @@ public class Header {
     populateHeaders(headerMessageComponents);
   }
 
-  public Map<String, String> getAllHeaders(){
+  public Map<String, String> getAllHeaders() {
     return headerStore;
   }
 
-  public String convertHeadersToString(){
+  public String convertHeadersToString() {
     StringBuilder allHeaders = new StringBuilder();
     for (Map.Entry<String, String> header : headerStore.entrySet()) {
       allHeaders.append(header.getKey() + ": " + header.getValue() + Constants.CLRF);
@@ -30,14 +30,14 @@ public class Header {
     return allHeaders.toString();
   }
 
-  public String getValue(String key){
+  public String getValue(String key) {
     return headerStore.get(key);
   }
 
   private ArrayList<String[]> splitIntoHeaderParts(String headers) {
     String[] splitEachHeader = headers.split(Constants.CLRF);
     ArrayList<String[]> headerMessageComponents = new ArrayList<>();
-    for(String header : splitEachHeader) {
+    for (String header : splitEachHeader) {
       headerMessageComponents.add(header.split(": "));
     }
     return headerMessageComponents;
@@ -53,7 +53,7 @@ public class Header {
   }
 
   private String getHeaderName(String[] headerParts) {
-   return headerParts[0];
+    return headerParts[0];
   }
 
   private String getHeaderDescription(String[] headerParts) {

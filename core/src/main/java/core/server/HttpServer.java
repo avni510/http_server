@@ -25,8 +25,7 @@ public class HttpServer {
         Connection connection = server.accept();
         serverExecutor.execute(connection);
       }
-    }
-    catch(Exception e){
+    } catch (Exception e) {
       e.printStackTrace();
     } finally {
       try {

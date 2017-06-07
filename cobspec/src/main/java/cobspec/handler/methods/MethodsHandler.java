@@ -14,7 +14,6 @@ public class MethodsHandler implements Handler {
 
   public Response generate(Request request) throws IOException {
     return new ResponseBuilder()
-        .setHttpVersion("HTTP/1.1")
         .setStatusCode(HttpCodes.OK)
         .build();
   }

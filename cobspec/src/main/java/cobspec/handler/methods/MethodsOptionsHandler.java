@@ -21,7 +21,6 @@ public class MethodsOptionsHandler implements Handler {
   public Response generate(Request request) throws IOException {
     String allAllowedRequestMethods = requestMethodsToString();
     return new ResponseBuilder()
-        .setHttpVersion("HTTP/1.1")
         .setStatusCode(HttpCodes.OK)
         .setHeader("Allow", allAllowedRequestMethods)
         .build();

@@ -21,7 +21,7 @@ public class Request {
     populateHeaders();
   }
 
-  public void populateHeaders(){
+  public void populateHeaders() {
     if (header != null) {
       headerClass.populate(header);
     }
@@ -43,7 +43,7 @@ public class Request {
     return headerClass.getAllHeaders();
   }
 
-  public String getHeaderValue(String key){
+  public String getHeaderValue(String key) {
     return headerClass.getValue(key);
   }
 
@@ -51,7 +51,7 @@ public class Request {
     return this.body;
   }
 
-  public String getBodyParam(String key){
+  public String getBodyParam(String key) {
     Map<String, String> bodyComponents = transformBody(body);
     if (bodyComponents != null) {
       return bodyComponents.get(key);
@@ -79,7 +79,7 @@ public class Request {
     return true;
   }
 
-  private Map<String, String> transformBody(String body){
+  private Map<String, String> transformBody(String body) {
     Map<String, String> bodyRepresentation = new HashMap();
     if (body != null) {
       String[] bodyKeysAndValues = body.split("&");

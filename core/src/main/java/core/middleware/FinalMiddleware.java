@@ -6,8 +6,6 @@ import core.Middleware;
 
 import core.request.Request;
 
-import core.response.Response;
-
 import core.handler.ErrorHandler;
 
 public class FinalMiddleware implements Middleware {

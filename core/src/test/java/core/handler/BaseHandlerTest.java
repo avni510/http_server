@@ -19,7 +19,6 @@ public class BaseHandlerTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/hello_world")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
     BaseHandler baseHandler = new BaseHandler();
@@ -27,6 +26,6 @@ public class BaseHandlerTest {
     Response actualResponse = baseHandler.generate(request);
 
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
-    assertEquals("hello world", new String (actualResponse.getBody()));
+    assertEquals("hello world", new String(actualResponse.getBody()));
   }
 }

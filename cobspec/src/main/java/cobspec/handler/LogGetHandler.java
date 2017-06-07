@@ -36,7 +36,6 @@ public class LogGetHandler implements Handler {
 
   private Response handleAuthorizedRequest() {
     return new ResponseBuilder()
-        .setHttpVersion("HTTP/1.1")
         .setStatusCode(HttpCodes.OK)
         .setHeader("Content-Type", "plain/text")
         .setBody(getBody())
@@ -45,7 +44,6 @@ public class LogGetHandler implements Handler {
 
   private Response handleUnAuthorizedRequest() {
     return new ResponseBuilder()
-        .setHttpVersion("HTTP/1.1")
         .setStatusCode(HttpCodes.UNAUTHORIZED)
         .setHeader("WWW-Authenticate", "Basic realm=\"Access to Avni's Server\"")
         .build();
