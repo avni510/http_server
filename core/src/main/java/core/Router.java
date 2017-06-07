@@ -13,13 +13,13 @@ public class Router {
     return this;
   }
 
-  public Handler retrieveHandler(Enum<RequestMethod> requestMethod, String uri){
+  public Handler retrieveHandler(Enum<RequestMethod> requestMethod, String uri) {
     if (uri.contains("?")) {
       String uriWithoutQueryParams = getUriWithoutQueryParams(uri);
       return routes.get(new Tuple<>(requestMethod, uriWithoutQueryParams));
     } else {
       Handler handler = routes.get(new Tuple<>(requestMethod, uri));
-      if(handler == null) {
+      if (handler == null) {
         String dynamicUri = getDynamicUri(uri);
         handler = routes.get(new Tuple<>(requestMethod, dynamicUri));
       }
@@ -27,15 +27,14 @@ public class Router {
     }
   }
 
-  public boolean uriExists(String uri){
-    boolean found = false;
-    for(Map.Entry<Tuple<Enum<RequestMethod>, String>, Handler> route : routes.entrySet()){
+  public boolean uriExists(String uri) {
+    for (Map.Entry<Tuple<Enum<RequestMethod>, String>, Handler> route : routes.entrySet()) {
       String uriInRouter = route.getKey().getSecondElement();
-      if (uriInRouter.equals(uri)){
+      if (uriInRouter.equals(uri)) {
         return true;
       }
     }
-    return found;
+    return false;
   }
 
   private String getUriWithoutQueryParams(String uri) {
@@ -43,14 +42,14 @@ public class Router {
     return uriParts[0];
   }
 
-  private String getDynamicUri(String uri){
-    if(uri.contains("edit")) {
+  private String getDynamicUri(String uri) {
+    if (uri.contains("edit")) {
       return getDynamicUriForEdit(uri);
     }
     return uri.substring(0, uri.length() - 1) + ":id";
   }
 
-  private String getDynamicUriForEdit(String uri){
+  private String getDynamicUriForEdit(String uri) {
     String[] uriParts = uri.split("/");
     uriParts[uriParts.length - 2] = ":id";
     return String.join("/", uriParts);

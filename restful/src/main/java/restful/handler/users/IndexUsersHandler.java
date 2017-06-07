@@ -3,6 +3,7 @@ package restful.handler.users;
 import core.DataStore;
 import core.Handler;
 
+import core.HttpCodes;
 import core.request.Request;
 
 import core.response.Response;
@@ -19,23 +20,23 @@ import java.io.StringWriter;
 
 import java.util.Map;
 
-public class IndexUsersHandler implements Handler{
+public class IndexUsersHandler implements Handler {
   private DataStore<Integer, String> dataStore;
 
-  public IndexUsersHandler(DataStore dataStore){
+  public IndexUsersHandler(DataStore dataStore) {
     this.dataStore = dataStore;
   }
 
   public Response generate(Request request) throws IOException {
     return new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
-        .setStatusCode(200)
+        .setStatusCode(HttpCodes.OK)
         .setHeader("Content-Type", "text/plain")
         .setBody(allUsernamesDisplay())
         .build();
   }
 
-  private String allUsernamesDisplay(){
+  private String allUsernamesDisplay() {
     Map<Integer, String> allDataValues = dataStore.getData();
     StringWriter stringWriter = new StringWriter();
     JsonWriter jsonWriter = Json.createWriter(stringWriter);
@@ -45,7 +46,7 @@ public class IndexUsersHandler implements Handler{
     return stringWriter.toString();
   }
 
-  private JsonArray populateUsers(Map<Integer, String> allDataValues){
+  private JsonArray populateUsers(Map<Integer, String> allDataValues) {
     JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
     for (Map.Entry<Integer, String> data : allDataValues.entrySet()) {
       String id = String.valueOf(data.getKey());

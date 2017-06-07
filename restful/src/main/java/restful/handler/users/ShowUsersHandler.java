@@ -2,8 +2,12 @@ package restful.handler.users;
 
 import core.DataStore;
 import core.Handler;
+import core.HttpCodes;
+
 import core.handler.ErrorHandler;
+
 import core.request.Request;
+
 import core.response.Response;
 import core.response.ResponseBuilder;
 
@@ -13,7 +17,7 @@ import java.io.IOException;
 public class ShowUsersHandler implements Handler {
   private DataStore<Integer, String> dataStore;
 
-  public ShowUsersHandler(DataStore dataStore){
+  public ShowUsersHandler(DataStore dataStore) {
     this.dataStore = dataStore;
   }
 
@@ -23,12 +27,12 @@ public class ShowUsersHandler implements Handler {
       String username = dataStore.getValue(id);
       return new ResponseBuilder()
           .setHttpVersion("HTTP/1.1")
-          .setStatusCode(200)
+          .setStatusCode(HttpCodes.OK)
           .setHeader("Content-Type", "text/plain")
           .setBody(username)
           .build();
     } else {
-      Handler handler = new ErrorHandler(404);
+      Handler handler = new ErrorHandler(HttpCodes.NOT_FOUND);
       return handler.generate(request);
     }
   }

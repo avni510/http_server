@@ -1,13 +1,16 @@
 package cobspec.handler.file_reader;
 
+import core.HttpCodes;
+import core.Tuple;
+import core.Handler;
+
 import core.response.Response;
 import core.response.ResponseBuilder;
 
-import core.Tuple;
-import core.Handler;
+import core.request.Request;
+
 import cobspec.FileHelper;
 
-import core.request.Request;
 
 import java.io.IOException;
 
@@ -31,31 +34,31 @@ public class FileReaderGetHandler implements Handler {
     return response;
   }
 
-  private Response handleRequestWithRange(String rangeHeader){
+  private Response handleRequestWithRange(String rangeHeader) {
     Tuple<Integer, Integer> byteRange = getRangeValues(rangeHeader);
     return new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
-        .setStatusCode(206)
+        .setStatusCode(HttpCodes.PARTIAL_CONTENT)
         .setHeader("Content-Type", "text/plain")
         .setHeader("Content-Range", "bytes " + byteRange.getFirstElement() + "-" + byteRange.getSecondElement())
         .setBody(fileHelper.getPartialContents(filePath, byteRange.getFirstElement(), byteRange.getSecondElement()))
         .build();
   }
 
-  private Response handleRequestWithNoRange(){
-     return new ResponseBuilder()
-         .setHttpVersion("HTTP/1.1")
-         .setStatusCode(200)
-         .setHeader("Content-Type", fileHelper.getMimeType(filePath))
-         .setHeader("Content-Length", String.valueOf(fileHelper.getLength(filePath)))
-         .setHeader("ETag", fileHelper.hashValue(filePath))
-         .setBody(fileHelper.readBytes(filePath))
-         .build();
+  private Response handleRequestWithNoRange() {
+    return new ResponseBuilder()
+        .setHttpVersion("HTTP/1.1")
+        .setStatusCode(HttpCodes.OK)
+        .setHeader("Content-Type", fileHelper.getMimeType(filePath))
+        .setHeader("Content-Length", String.valueOf(fileHelper.getLength(filePath)))
+        .setHeader("ETag", fileHelper.hashValue(filePath))
+        .setBody(fileHelper.readBytes(filePath))
+        .build();
   }
 
-  private String returnRangeHeader(Request request){
-                                                    return request.getHeaderValue("Range");
-                                                                                            }
+  private String returnRangeHeader(Request request) {
+    return request.getHeaderValue("Range");
+  }
 
   private Tuple<Integer, Integer> getRangeValues(String header) {
     String rangeInRequest = getRange(header);
@@ -63,28 +66,28 @@ public class FileReaderGetHandler implements Handler {
     Integer rangeStringLength = rangeInRequest.length() - 1;
     if (noSpecifiedStartValue(indexOfHyphen)) {
       return getRangeWithNoStartValue(rangeInRequest);
-    } else if(noSpecifiedEndValue(indexOfHyphen, rangeStringLength)) {
+    } else if (noSpecifiedEndValue(indexOfHyphen, rangeStringLength)) {
       return getRangeWithNoEndValue(rangeInRequest);
     } else {
       return getRangeWithAllValuesSpecified(rangeInRequest);
     }
   }
 
-  private Tuple<Integer, Integer> getRangeWithNoStartValue(String rangeInRequest){
+  private Tuple<Integer, Integer> getRangeWithNoStartValue(String rangeInRequest) {
     Integer startIndex = fileHelper.getLength(filePath) - Integer.parseInt(rangeInRequest.substring(1));
     Integer endIndex = fileHelper.getLength(filePath);
     return new Tuple<>(startIndex, endIndex);
   }
 
-  private Tuple<Integer, Integer> getRangeWithNoEndValue(String rangeInRequest){
+  private Tuple<Integer, Integer> getRangeWithNoEndValue(String rangeInRequest) {
     Integer startIndex = Integer.parseInt(rangeInRequest.substring(0, 1));
     Integer endIndex = fileHelper.getLength(filePath);
     return new Tuple<>(startIndex, endIndex);
   }
 
 
-  private Tuple<Integer, Integer> getRangeWithAllValuesSpecified(String rangeInRequest){
-    Integer startIndex = Integer.parseInt(rangeInRequest.substring(0,1));
+  private Tuple<Integer, Integer> getRangeWithAllValuesSpecified(String rangeInRequest) {
+    Integer startIndex = Integer.parseInt(rangeInRequest.substring(0, 1));
     Integer endIndex = Integer.parseInt(rangeInRequest.substring(2)) + 1;
     return new Tuple<>(startIndex, endIndex);
   }
@@ -94,11 +97,11 @@ public class FileReaderGetHandler implements Handler {
   }
 
   private boolean noSpecifiedEndValue(Integer indexOfHyphen, Integer rangeStringLength) {
-   return indexOfHyphen == rangeStringLength;
+    return indexOfHyphen == rangeStringLength;
   }
 
 
-  private String getRange(String header){
+  private String getRange(String header) {
     String[] rangeParts = header.split("=");
     return rangeParts[1];
   }

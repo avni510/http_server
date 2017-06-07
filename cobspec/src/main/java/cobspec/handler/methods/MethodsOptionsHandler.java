@@ -1,6 +1,7 @@
 package cobspec.handler.methods;
 
 import core.Handler;
+import core.HttpCodes;
 
 import core.request.Request;
 import core.request.RequestMethod;
@@ -13,7 +14,7 @@ import java.io.IOException;
 public class MethodsOptionsHandler implements Handler {
   private RequestMethod[] requestMethodsOnResource;
 
-  public MethodsOptionsHandler(RequestMethod[] requestMethodsOnResource){
+  public MethodsOptionsHandler(RequestMethod[] requestMethodsOnResource) {
     this.requestMethodsOnResource = requestMethodsOnResource;
   }
 
@@ -21,15 +22,15 @@ public class MethodsOptionsHandler implements Handler {
     String allAllowedRequestMethods = requestMethodsToString();
     return new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
-        .setStatusCode(200)
+        .setStatusCode(HttpCodes.OK)
         .setHeader("Allow", allAllowedRequestMethods)
         .build();
   }
 
-  private String requestMethodsToString(){
+  private String requestMethodsToString() {
     StringBuilder allRequestMethods = new StringBuilder();
     Integer lastIndex = requestMethodsOnResource.length - 1;
-    for(int i = 0; i < lastIndex; i++){
+    for (int i = 0; i < lastIndex; i++) {
       allRequestMethods.append(requestMethodsOnResource[i].toString() + ",");
     }
     Enum<RequestMethod> lastElement = requestMethodsOnResource[lastIndex];

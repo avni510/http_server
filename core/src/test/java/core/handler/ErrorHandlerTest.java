@@ -1,5 +1,6 @@
 package core.handler;
 
+import core.HttpCodes;
 import core.handler.ErrorHandler;
 import core.request.Request;
 import core.request.RequestBuilder;
@@ -21,7 +22,7 @@ public class ErrorHandlerTest {
         .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
-    ErrorHandler errorHandler = new ErrorHandler(404);
+    ErrorHandler errorHandler = new ErrorHandler(HttpCodes.NOT_FOUND);
 
     Response actualResponse = errorHandler.generate(request);
 
@@ -31,7 +32,7 @@ public class ErrorHandlerTest {
   @Test
   public void testResponseIsReturnedFor400Error() {
     Request request = null;
-    ErrorHandler errorHandler = new ErrorHandler(400);
+    ErrorHandler errorHandler = new ErrorHandler(HttpCodes.BAD_REQUEST);
 
     Response actualResponse = errorHandler.generate(request);
 

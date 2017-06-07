@@ -2,6 +2,7 @@ package restful.handler.users;
 
 import core.DataStore;
 import core.Handler;
+import core.HttpCodes;
 
 import core.handler.ErrorHandler;
 
@@ -26,10 +27,10 @@ public class DeleteUsersHandler implements Handler {
       deleteUsername(request);
       return new ResponseBuilder()
           .setHttpVersion("HTTP/1.1")
-          .setStatusCode(200)
+          .setStatusCode(HttpCodes.OK)
           .build();
     } else {
-      Handler handler = new ErrorHandler(404);
+      Handler handler = new ErrorHandler(HttpCodes.NOT_FOUND);
       return handler.generate(request);
     }
   }

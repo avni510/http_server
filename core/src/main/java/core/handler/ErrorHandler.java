@@ -7,9 +7,9 @@ import core.response.Response;
 import core.response.ResponseBuilder;
 
 public class ErrorHandler implements Handler {
-  private Integer errorCode;
+  private String errorCode;
 
-  public ErrorHandler(Integer errorCode){
+  public ErrorHandler(String errorCode){
     this.errorCode = errorCode;
   }
 

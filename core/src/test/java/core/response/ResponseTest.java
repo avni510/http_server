@@ -2,6 +2,7 @@ package core.response;
 
 import core.Constants;
 
+import core.HttpCodes;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -14,7 +15,7 @@ public class ResponseTest {
   public void httpResponseIstReturnedWithHeaderAndBody() {
     Response response = new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
-        .setStatusCode(200)
+        .setStatusCode(HttpCodes.OK)
         .setHeader("Content-Type", "text/plain")
         .setBody("hello world")
         .build();
@@ -28,7 +29,7 @@ public class ResponseTest {
   public void httpResponseIstReturnedWithNoHeaderAndBody() {
     Response response = new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
-        .setStatusCode(404)
+        .setStatusCode(HttpCodes.NOT_FOUND)
         .build();
 
     byte[] expectedHttpResponse = ("HTTP/1.1 404 Not Found" + Constants.CLRF + Constants.CLRF).getBytes();
@@ -40,7 +41,7 @@ public class ResponseTest {
   public void httpResponseIstReturnedWithHeaderButNoBody() {
     Response response = new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
-        .setStatusCode(302)
+        .setStatusCode(HttpCodes.FOUND)
         .setHeader("Location", "http://localhost:4444/")
         .build();
 

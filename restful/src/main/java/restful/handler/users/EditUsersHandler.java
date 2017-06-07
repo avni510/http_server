@@ -2,6 +2,7 @@ package restful.handler.users;
 
 import core.DataStore;
 import core.Handler;
+import core.HttpCodes;
 
 import core.handler.ErrorHandler;
 
@@ -12,7 +13,7 @@ import core.response.ResponseBuilder;
 
 import java.io.IOException;
 
-public class EditUsersHandler implements Handler{
+public class EditUsersHandler implements Handler {
   private DataStore dataStore;
 
   public EditUsersHandler(DataStore dataStore) {
@@ -21,13 +22,13 @@ public class EditUsersHandler implements Handler{
 
   public Response generate(Request request) throws IOException {
     Integer id = request.getIdInUri();
-    if(dataStore.keyExists(id)) {
+    if (dataStore.keyExists(id)) {
       return new ResponseBuilder()
           .setHttpVersion("HTTP/1.1")
-          .setStatusCode(200)
+          .setStatusCode(HttpCodes.OK)
           .build();
     } else {
-      Handler handler = new ErrorHandler(404);
+      Handler handler = new ErrorHandler(HttpCodes.NOT_FOUND);
       return handler.generate(request);
     }
   }

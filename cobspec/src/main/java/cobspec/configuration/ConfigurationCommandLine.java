@@ -4,29 +4,29 @@ public class ConfigurationCommandLine {
   private String defaultDirectory = System.getProperty("user.dir") + "/cobspec/code";
   private Integer defaultPort = 4444;
   private Integer portNumber;
-  private String  directoryPath;
+  private String directoryPath;
   private ConfigurationValidation configurationValidation;
 
-  public ConfigurationCommandLine(){
+  public ConfigurationCommandLine() {
     this.configurationValidation = new ConfigurationValidation(defaultPort);
   }
 
-  public void parse(String[] commandLineArgs){
+  public void parse(String[] commandLineArgs) {
     configurationValidation.exitForInvalidArgs(commandLineArgs);
     portNumber = retrievePort(commandLineArgs);
     directoryPath = retrieveDirectory(commandLineArgs);
   }
 
-  public Integer getPortNumber(){
+  public Integer getPortNumber() {
     return portNumber;
   }
 
-  public String getDirectoryName(){
+  public String getDirectoryName() {
     return directoryPath;
   }
 
 
-  private String retrieveDirectory(String[] commandLineArgs){
+  private String retrieveDirectory(String[] commandLineArgs) {
     return configurationValidation.findArg(commandLineArgs, "-d", defaultDirectory);
   }
 

@@ -27,13 +27,13 @@ public class ConfigurationRoutes {
   public Router buildRouter() {
     Router router = new Router();
     router.addRoute(RequestMethod.GET, "/", new BaseHandler())
-          .addRoute(RequestMethod.GET, "/users", new IndexUsersHandler(dataStore))
-          .addRoute(RequestMethod.GET, "/users/new", new NewUsersHandler())
-          .addRoute(RequestMethod.POST, "/users", new CreateUsersHandler(dataStore))
-          .addRoute(RequestMethod.GET, "/users/:id", new ShowUsersHandler(dataStore))
-          .addRoute(RequestMethod.GET, "/users/:id/edit", new EditUsersHandler(dataStore))
-          .addRoute(RequestMethod.PUT, "/users/:id", new UpdateUsersHandler(dataStore))
-          .addRoute(RequestMethod.DELETE, "/users/:id", new DeleteUsersHandler(dataStore));
+        .addRoute(RequestMethod.GET, "/users", new IndexUsersHandler(dataStore))
+        .addRoute(RequestMethod.GET, "/users/new", new NewUsersHandler())
+        .addRoute(RequestMethod.POST, "/users", new CreateUsersHandler(dataStore))
+        .addRoute(RequestMethod.GET, "/users/:id", new ShowUsersHandler(dataStore))
+        .addRoute(RequestMethod.GET, "/users/:id/edit", new EditUsersHandler(dataStore))
+        .addRoute(RequestMethod.PUT, "/users/:id", new UpdateUsersHandler(dataStore))
+        .addRoute(RequestMethod.DELETE, "/users/:id", new DeleteUsersHandler(dataStore));
     return router;
   }
 }

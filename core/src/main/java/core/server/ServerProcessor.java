@@ -2,6 +2,7 @@ package core.server;
 
 import core.Connection;
 import core.Handler;
+import core.HttpCodes;
 import core.Middleware;
 import core.handler.ErrorHandler;
 import core.response.Response;
@@ -43,7 +44,7 @@ public class ServerProcessor implements Runnable {
     try {
       request = requestParser.parse();
     } catch (Exception e) {
-      ErrorHandler errorHandler = new ErrorHandler(400);
+      ErrorHandler errorHandler = new ErrorHandler(HttpCodes.BAD_REQUEST);
       return errorHandler.generate(request);
     }
     Handler handler = app.call(request);

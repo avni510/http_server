@@ -1,5 +1,6 @@
 package core.middleware;
 
+import core.HttpCodes;
 import core.Middleware;
 import core.Handler;
 import core.Router;
@@ -22,7 +23,7 @@ public class RoutingMiddleware implements Middleware {
     if (handler != null) {
       return handler;
     } else if (router.uriExists(request.getUri())) {
-      return new ErrorHandler(405);
+      return new ErrorHandler(HttpCodes.METHOD_NOT_ALLOWED);
     } else {
       return app.call(request);
     }

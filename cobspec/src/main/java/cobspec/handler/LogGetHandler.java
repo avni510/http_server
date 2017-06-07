@@ -1,12 +1,13 @@
 package cobspec.handler;
 
+import core.Handler;
 import core.DataStore;
+import core.HttpCodes;
+
 import core.request.Request;
 
 import core.response.Response;
 import core.response.ResponseBuilder;
-
-import core.Handler;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -19,7 +20,7 @@ public class LogGetHandler implements Handler {
   String username;
   String password;
 
-  public LogGetHandler(DataStore<String, String> dataStore, String username, String password){
+  public LogGetHandler(DataStore<String, String> dataStore, String username, String password) {
     this.dataStore = dataStore;
     this.username = username;
     this.password = password;
@@ -33,19 +34,19 @@ public class LogGetHandler implements Handler {
     }
   }
 
-  private Response handleAuthorizedRequest(){
+  private Response handleAuthorizedRequest() {
     return new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
-        .setStatusCode(200)
+        .setStatusCode(HttpCodes.OK)
         .setHeader("Content-Type", "plain/text")
         .setBody(getBody())
         .build();
   }
 
-  private Response handleUnAuthorizedRequest(){
+  private Response handleUnAuthorizedRequest() {
     return new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
-        .setStatusCode(401)
+        .setStatusCode(HttpCodes.UNAUTHORIZED)
         .setHeader("WWW-Authenticate", "Basic realm=\"Access to Avni's Server\"")
         .build();
   }
@@ -62,7 +63,7 @@ public class LogGetHandler implements Handler {
     return false;
   }
 
-  private String getBody(){
+  private String getBody() {
     StringBuilder body = new StringBuilder();
     Map<String, String> allLogs = dataStore.getData();
     for (Map.Entry<String, String> data : allLogs.entrySet()) {

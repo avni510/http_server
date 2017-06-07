@@ -1,10 +1,11 @@
 package cobspec.handler.form;
 
 import core.DataStore;
+import core.HttpCodes;
+import core.Handler;
+
 import core.response.Response;
 import core.response.ResponseBuilder;
-
-import core.Handler;
 
 import core.request.Request;
 
@@ -21,11 +22,11 @@ public class FormDeleteHandler implements Handler {
     deleteAllData();
     return new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
-        .setStatusCode(200)
+        .setStatusCode(HttpCodes.OK)
         .build();
   }
 
-  private void deleteAllData(){
+  private void deleteAllData() {
     dataStore.clear();
   }
 }

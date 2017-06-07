@@ -1,6 +1,7 @@
 package cobspec.handler;
 
 import core.Handler;
+import core.HttpCodes;
 
 import core.request.Request;
 
@@ -14,25 +15,25 @@ public class TeapotGetHandler implements Handler {
   public Response generate(Request request) throws IOException {
     if (request.getUri().equals("/coffee")) {
       return handleCoffeeRequest();
-    } else if (request.getUri().equals("/tea")){
+    } else if (request.getUri().equals("/tea")) {
       return handleTeaRequest();
     }
     return null;
   }
 
-  private Response handleCoffeeRequest(){
+  private Response handleCoffeeRequest() {
     return new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
-        .setStatusCode(418)
+        .setStatusCode(HttpCodes.TEAPOT)
         .setHeader("Content-Type", "text/plain")
         .setBody("I'm a teapot")
         .build();
   }
 
-  private Response handleTeaRequest(){
+  private Response handleTeaRequest() {
     return new ResponseBuilder()
         .setHttpVersion("HTTP/1.1")
-        .setStatusCode(200)
+        .setStatusCode(HttpCodes.OK)
         .build();
   }
 }

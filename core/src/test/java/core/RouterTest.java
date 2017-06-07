@@ -17,7 +17,7 @@ public class RouterTest {
   public void routeIsRetrieved() throws Exception{
     Router router = new Router();
     BaseHandler baseHandler = new BaseHandler();
-    ErrorHandler errorHandler = new ErrorHandler(404);
+    ErrorHandler errorHandler = new ErrorHandler(HttpCodes.NOT_FOUND);
     router.addRoute(RequestMethod.GET, "/hello_world", baseHandler);
     router.addRoute(RequestMethod.GET, "/error", errorHandler);
 
@@ -30,7 +30,7 @@ public class RouterTest {
   public void routeWithQueryParamsIsHandled() throws Exception{
     Router router = new Router();
     BaseHandler baseHandler = new BaseHandler();
-    ErrorHandler errorHandler = new ErrorHandler(404);
+    ErrorHandler errorHandler = new ErrorHandler(HttpCodes.NOT_FOUND);
     router.addRoute(RequestMethod.GET, "/parameters", baseHandler);
     router.addRoute(RequestMethod.GET, "/error", errorHandler);
 
@@ -43,7 +43,7 @@ public class RouterTest {
   public void dynamicRouteIsHandled() throws Exception{
     Router router = new Router();
     BaseHandler baseHandler = new BaseHandler();
-    ErrorHandler errorHandler = new ErrorHandler(404);
+    ErrorHandler errorHandler = new ErrorHandler(HttpCodes.NOT_FOUND);
     router.addRoute(RequestMethod.GET, "/foo/:id", baseHandler);
     router.addRoute(RequestMethod.GET, "/error", errorHandler);
 
@@ -56,7 +56,7 @@ public class RouterTest {
   public void dynamicRouteForEditIsHandled() throws Exception{
     Router router = new Router();
     BaseHandler baseHandler = new BaseHandler();
-    ErrorHandler errorHandler = new ErrorHandler(404);
+    ErrorHandler errorHandler = new ErrorHandler(HttpCodes.NOT_FOUND);
     router.addRoute(RequestMethod.GET, "/foo/:id/edit", baseHandler);
     router.addRoute(RequestMethod.GET, "/error", errorHandler);
 
