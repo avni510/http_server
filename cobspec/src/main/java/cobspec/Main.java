@@ -17,6 +17,9 @@ import core.server.ServerExecutor;
 
 import java.net.ServerSocket;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class Main {
 
   public static void main(String[] args) throws Exception {
@@ -31,7 +34,8 @@ public class Main {
 
     RoutingMiddleware app = setupApp(router, directoryPath);
 
-    ServerExecutor serverExecutor = new ServerExecutor(app);
+    ExecutorService threadPool = Executors.newFixedThreadPool(4);
+    ServerExecutor serverExecutor = new ServerExecutor(app, threadPool);
 
     ServerCancellationToken serverCancellationToken = new ServerCancellationToken();
     serverCancellationToken.setListeningCondition(true);

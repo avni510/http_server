@@ -15,6 +15,8 @@ import core.utils.DataStore;
 import restful.configuration.ConfigurationRoutes;
 
 import java.net.ServerSocket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Main {
   private static int portNumber = 4444;
@@ -30,7 +32,8 @@ public class Main {
     FinalMiddleware finalMiddleware = new FinalMiddleware();
     RoutingMiddleware app = new RoutingMiddleware(router, finalMiddleware);
 
-    ServerExecutor serverExecutor = new ServerExecutor(app);
+    ExecutorService threadPool = Executors.newFixedThreadPool(4);
+    ServerExecutor serverExecutor = new ServerExecutor(app, threadPool);
 
     ServerCancellationToken serverCancellationToken = new ServerCancellationToken();
     serverCancellationToken.setListeningCondition(true);

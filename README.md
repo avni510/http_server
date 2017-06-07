@@ -79,3 +79,16 @@ To run restful tests
 ```
 $ ./gradlew restful:test
 ```
+
+Benchmark Testing
+-----------------
+
+Run the cobspec app 
+```
+$ java -jar cobspec/build/libs/cobspec-standalone.jar
+```
+
+Run the benchmark script
+```
+$ ./benchmark_testing
+```

@@ -1,0 +1,16 @@
+# !/bin/bash
+
+echo "Test 1"
+echo ""
+echo "Number of requests made - 1500, Number of multiple requests performed - 70"
+echo ""
+
+ab -n 1500 -c 70 http://localhost:4444/
+
+echo ""
+echo "Test 2"
+echo ""
+echo "Number of requests made - 7000, Number of multiple requests performed - 10"
+echo ""
+ab -n 7000 -c 10 http://localhost:4444/
+echo "Starts to become slow after about 7000 requests at concurrency level 10"

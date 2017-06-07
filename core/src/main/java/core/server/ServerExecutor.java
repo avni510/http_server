@@ -6,18 +6,17 @@ import core.Middleware;
 import core.ServerExecutorService;
 
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class ServerExecutor implements ServerExecutorService {
   private Middleware app;
   private ExecutorService threadPool;
 
-  public ServerExecutor(Middleware app) {
+  public ServerExecutor(Middleware app, ExecutorService threadPool) {
     this.app = app;
+    this.threadPool = threadPool;
   }
 
   public void execute(Connection connection) {
-    threadPool = Executors.newFixedThreadPool(4);
     threadPool.execute(new ServerProcessor(connection, app));
   }
 
