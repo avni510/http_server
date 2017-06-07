@@ -1,12 +1,13 @@
 package restful.configuration;
 
-import core.DataStore;
 import core.Handler;
 import core.Router;
 
 import core.request.Request;
 import core.request.RequestBuilder;
 import core.request.RequestMethod;
+
+import core.utils.DataStore;
 
 import core.response.Response;
 

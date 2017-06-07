@@ -1,12 +1,12 @@
-package core;
-
-import org.junit.Test;
+package core.utils;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static junit.framework.TestCase.assertTrue;
+import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class DataStoreTest {
 

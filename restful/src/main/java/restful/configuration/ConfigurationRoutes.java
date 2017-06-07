@@ -1,11 +1,12 @@
 package restful.configuration;
 
-import core.DataStore;
 import core.Router;
 
 import core.handler.BaseHandler;
 
 import core.request.RequestMethod;
+
+import core.utils.DataStore;
 
 import restful.handler.users.IndexUsersHandler;
 import restful.handler.users.EditUsersHandler;

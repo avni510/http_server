@@ -1,10 +1,11 @@
 package restful.handler.users;
 
-import core.DataStore;
 import core.Handler;
 import core.HttpCodes;
 
 import core.request.Request;
+
+import core.utils.DataStore;
 
 import core.response.Response;
 import core.response.ResponseBuilder;

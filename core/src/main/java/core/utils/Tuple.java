@@ -1,4 +1,4 @@
-package core;
+package core.utils;
 
 public class Tuple<T1, T2> {
   public final T1 t1;

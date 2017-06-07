@@ -1,11 +1,12 @@
 package cobspec.configuration;
 
-import core.DataStore;
 import core.Router;
 
 import core.request.RequestMethod;
 
 import core.handler.BaseHandler;
+
+import core.utils.DataStore;
 
 import cobspec.handler.TeapotGetHandler;
 import cobspec.handler.RedirectGetHandler;

@@ -1,6 +1,6 @@
 package cobspec.handler.form;
 
-import core.DataStore;
+import core.utils.DataStore;
 
 import core.request.Request;
 import core.request.RequestBuilder;

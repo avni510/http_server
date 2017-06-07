@@ -1,4 +1,4 @@
-package core;
+package core.utils;
 
 import core.request.RequestMethod;
 
@@ -9,6 +9,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
+import core.utils.Tuple;
 import org.junit.Test;
 
 public class TupleTest {

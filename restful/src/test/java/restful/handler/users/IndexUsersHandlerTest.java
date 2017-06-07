@@ -1,10 +1,11 @@
 package restful.handler.users;
 
-import core.DataStore;
+import core.utils.DataStore;
 
 import core.request.Request;
 import core.request.RequestBuilder;
 import core.request.RequestMethod;
+
 import core.response.Response;
 
 import java.io.IOException;

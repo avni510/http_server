@@ -1,7 +1,7 @@
 package cobspec.handler.file_reader;
 
 import core.HttpCodes;
-import core.Tuple;
+import core.utils.Tuple;
 import core.Handler;
 
 import core.response.Response;
