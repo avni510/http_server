@@ -1,8 +1,10 @@
 package cobspec.middleware;
 
+import core.Handler;
 import core.Middleware;
 
 import core.middleware.FinalMiddleware;
+
 import core.request.Request;
 import core.request.RequestBuilder;
 import core.request.RequestMethod;
@@ -16,19 +18,19 @@ import static org.junit.Assert.assertEquals;
 public class FileMiddlewareTest {
 
   @Test
-  public void responseForFileIsReturned() throws Exception{
+  public void responseForFileIsReturned() throws Exception {
     String rootDirectoryPath = System.getProperty("user.dir") + "/code";
     Middleware nextMiddleware = new FinalMiddleware();
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/result.txt")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
     FileMiddleware fileMiddleware = new FileMiddleware(rootDirectoryPath, nextMiddleware);
 
-    Response actualResponse = fileMiddleware.call(request);
+    Handler handler = fileMiddleware.call(request);
 
+    Response actualResponse = handler.generate(request);
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
     assertEquals("module TimeLogger\nend\n", new String(actualResponse.getBody()));
   }
@@ -40,13 +42,13 @@ public class FileMiddlewareTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/validation.txt")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
     FileMiddleware fileMiddleware = new FileMiddleware(rootDirectoryPath, nextMiddleware);
 
-    Response actualResponse = fileMiddleware.call(request);
+    Handler handler = fileMiddleware.call(request);
 
+    Response actualResponse = handler.generate(request);
     assertEquals("200 OK", actualResponse.getStatusCodeMessage());
     assertEquals("x = 1\ny = 2\n", new String(actualResponse.getBody()));
   }
@@ -58,13 +60,13 @@ public class FileMiddlewareTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.PUT)
         .setUri("/validation.txt")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
     FileMiddleware fileMiddleware = new FileMiddleware(rootDirectoryPath, nextMiddleware);
 
-    Response actualResponse = fileMiddleware.call(request);
+    Handler handler = fileMiddleware.call(request);
 
+    Response actualResponse = handler.generate(request);
     assertEquals("405 Method Not Allowed", actualResponse.getStatusCodeMessage());
   }
 
@@ -75,13 +77,13 @@ public class FileMiddlewareTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/nonexistent_route")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
     FileMiddleware fileMiddleware = new FileMiddleware(rootDirectoryPath, nextMiddleware);
 
-    Response actualResponse = fileMiddleware.call(request);
+    Handler handler = fileMiddleware.call(request);
 
+    Response actualResponse = handler.generate(request);
     assertEquals("404 Not Found", actualResponse.getStatusCodeMessage());
   }
 }

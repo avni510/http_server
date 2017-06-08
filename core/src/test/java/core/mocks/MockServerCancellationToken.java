@@ -7,15 +7,15 @@ public class MockServerCancellationToken implements CancellationToken {
   private int count = 0;
 
   public boolean isListening() {
-    if (count == 0){
+    if (count == 0) {
       count += 1;
     } else {
       cancel();
     }
-    return  listening;
+    return listening;
   }
 
-  public void cancel(){
+  public void cancel() {
     listening = false;
   }
 

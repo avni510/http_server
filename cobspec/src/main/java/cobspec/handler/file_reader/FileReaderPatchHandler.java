@@ -1,7 +1,9 @@
 package cobspec.handler.file_reader;
 
-import core.Handler;
 import cobspec.FileHelper;
+
+import core.Handler;
+import core.HttpCodes;
 
 import core.request.Request;
 
@@ -21,7 +23,7 @@ public class FileReaderPatchHandler implements Handler {
 
   public Response generate(Request request) throws IOException {
     Response response;
-    if (fileHashValuesMatch(getIfMatchValue(request))){
+    if (fileHashValuesMatch(getIfMatchValue(request))) {
       response = handleFileHashValuesMatch(request);
     } else {
       response = handleFileHashValuesDoNotMatch();
@@ -29,19 +31,17 @@ public class FileReaderPatchHandler implements Handler {
     return response;
   }
 
-  private Response handleFileHashValuesMatch(Request request){
+  private Response handleFileHashValuesMatch(Request request) {
     String patchedContents = request.getEntireBody();
     fileHelper.write(patchedContents, filePath);
     return new ResponseBuilder()
-        .setHttpVersion("HTTP/1.1")
-        .setStatusCode(204)
+        .setStatusCode(HttpCodes.NO_CONTENT)
         .build();
   }
 
-  private Response handleFileHashValuesDoNotMatch(){
+  private Response handleFileHashValuesDoNotMatch() {
     return new ResponseBuilder()
-        .setHttpVersion("HTTP/1.1")
-        .setStatusCode(400)
+        .setStatusCode(HttpCodes.BAD_REQUEST)
         .build();
   }
 

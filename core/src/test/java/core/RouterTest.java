@@ -1,16 +1,11 @@
 package core;
 
-import core.handler.HelloWorldGetHandler;
+import core.handler.BaseHandler;
+import core.handler.ErrorHandler;
 
-import core.request.Request;
-import core.request.RequestBuilder;
 import core.request.RequestMethod;
 
-import core.response.Response;
-
 import org.junit.Test;
-
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -18,72 +13,71 @@ import static org.junit.Assert.assertFalse;
 
 public class RouterTest {
 
-//  private String getParametersBody(){
-//    return "variable_1 = Operators <, >, =, !=; +, -, *, &, @, #, $, [, ]: \"is that all\"? variable_2 = stuff ";
-//  }
-
   @Test
-  public void routeIsAdded() throws Exception{
+  public void routeIsRetrieved() throws Exception {
     Router router = new Router();
-
-    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler());
-
-    Map<Tuple<Enum<RequestMethod>, String>, Handler> allRoutes = router.getRoutes();
-    Handler handler = allRoutes.get(new Tuple<>(RequestMethod.GET, "/hello_world"));
-    Request request = new RequestBuilder()
-        .setRequestMethod(RequestMethod.GET)
-        .setUri("/hello_world")
-        .setHttpVersion("HTTP/1.1")
-        .setHeader("Host: localhost")
-        .build();
-    Response actualResponse = handler.generate(request);
-    assertEquals("200 OK", actualResponse.getStatusCodeMessage());
-    assertEquals("hello world", new String (actualResponse.getBody()));
-  }
-
-  @Test
-  public void routeIsRetrieved() throws Exception{
-    Router router = new Router();
-    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler());
+    BaseHandler baseHandler = new BaseHandler();
+    ErrorHandler errorHandler = new ErrorHandler(HttpCodes.NOT_FOUND);
+    router.addRoute(RequestMethod.GET, "/hello_world", baseHandler);
+    router.addRoute(RequestMethod.GET, "/error", errorHandler);
 
     Handler handler = router.retrieveHandler(RequestMethod.GET, "/hello_world");
 
-    Request request = new RequestBuilder()
-        .setRequestMethod(RequestMethod.GET)
-        .setUri("/hello_world")
-        .setHttpVersion("HTTP/1.1")
-        .setHeader("Host: localhost")
-        .build();
-    Response actualResponse = handler.generate(request);
-    assertEquals("200 OK", actualResponse.getStatusCodeMessage());
-    assertEquals("hello world", new String (actualResponse.getBody()));
+    assertEquals(handler, baseHandler);
   }
 
-//  @Test
-//  public void handlesARouteWithAQuestionMark() throws Exception{
-//    Router router = new Router();
-//    router.addRoute(RequestMethod.GET, "/parameters", new ParametersGetHandler());
-//
-//    String httpUri = "/parameters?variable_1=Operators%20%3C%2C%20%3E%2C%20%3D%2C%20" +
-//                     "!%3D%3B%20%2B%2C%20-%2C%20*%2C%20%26%2C%20%40%2C%20%23%2C%20%24%2C%20%5B%2C%20%" +
-//                     "5D%3A%20%22is%20that%20all%22%3F&variable_2=stuff";
-//    Handler handler = router.retrieveHandler(RequestMethod.GET, httpUri);
-//
-//    Request request = new RequestBuilder()
-//        .setRequestMethod(RequestMethod.GET)
-//        .setUri(httpUri)
-//        .setHttpVersion("HTTP/1.1")
-//        .setHeader("Host: localhost")
-//        .build();
-//    Response actualResponse = handler.generate(request);
-//    assertEquals(getParametersBody(), new String(actualResponse.getBody()));
-//
-//  }
+  @Test
+  public void routeWithQueryParamsIsHandled() throws Exception {
+    Router router = new Router();
+    BaseHandler baseHandler = new BaseHandler();
+    ErrorHandler errorHandler = new ErrorHandler(HttpCodes.NOT_FOUND);
+    router.addRoute(RequestMethod.GET, "/parameters", baseHandler);
+    router.addRoute(RequestMethod.GET, "/error", errorHandler);
+
+    Handler handler = router.retrieveHandler(RequestMethod.GET, "/parameters?variable_1=foo");
+
+    assertEquals(handler, baseHandler);
+  }
 
   @Test
-  public void returnsTrueIfAUriIsInARouter(){
+  public void dynamicRouteIsHandled() throws Exception {
     Router router = new Router();
-    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler());
+    BaseHandler baseHandler = new BaseHandler();
+    ErrorHandler errorHandler = new ErrorHandler(HttpCodes.NOT_FOUND);
+    router.addRoute(RequestMethod.GET, "/foo/:id", baseHandler);
+    router.addRoute(RequestMethod.GET, "/error", errorHandler);
+
+    Handler handler = router.retrieveHandler(RequestMethod.GET, "/foo/1");
+
+    assertEquals(handler, baseHandler);
+  }
+
+  @Test
+  public void dynamicRouteForEditIsHandled() throws Exception {
+    Router router = new Router();
+    BaseHandler baseHandler = new BaseHandler();
+    ErrorHandler errorHandler = new ErrorHandler(HttpCodes.NOT_FOUND);
+    router.addRoute(RequestMethod.GET, "/foo/:id/edit", baseHandler);
+    router.addRoute(RequestMethod.GET, "/error", errorHandler);
+
+    Handler handler = router.retrieveHandler(RequestMethod.GET, "/foo/1/edit");
+
+    assertEquals(handler, baseHandler);
+  }
+
+  @Test
+  public void nullIsReturnedIfThereAreNoMatchingRoutes() throws Exception {
+    Router router = new Router();
+
+    Handler handler = router.retrieveHandler(RequestMethod.GET, "/invalid");
+
+    assertEquals(handler, null);
+  }
+
+  @Test
+  public void returnsTrueIfAUriIsInARouter() {
+    Router router = new Router();
+    router.addRoute(RequestMethod.GET, "/hello_world", new BaseHandler());
 
     boolean actualResult = router.uriExists("/hello_world");
 
@@ -91,9 +85,9 @@ public class RouterTest {
   }
 
   @Test
-  public void returnsFalseIfAUriIsNotInARouter(){
+  public void returnsFalseIfAUriIsNotInARouter() {
     Router router = new Router();
-    router.addRoute(RequestMethod.GET, "/hello_world", new HelloWorldGetHandler());
+    router.addRoute(RequestMethod.GET, "/hello_world", new BaseHandler());
 
     boolean actualResult = router.uriExists("/nonexistent_uri");
 

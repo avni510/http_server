@@ -28,7 +28,7 @@ public class MockServerSocketConnection implements Connection {
   }
 
   public OutputStream out() throws IOException {
-    return new OutputStream(){
+    return new OutputStream() {
       @Override
       public void write(int b) throws IOException {
         storedOutputData.add((byte) b);
@@ -36,7 +36,7 @@ public class MockServerSocketConnection implements Connection {
     };
   }
 
-  public void setStoredInputData(String data){
+  public void setStoredInputData(String data) {
     storedInputData = data.getBytes();
   }
 

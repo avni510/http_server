@@ -1,6 +1,7 @@
 package cobspec.handler;
 
 import core.Handler;
+import core.HttpCodes;
 
 import core.request.Request;
 
@@ -15,8 +16,7 @@ public class ParametersGetHandler implements Handler {
 
   public Response generate(Request request) throws IOException {
     return new ResponseBuilder()
-        .setHttpVersion("HTTP/1.1")
-        .setStatusCode(200)
+        .setStatusCode(HttpCodes.OK)
         .setHeader("Content-Type", "text/plain")
         .setBody(decodeUri(request.getUri()))
         .build();
@@ -45,7 +45,7 @@ public class ParametersGetHandler implements Handler {
   private String decodedParameter(String uri) {
     StringBuilder decodedParameters = new StringBuilder();
     String[] encodedSplitParameters = uri.split("&");
-    for(String param: encodedSplitParameters){
+    for (String param : encodedSplitParameters) {
       String[] splitKeyAndValue = param.split("=");
       String variableName = splitKeyAndValue[0];
       String variableValue = splitKeyAndValue[1];

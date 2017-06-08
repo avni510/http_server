@@ -2,7 +2,8 @@ package cobspec.handler.form;
 
 import core.Constants;
 
-import core.DataStore;
+import core.utils.DataStore;
+
 import core.request.Request;
 import core.request.RequestBuilder;
 import core.request.RequestMethod;
@@ -17,13 +18,13 @@ import static org.junit.Assert.assertEquals;
 
 public class FormGetHandlerTest {
 
-  private String getBody(String storedData){
+  private String getBody(String storedData) {
     return
         "<form action=\"/form\" method=\"post\">" +
-          "Data: <br> " +
-          "<input type=\"text\" name=\"data\">" +
-          "<input type=\"submit\" value=\"Submit\">" +
-        "</form> <br>" + "<p>" + storedData + "</p>";
+            "Data: <br> " +
+            "<input type=\"text\" name=\"data\">" +
+            "<input type=\"submit\" value=\"Submit\">" +
+            "</form> <br>" + "<p>" + storedData + "</p>";
   }
 
   @Test
@@ -31,7 +32,6 @@ public class FormGetHandlerTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/form")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
 
@@ -49,7 +49,6 @@ public class FormGetHandlerTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/form")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
     DataStore<String, String> dataStore = new DataStore<String, String>();

@@ -1,6 +1,7 @@
 package cobspec.handler.form;
 
-import core.DataStore;
+import core.utils.DataStore;
+
 import core.request.Request;
 import core.request.RequestBuilder;
 import core.request.RequestMethod;
@@ -20,7 +21,6 @@ public class FormDeleteHandlerTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.DELETE)
         .setUri("/form")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
     DataStore<String, String> dataStore = new DataStore<>();

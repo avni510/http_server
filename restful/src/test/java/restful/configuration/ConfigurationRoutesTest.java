@@ -1,12 +1,13 @@
 package restful.configuration;
 
-import core.DataStore;
 import core.Handler;
 import core.Router;
 
 import core.request.Request;
 import core.request.RequestBuilder;
 import core.request.RequestMethod;
+
+import core.utils.DataStore;
 
 import core.response.Response;
 
@@ -26,8 +27,7 @@ public class ConfigurationRoutesTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/users")
-        .setHttpVersion("HTTP/1.1")
-        .setHeader("Host: localhost")
+                .setHeader("Host: localhost")
         .build();
     Handler handler = router.retrieveHandler(request.getRequestMethod(), request.getUri());
     Response actualResponse = handler.generate(request);

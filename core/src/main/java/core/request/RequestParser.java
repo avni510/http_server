@@ -14,7 +14,6 @@ public class RequestParser {
   private BufferedReader inputStream;
   private RequestMethod requestMethod;
   private String uri;
-  private String httpVersion;
   private String headers;
   private String body = null;
 
@@ -24,7 +23,7 @@ public class RequestParser {
 
   public Request parse() throws Exception {
     String httpRequest = bufferedReaderToString(inputStream);
-    ArrayList<String> requestComponents = new ArrayList<> (Arrays.asList(httpRequest.split(Constants.CLRF)));
+    ArrayList<String> requestComponents = new ArrayList<>(Arrays.asList(httpRequest.split(Constants.CLRF)));
     setRequestLineParts(requestComponents);
     setHeaders(requestComponents);
     setBody(requestComponents);
@@ -32,12 +31,11 @@ public class RequestParser {
     return request;
   }
 
-  private Request buildRequest(){
+  private Request buildRequest() {
 
     Request request = new RequestBuilder()
         .setRequestMethod(this.requestMethod)
         .setUri(this.uri)
-        .setHttpVersion(this.httpVersion)
         .setHeader(this.headers)
         .setBody(this.body)
         .build();
@@ -45,28 +43,28 @@ public class RequestParser {
   }
 
   private String bufferedReaderToString(BufferedReader bufferedReader) throws Exception {
-      Integer contentLength = 0;
-      StringBuilder httpRequest = new StringBuilder();
-      String line;
-      while (null != (line = bufferedReader.readLine()) && !line.isEmpty()) {
-        httpRequest.append(line + Constants.CLRF);
-        if (line.contains("Content-Length: ")) {
-          String numericalContentLength = line.substring("Content-Length: ".length());
-          contentLength = Integer.parseInt(numericalContentLength);
-        }
+    Integer contentLength = 0;
+    StringBuilder httpRequest = new StringBuilder();
+    String line;
+    while (null != (line = bufferedReader.readLine()) && !line.isEmpty()) {
+      httpRequest.append(line + Constants.CLRF);
+      if (line.contains("Content-Length: ")) {
+        String numericalContentLength = line.substring("Content-Length: ".length());
+        contentLength = Integer.parseInt(numericalContentLength);
       }
-      httpRequest = populateBody(httpRequest, bufferedReader, contentLength);
-      String rawRequest = httpRequest.toString();
-      if (!rawRequest.contains("Host: ")) {
-        throw new Exception();
-      }
-      return rawRequest;
+    }
+    httpRequest = populateBody(httpRequest, bufferedReader, contentLength);
+    String rawRequest = httpRequest.toString();
+    if (!rawRequest.contains("Host: ")) {
+      throw new Exception();
+    }
+    return rawRequest;
   }
 
   private StringBuilder populateBody(StringBuilder httpRequest,
                                      BufferedReader bufferedReader,
                                      Integer contentLength) throws IOException {
-    if (contentLength > 0){
+    if (contentLength > 0) {
       return appendBody(httpRequest, bufferedReader, contentLength);
     }
     return httpRequest;
@@ -86,7 +84,6 @@ public class RequestParser {
     String[] requestLineParts = requestLine.split(" ");
     setRequestMethod(requestLineParts);
     setUri(requestLineParts);
-    setHttpVersion(requestLineParts);
   }
 
   private void setRequestMethod(String[] requestLineComponents) {
@@ -99,11 +96,7 @@ public class RequestParser {
   }
 
   private void setUri(String[] requestLineComponents) {
-   this.uri = requestLineComponents[1];
-  }
-
-  private void setHttpVersion(String[] requestLineComponents) {
-    this.httpVersion = requestLineComponents[2];
+    this.uri = requestLineComponents[1];
   }
 
   private void setBody(ArrayList<String> requestParts) {
@@ -125,7 +118,7 @@ public class RequestParser {
     }
   }
 
-  private String joinHeaders(String delimeter, List<String> allHeaders){
+  private String joinHeaders(String delimeter, List<String> allHeaders) {
     return String.join(delimeter, allHeaders);
   }
 
@@ -133,7 +126,7 @@ public class RequestParser {
     return arrayList.size() - 1;
   }
 
-  private boolean bodyExistInRequest(ArrayList<String> requestParts){
+  private boolean bodyExistInRequest(ArrayList<String> requestParts) {
     Integer lastIndex = lastIndexInArray(requestParts);
     String lastElement = requestParts.get(lastIndex);
     return lastElement.contains("Body: ");

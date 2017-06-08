@@ -10,9 +10,9 @@ import core.request.RequestMethod;
 
 import cobspec.FileHelper;
 
-import org.junit.Test;
-
 import java.io.IOException;
+
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -23,7 +23,6 @@ public class FileReaderGetHandlerTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/result.txt")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
     String pathToFile = System.getProperty("user.dir") + "/code/result.txt";
@@ -40,7 +39,6 @@ public class FileReaderGetHandlerTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/result.txt")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost" + Constants.CLRF + "Range: bytes=0-5" + Constants.CLRF)
         .build();
     String pathToFile = System.getProperty("user.dir") + "/code/result.txt";
@@ -50,7 +48,7 @@ public class FileReaderGetHandlerTest {
 
     assertEquals("206 Partial Content", actualResponse.getStatusCodeMessage());
     assertEquals("Content-Range: bytes 0-6" + Constants.CLRF +
-                          "Content-Type: text/plain" + Constants.CLRF, actualResponse.getHeaders());
+        "Content-Type: text/plain" + Constants.CLRF, actualResponse.getHeaders());
     assertEquals("module", new String(actualResponse.getBody()));
   }
 
@@ -59,7 +57,6 @@ public class FileReaderGetHandlerTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/result.txt")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost" + Constants.CLRF + "Range: bytes=-5" + Constants.CLRF)
         .build();
     String pathToFile = System.getProperty("user.dir") + "/code/result.txt";
@@ -77,7 +74,6 @@ public class FileReaderGetHandlerTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/result.txt")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost" + Constants.CLRF + "Range: bytes=5-" + Constants.CLRF)
         .build();
     String pathToFile = System.getProperty("user.dir") + "/code/result.txt";
@@ -87,7 +83,7 @@ public class FileReaderGetHandlerTest {
 
     assertEquals("206 Partial Content", actualResponse.getStatusCodeMessage());
     assertEquals("Content-Range: bytes 5-22" + Constants.CLRF +
-                          "Content-Type: text/plain" + Constants.CLRF, actualResponse.getHeaders());
+        "Content-Type: text/plain" + Constants.CLRF, actualResponse.getHeaders());
     assertEquals("e TimeLogger\nend\n", new String(actualResponse.getBody()));
   }
 }

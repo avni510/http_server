@@ -9,18 +9,18 @@ public class MockSocket extends Socket {
   private InputStream inputStream;
   private OutputStream outputStream;
 
-  public MockSocket (InputStream inputstream, OutputStream outputStream) {
+  public MockSocket(InputStream inputstream, OutputStream outputStream) {
     this.inputStream = inputstream;
     this.outputStream = outputStream;
   }
 
   @Override
-  public InputStream getInputStream(){
+  public InputStream getInputStream() {
     return inputStream;
   }
 
   @Override
-  public OutputStream getOutputStream(){
+  public OutputStream getOutputStream() {
     return outputStream;
   }
 }

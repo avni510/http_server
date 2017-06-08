@@ -1,6 +1,7 @@
 package cobspec.handler;
 
 import core.Handler;
+import core.HttpCodes;
 
 import core.request.Request;
 
@@ -14,36 +15,34 @@ public class CookieGetHandler implements Handler {
 
   public Response generate(Request request) throws IOException {
     String requestCookie = cookieValue(request);
-    if (cookie.equals(requestCookie)){
+    if (cookie.equals(requestCookie)) {
       return handleCookieRequest();
     } else {
       return handleSetCookie();
     }
   }
 
-  private Response handleCookieRequest(){
+  private Response handleCookieRequest() {
     return new ResponseBuilder()
-        .setHttpVersion("HTTP/1.1")
-        .setStatusCode(200)
+        .setStatusCode(HttpCodes.OK)
         .setHeader("Content-Type", "text/plain")
         .setBody("mmmm chocolate")
         .build();
   }
 
-  private Response handleSetCookie(){
+  private Response handleSetCookie() {
     return new ResponseBuilder()
-        .setHttpVersion("HTTP/1.1")
-        .setStatusCode(200)
+        .setStatusCode(HttpCodes.OK)
         .setHeader("Content-Type", "text/plain")
         .setHeader("Set-Cookie", cookie)
         .setBody("Eat")
         .build();
   }
 
-  private String cookieValue(Request request){
+  private String cookieValue(Request request) {
     String cookie = null;
     String headerValue = request.getHeaderValue("Cookie");
-    if (headerValue != null){
+    if (headerValue != null) {
       cookie = headerValue;
     }
     return cookie;

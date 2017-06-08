@@ -3,11 +3,12 @@ package core.request;
 public class RequestBuilder {
   private Enum<RequestMethod> requestMethod;
   private String uri;
-  private String httpVersion;
+  private String httpVersion = "HTTP/1.1";
   private String header = null;
   private String body = null;
 
-  public RequestBuilder() {}
+  public RequestBuilder() {
+  }
 
   public RequestBuilder setRequestMethod(Enum<RequestMethod> requestMethod) {
     this.requestMethod = requestMethod;
@@ -16,11 +17,6 @@ public class RequestBuilder {
 
   public RequestBuilder setUri(String uri) {
     this.uri = uri;
-    return this;
-  }
-
-  public RequestBuilder setHttpVersion(String httpVersion) {
-    this.httpVersion = httpVersion;
     return this;
   }
 

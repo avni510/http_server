@@ -19,7 +19,6 @@ public class MethodsHandlerTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/method_options")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
     MethodsHandler methodsHandler = new MethodsHandler();

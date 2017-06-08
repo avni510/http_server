@@ -1,12 +1,14 @@
 package cobspec.handler.directory;
 
 import core.Handler;
-import cobspec.FileHelper;
+import core.HttpCodes;
 
 import core.response.ResponseBuilder;
 import core.response.Response;
 
 import core.request.Request;
+
+import cobspec.FileHelper;
 
 import java.io.UnsupportedEncodingException;
 
@@ -21,8 +23,7 @@ public class DirectoryGetHandler implements Handler {
 
   public Response generate(Request request) throws UnsupportedEncodingException {
     Response response = new ResponseBuilder()
-        .setHttpVersion("HTTP/1.1")
-        .setStatusCode(200)
+        .setStatusCode(HttpCodes.OK)
         .setHeader("Content-Type", "text/html")
         .setBody(getBody())
         .build();
@@ -40,11 +41,11 @@ public class DirectoryGetHandler implements Handler {
     return body.toString();
   }
 
-  private String getHtml(String name, String link){
+  private String getHtml(String name, String link) {
     return "<li> <a href=" + link + ">" + name + "</a></li>";
   }
 
-  private Map<String, String> setFileInformation(){
+  private Map<String, String> setFileInformation() {
     FileHelper fileManager = new FileHelper();
     return fileManager.getNameAndRelativePath(rootDirectoryPath);
   }

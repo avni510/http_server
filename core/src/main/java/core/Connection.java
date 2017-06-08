@@ -6,6 +6,7 @@ import java.io.OutputStream;
 
 public interface Connection {
   InputStream in() throws IOException;
+
   OutputStream out() throws IOException;
 }
 

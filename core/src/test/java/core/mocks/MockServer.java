@@ -8,7 +8,7 @@ import java.io.IOException;
 public class MockServer implements ConnectionManager {
   private Connection mockServerSocketConnection;
 
-  public MockServer withAcceptStubbedToReturn(Connection mockServerSocketConnection){
+  public MockServer withAcceptStubbedToReturn(Connection mockServerSocketConnection) {
     this.mockServerSocketConnection = mockServerSocketConnection;
     return this;
   }

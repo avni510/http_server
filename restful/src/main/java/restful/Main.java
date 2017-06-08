@@ -1,22 +1,22 @@
 package restful;
 
 import core.Router;
-import core.Server;
-import core.ServerExecutor;
-import core.ServerCancellationToken;
-import core.HttpServer;
-import core.DataStore;
+
+import core.middleware.FinalMiddleware;
+import core.middleware.RoutingMiddleware;
+
+import core.server.Server;
+import core.server.ServerExecutor;
+import core.server.ServerCancellationToken;
+import core.server.HttpServer;
+
+import core.utils.DataStore;
 
 import restful.configuration.ConfigurationRoutes;
 
-import restful.middleware.UsersDeleteRequestMiddleware;
-import restful.middleware.UsersPutRequestMiddleware;
-import restful.middleware.UsersGetRequestMiddleware;
-import restful.middleware.ValidIdMiddleware;
-
-import core.middleware.RoutingMiddleware;
-
 import java.net.ServerSocket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Main {
   private static int portNumber = 4444;
@@ -29,22 +29,16 @@ public class Main {
     ServerSocket serverSocket = new ServerSocket(portNumber);
     Server server = new Server(serverSocket);
 
-    RoutingMiddleware app = setupApp(router, dataStore);
+    FinalMiddleware finalMiddleware = new FinalMiddleware();
+    RoutingMiddleware app = new RoutingMiddleware(router, finalMiddleware);
 
-    ServerExecutor serverExecutor = new ServerExecutor(app);
+    ExecutorService threadPool = Executors.newFixedThreadPool(4);
+    ServerExecutor serverExecutor = new ServerExecutor(app, threadPool);
 
     ServerCancellationToken serverCancellationToken = new ServerCancellationToken();
     serverCancellationToken.setListeningCondition(true);
 
     HttpServer httpServer = new HttpServer(server, serverExecutor, serverCancellationToken);
     httpServer.execute();
-  }
-
-  private static RoutingMiddleware setupApp(Router router, DataStore<Integer, String> dataStore){
-    UsersGetRequestMiddleware usersGetRequestMiddleware = new UsersGetRequestMiddleware(dataStore);
-    UsersPutRequestMiddleware usersPutRequestMiddleware = new UsersPutRequestMiddleware(dataStore, usersGetRequestMiddleware);
-    UsersDeleteRequestMiddleware usersDeleteRequestMiddleware = new UsersDeleteRequestMiddleware(dataStore, usersPutRequestMiddleware);
-    ValidIdMiddleware app = new ValidIdMiddleware(dataStore, usersDeleteRequestMiddleware);
-    return new RoutingMiddleware(router, app);
   }
 }

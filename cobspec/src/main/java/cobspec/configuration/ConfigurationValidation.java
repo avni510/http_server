@@ -22,10 +22,11 @@ public class ConfigurationValidation {
   }
 
   public Boolean isValidArgs(String[] commandLineArgs) {
-    if (commandLineArgs.length == 0) { return true;}
-    else {
+    if (commandLineArgs.length == 0) {
+      return true;
+    } else {
       return isValidFlags(commandLineArgs) &&
-             isValidPortNumber(commandLineArgs);
+          isValidPortNumber(commandLineArgs);
     }
   }
 
@@ -41,14 +42,14 @@ public class ConfigurationValidation {
 
   private Boolean isValidFlags(String[] commandLineArgs) {
     Boolean result;
-    switch(commandLineArgs.length) {
+    switch (commandLineArgs.length) {
       case 2:
         result = commandLineArgs[0].equals("-p") ||
-                 commandLineArgs[0].equals("-d");
+            commandLineArgs[0].equals("-d");
         break;
       case 4:
         result = commandLineArgs[0].equals("-p") &&
-                 commandLineArgs[2].equals("-d");
+            commandLineArgs[2].equals("-d");
         break;
       default:
         result = false;

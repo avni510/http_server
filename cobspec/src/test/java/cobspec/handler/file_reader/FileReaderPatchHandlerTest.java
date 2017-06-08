@@ -10,19 +10,19 @@ import core.request.RequestMethod;
 
 import cobspec.FileHelper;
 
-import org.junit.Test;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.nio.charset.StandardCharsets;
 
+import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 
 public class FileReaderPatchHandlerTest {
 
-  private void writeToFile(String content){
+  private void writeToFile(String content) {
     String pathToFile = System.getProperty("user.dir") + "/code/result.txt";
     try {
       File file = new File(pathToFile);
@@ -38,7 +38,6 @@ public class FileReaderPatchHandlerTest {
     Request getRequest = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/result.txt")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost" + Constants.CLRF)
         .build();
 
@@ -51,9 +50,8 @@ public class FileReaderPatchHandlerTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.PATCH)
         .setUri("/result.txt")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost" + Constants.CLRF +
-                   "If-Match: cc640aa14e96c7e21003963620c42259125749d9" + Constants.CLRF)
+            "If-Match: cc640aa14e96c7e21003963620c42259125749d9" + Constants.CLRF)
         .setBody("data=foobar")
         .build();
     String pathToFile = System.getProperty("user.dir") + "/code/result.txt";
@@ -70,9 +68,8 @@ public class FileReaderPatchHandlerTest {
     Request patchRequest = new RequestBuilder()
         .setRequestMethod(RequestMethod.PATCH)
         .setUri("/result.txt")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost" + Constants.CLRF +
-                   "If-Match: cc640aa14e96c7e21003963620c42259125749d9" + Constants.CLRF)
+            "If-Match: cc640aa14e96c7e21003963620c42259125749d9" + Constants.CLRF)
         .setBody("data=foobar")
         .build();
     String pathToFile = System.getProperty("user.dir") + "/code/result.txt";

@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class CookieGetHandlerTest {
 
@@ -21,7 +21,6 @@ public class CookieGetHandlerTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/cookie?type=chocolate")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost")
         .build();
     CookieGetHandler cookieGetHandler = new CookieGetHandler();
@@ -29,8 +28,8 @@ public class CookieGetHandlerTest {
     Response actualResponse = cookieGetHandler.generate(request);
 
     assertEquals("Set-Cookie: type=chocolate" + Constants.CLRF +
-                          "Content-Type: text/plain" + Constants.CLRF, actualResponse.getHeaders());
-    assertEquals("Eat", new String (actualResponse.getBody()));
+        "Content-Type: text/plain" + Constants.CLRF, actualResponse.getHeaders());
+    assertEquals("Eat", new String(actualResponse.getBody()));
   }
 
   @Test
@@ -38,13 +37,12 @@ public class CookieGetHandlerTest {
     Request request = new RequestBuilder()
         .setRequestMethod(RequestMethod.GET)
         .setUri("/eat_cookie")
-        .setHttpVersion("HTTP/1.1")
         .setHeader("Host: localhost" + Constants.CLRF + "Cookie: type=chocolate" + Constants.CLRF)
         .build();
     CookieGetHandler cookieGetHandler = new CookieGetHandler();
 
     Response actualResponse = cookieGetHandler.generate(request);
 
-    assertEquals("mmmm chocolate", new String (actualResponse.getBody()));
+    assertEquals("mmmm chocolate", new String(actualResponse.getBody()));
   }
 }

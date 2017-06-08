@@ -1,15 +1,14 @@
 package cobspec.configuration;
 
-import cobspec.configuration.ConfigurationCommandLine;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class ConfigurationCommandLineTest {
-  private String rootPath = System.getProperty("user.dir");
+  private String rootPath = System.getProperty("user.dir") + "/cobspec";
 
   @Test
-  public void directoryAndPortAreParsed(){
+  public void directoryAndPortAreParsed() {
     ConfigurationCommandLine configurationCommandLine = new ConfigurationCommandLine();
 
     String[] commandLineArgs = {"-p", "5000", "-d", rootPath + "/new_directory"};
