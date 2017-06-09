@@ -1,31 +1,41 @@
 package core;
 
 import core.request.RequestMethod;
+
 import core.utils.Tuple;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class Router {
   private Map<Tuple<Enum<RequestMethod>, String>, Handler> routes = new HashMap();
 
-  public Router addRoute(Enum<RequestMethod> requestMethod, String uri, Handler handler) {
-    routes.put(new Tuple<>(requestMethod, uri), handler);
+  public Router addRoute(Enum<RequestMethod> requestMethod, String path, Handler handler) {
+    if (!isStaticRoute(path)) {
+      String regexPath = convertPathToRegex(path);
+      routes.put(new Tuple<>(requestMethod, regexPath), handler);
+      return this;
+    }
+    routes.put(new Tuple<>(requestMethod, path), handler);
     return this;
   }
 
   public Handler retrieveHandler(Enum<RequestMethod> requestMethod, String uri) {
     if (uri.contains("?")) {
-      String uriWithoutQueryParams = getUriWithoutQueryParams(uri);
-      return routes.get(new Tuple<>(requestMethod, uriWithoutQueryParams));
-    } else {
-      Handler handler = routes.get(new Tuple<>(requestMethod, uri));
-      if (handler == null) {
-        String dynamicUri = getDynamicUri(uri);
-        handler = routes.get(new Tuple<>(requestMethod, dynamicUri));
-      }
-      return handler;
+      uri = getUriWithoutQueryParams(uri);
     }
+    for (Map.Entry<Tuple<Enum<RequestMethod>, String>, Handler> route :
+        routes.entrySet()) {
+      Tuple<Enum<RequestMethod>, String> requestMethodAndPath = route.getKey();
+      Enum<RequestMethod> routeRequestMethod = requestMethodAndPath.getFirstElement();
+      String routePath = requestMethodAndPath.getSecondElement();
+      if (routeRequestMethod.equals(requestMethod) && Pattern.matches(routePath, uri)) {
+        Handler handler = route.getValue();
+        return handler;
+      }
+    }
+    return null;
   }
 
   public boolean uriExists(String uri) {
@@ -43,16 +53,21 @@ public class Router {
     return uriParts[0];
   }
 
-  private String getDynamicUri(String uri) {
-    if (uri.contains("edit")) {
-      return getDynamicUriForEdit(uri);
+  private boolean isStaticRoute(String path) {
+    if (path.contains(":")) {
+      return false;
     }
-    return uri.substring(0, uri.length() - 1) + ":id";
+    return true;
   }
 
-  private String getDynamicUriForEdit(String uri) {
-    String[] uriParts = uri.split("/");
-    uriParts[uriParts.length - 2] = ":id";
-    return String.join("/", uriParts);
+  private String convertPathToRegex(String path) {
+    String regex = "[a-zA-Z0-9]+";
+    String[] splitPath = path.split("/");
+    for (int i = 0; i < splitPath.length; i++) {
+      if (splitPath[i].contains(":")) {
+        splitPath[i] = regex;
+      }
+    }
+    return String.join("/", splitPath);
   }
 }

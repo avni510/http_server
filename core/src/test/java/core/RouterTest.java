@@ -66,10 +66,34 @@ public class RouterTest {
   }
 
   @Test
-  public void nullIsReturnedIfThereAreNoMatchingRoutes() throws Exception {
+  public void nullIsReturnedIfTheUriIsLongerThanSpecified() throws Exception {
     Router router = new Router();
+    BaseHandler baseHandler = new BaseHandler();
+    router.addRoute(RequestMethod.GET, "/foo/:id/edit", baseHandler);
 
-    Handler handler = router.retrieveHandler(RequestMethod.GET, "/invalid");
+    Handler handler = router.retrieveHandler(RequestMethod.GET, "/foo/1/edit/new");
+
+    assertEquals(handler, null);
+  }
+
+  @Test
+  public void nullIsReturnedIfTheUriIsShorterThanSpecified() throws Exception {
+    Router router = new Router();
+    BaseHandler baseHandler = new BaseHandler();
+    router.addRoute(RequestMethod.GET, "/foo/:id/edit", baseHandler);
+
+    Handler handler = router.retrieveHandler(RequestMethod.GET, "/foo");
+
+    assertEquals(handler, null);
+  }
+
+  @Test
+  public void nullIsReturnedIfTheUriIfASpecialCharacterIsInTheUri() throws Exception {
+    Router router = new Router();
+    BaseHandler baseHandler = new BaseHandler();
+    router.addRoute(RequestMethod.GET, "/foo/:id/edit", baseHandler);
+
+    Handler handler = router.retrieveHandler(RequestMethod.GET, "/foo/*/edit");
 
     assertEquals(handler, null);
   }
